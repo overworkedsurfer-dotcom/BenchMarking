@@ -68,6 +68,18 @@ def finalize(w: World) -> None:
     for a in w.answers:
         if a["answer"] is None:
             a["answer"] = w.deferred[a["task_id"]]()
+    for table in ("transactions", "calls", "logins"):
+        bad = [r for r in w.tables[table] if r["timestamp"][:4] != "2025"]
+        if bad:
+            raise RuntimeError(f"seed {w.seed}: {len(bad)} {table} rows outside 2025, e.g. {bad[0]['timestamp']}")
+    # rule-derived golds must contain exactly the planted cases — no accidental positives from background data
+    answers = {a["task_id"]: a["answer"] for a in w.answers}
+    for (tid, fname), ids in w.expected.items():
+        gold = {x["id"] if isinstance(x, dict) else x for x in answers[tid][fname]}
+        if gold != set(ids):
+            raise RuntimeError(f"seed {w.seed}: {tid}.{fname} gold differs from planted cases "
+                               f"(unexpected={sorted(gold - set(ids))}, missing={sorted(set(ids) - gold)}); "
+                               f"try another seed")
     order = {t["task_id"]: i for i, t in enumerate(sorted(w.tasks, key=lambda t: t["task_id"]))}
     w.tasks.sort(key=lambda t: order[t["task_id"]])
     w.answers.sort(key=lambda a: order[a["task_id"]])

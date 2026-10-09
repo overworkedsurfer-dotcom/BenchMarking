@@ -1,454 +1,485 @@
 business_id,ein,name,entity_type,industry,jurisdiction,address_id,incorporation_date
-B101146,00-9224023,Summit Family Holdings LLC,LLC,holding company,DE,AD351321,2003-10-05
-B101169,00-9526861,Golden & Associates Inc,S-Corporation,legal services,CO,AD353875,1996-11-08
-B102222,00-7227315,Ironwood Grocers LLC,LLC,grocery,NC,AD416658,2006-08-23
-B105484,00-2873939,Brightwater Boutique LP,Partnership,retail,FL,AD214575,2000-07-27
-B106653,00-6468940,Juniper Systems Inc,S-Corporation,software,CA,AD686665,2017-12-28
-B113056,00-4506522,Lantern Outfitters LLC,LLC,retail,AZ,AD905182,1992-09-25
-B113878,00-1725258,Trailhead Outfitters LLC,LLC,retail,NC,AD760326,1997-05-01
-B114551,00-7162306,Union Residential Inc,Corporation,property management,OH,AD636767,2011-05-08
-B115960,00-4982427,Crescent Outfitters LLC,LLC,retail,CA,AD495694,2009-09-18
-B117776,00-1687027,Onyx Resources Ltd,Ltd,logistics,VG,AD795183,2023-01-14
-B120533,00-6543709,Clearview Freight LLC,LLC,logistics,CO,AD880882,2022-01-14
-B123159,00-9534321,Northgate Hair Studio LLC,LLC,salon,OR,AD280055,2009-05-30
-B126228,00-1475261,Apex Strategic Consulting LLC,LLC,consulting,WY,AD849442,2024-06-14
-B127830,00-6079899,Evergreen Strategy Group LLC,LLC,consulting,TX,AD420114,2019-07-25
-B128599,00-8107812,Orchard Express Wash Inc,S-Corporation,car wash,MN,AD110953,2015-07-08
-B129345,00-2319256,Evergreen Renovations LLC,LLC,construction,OR,AD611051,2021-06-25
-B131765,00-2008628,Keystone Salon LLC,LLC,salon,CA,AD915127,2010-09-18
-B132410,00-4876656,Atlas Goods LLC,LLC,retail,MN,AD381160,2020-08-14
-B134753,00-9131102,Stonebridge Freight Inc,Corporation,logistics,TX,AD950130,2006-12-05
-B136831,00-4910655,Harborview Bistro LLC,LLC,restaurant,OH,AD226210,2021-12-20
-B139299,00-9564950,Riverside Technologies LLC,LLC,software,CO,AD419666,2014-09-06
-B139516,00-6477687,Cascade Salon LLC,LLC,salon,TX,AD299562,2013-02-21
-B145662,00-1855890,Patriot Kitchen LLC,LLC,restaurant,TN,AD595550,2020-07-11
-B146934,00-7198726,Granite Express Wash LLC,LLC,car wash,MN,AD181107,1993-03-08
-B147800,00-2971735,Ironwood Residential LLC,LLC,property management,TX,AD727904,1996-09-16
-B148171,00-5078590,Everly Investments LLC,LLC,consulting,WY,AD849442,2025-08-28
-B150040,00-8636370,Heritage Grill LLC,LLC,restaurant,OR,AD978842,1996-06-21
-B151076,00-9259357,Copperfield Foods Inc,S-Corporation,grocery,NV,AD419374,2002-01-26
-B151815,00-1761429,Golden Dental LLC,LLC,healthcare,NV,AD419394,2013-08-18
-B154341,00-6299906,Keystone Diner Inc,Corporation,restaurant,CA,AD386927,2000-10-15
-B155314,00-9419581,Crescent Cafe LLC,LLC,restaurant,TX,AD294110,2001-03-24
-B158042,00-7084555,Oakmont Family Holdings LLC,LLC,holding company,DE,AD351321,2006-03-08
-B159159,00-8941389,Pioneer Manufacturing LLC,LLC,manufacturing,NC,AD372892,2009-09-28
-B159435,00-8243305,Pioneer Family Clinic Inc,Corporation,healthcare,TN,AD368185,1994-06-17
-B161324,00-5177009,Silverline CPA Group LLC,LLC,accounting,NC,AD294110,2009-11-01
-B163540,00-5382235,Vertex Laundromat Inc,Corporation,laundromat,NC,AD165891,2016-09-22
-B164556,00-8519043,Prairie IT Services LLC,LLC,consulting,NJ,AD355716,2023-12-25
-B166173,00-1308860,Juniper Family Holdings LLC,LLC,holding company,DE,AD289116,2013-06-28
-B171001,00-5895145,Westbrook Labs Inc,Corporation,software,CO,AD827621,2005-01-28
-B174493,00-8438557,Lantern Dental LP,Partnership,healthcare,DE,AD351321,1998-01-07
-B174572,00-6089809,Clearview Freight Inc,S-Corporation,logistics,AZ,AD601000,2017-10-12
-B175289,00-4306274,Lumen Ventures FZE,FZE,holding company,AE,AD469522,2023-07-02
-B175648,00-7310031,Union Tax & Accounting Inc,Corporation,accounting,TX,AD294110,2014-10-31
+B104072,00-2360456,Copperfield Family Holdings LLC,LLC,holding company,DE,AD849442,2002-02-11
+B104137,00-4871755,Oakmont Strategy Group LP,Partnership,consulting,NJ,AD828836,2007-02-09
+B105937,00-8004299,Summit Family Holdings LLC,LLC,holding company,DE,AD849442,2000-12-06
+B106727,00-7539402,Carrick International Ltd,Ltd,holding company,BZ,AD727084,2023-03-02
+B108721,00-1610558,Silverline Outfitters LLC,LLC,retail,AZ,AD845838,2010-11-04
+B109895,00-7507200,Corvus Holdings LLC,LLC,consulting,DE,AD351321,2025-06-08
+B110828,00-7210177,Juniper Medical Group Inc,Corporation,healthcare,TX,AD942028,2017-07-05
+B111351,00-6217490,Ironwood Boutique Inc,S-Corporation,retail,FL,AD168185,2007-02-23
+B112438,00-6206344,Heritage Family Clinic Inc,S-Corporation,healthcare,TX,AD692116,1992-08-23
+B113497,00-3262401,Atlas Goods LP,Partnership,retail,CO,AD598344,2019-10-01
+B114093,00-4002770,Juniper Auto Spa Inc,Corporation,car wash,TN,AD175459,2021-06-10
+B114540,00-1842127,Prairie Family Holdings LLC,LLC,holding company,DE,AD849442,2005-01-27
+B121085,00-9396356,Falcon Systems LLC,LLC,software,MN,AD149641,2013-11-11
+B129055,00-8920424,Stonebridge Contracting LLC,LLC,construction,DE,AD294110,2016-01-12
+B129727,00-2595571,Granite Builders Inc,Corporation,construction,NV,AD492024,1994-08-07
+B130534,00-1245475,Vertex Kitchen LP,Partnership,restaurant,TN,AD478468,2007-12-05
+B131668,00-7279034,Trailhead Realty LLC,LLC,property management,DE,AD351321,1997-11-09
+B135180,00-6782763,Ironwood Motors Service LLC,LLC,auto repair,OR,AD239362,2006-11-23
+B139105,00-3250483,Atlas CPA Group LLC,LLC,accounting,MN,AD470789,2019-08-28
+B139341,00-7961380,Union Systems Inc,S-Corporation,software,OR,AD327579,2003-04-17
+B139593,00-5151664,Trailhead Industries LLC,LLC,manufacturing,OR,AD121132,2021-06-22
+B142041,00-7999386,Riverside Strategy Group LLC,LLC,consulting,NV,AD360588,2024-11-14
+B143908,00-2409173,Patriot Taqueria LLC,LLC,restaurant,TN,AD175622,2002-01-21
+B144644,00-3615498,Riverside Supply LLC,LLC,retail,TX,AD120524,2024-10-17
+B152675,00-8953280,Brightwater Construction LLC,LLC,construction,CO,AD566141,1994-11-24
+B153302,00-5739595,Crescent Strategy Group Inc,Corporation,consulting,NJ,AD124605,2024-08-04
+B159965,00-7164213,Silverline Fabrication LLC,LLC,manufacturing,OH,AD574221,2023-03-03
+B160192,00-2268027,Westbrook Auto Spa LLC,LLC,car wash,MN,AD117013,2005-05-04
+B168791,00-7594172,Lakeside Manufacturing Inc,S-Corporation,manufacturing,TX,AD381638,2003-10-31
+B171262,00-2981556,Ironwood Family Holdings LLC,LLC,holding company,DE,AD849442,2013-01-30
+B173444,00-4173803,Orchard Family Holdings LLC,LLC,holding company,DE,AD351321,2013-04-16
+B175166,00-5123365,Trailhead Realty LP,Partnership,property management,NJ,AD406997,2008-01-07
 B177603,00-3323935,Juniper Family Holdings LLC,LLC,holding company,DE,AD289116,2001-07-25
-B179837,00-9726672,Highland Construction Inc,Corporation,construction,FL,AD684079,2002-07-07
-B183096,00-9387063,Liberty Boutique LLC,LLC,retail,AZ,AD200946,2020-10-19
-B185028,00-4414118,Liberty Auto Repair LP,Partnership,auto repair,MN,AD289116,2007-01-02
-B186187,00-2066016,Cascade Family Clinic LLC,LLC,healthcare,CO,AD520298,2022-07-30
+B179512,00-6213455,Patriot Taqueria Inc,Corporation,restaurant,FL,AD712703,2002-11-16
+B179534,00-3195301,Lantern Realty LLC,LLC,property management,TX,AD289116,1998-05-11
 B186982,00-4320311,Copperfield Renovations Inc,Corporation,construction,MN,AD229200,1996-08-17
-B190395,00-7934516,Highland Industries LLC,LLC,manufacturing,TN,AD183945,2008-11-21
-B192066,00-3118236,Lakeside Transport Inc,Corporation,logistics,CO,AD344924,1992-08-29
-B194728,00-7794358,Riverside Bookkeeping Inc,S-Corporation,accounting,CO,AD289116,1994-04-26
-B195732,00-8427302,Frontier CPA Group Inc,Corporation,accounting,CO,AD952945,1998-04-20
-B196811,00-9081987,Beacon Freight LLC,LLC,logistics,DE,AD289116,1995-08-28
-B200214,00-9490117,Prairie Goods LLC,LLC,retail,NJ,AD328211,2000-11-30
-B202997,00-5896616,Cygnus Holdings Ltd,Ltd,holding company,CY,AD568169,2018-01-03
-B203322,00-2249156,Crescent Taqueria LLC,LLC,restaurant,NC,AD666277,2006-10-03
+B189517,00-2111710,Frontier Health Partners Inc,Corporation,healthcare,FL,AD862659,2007-12-13
+B196215,00-9228877,Prairie Grocers LLC,LLC,grocery,AZ,AD889051,2005-02-10
+B196601,00-2778154,Clearview & Associates LLC,LLC,legal services,FL,AD289116,1996-01-11
+B197180,00-2320725,Silverline Residential LLC,LLC,property management,OR,AD798491,2008-07-12
+B199307,00-3140630,Crescent Garage Inc,S-Corporation,auto repair,NC,AD543899,1996-06-09
+B199949,00-9487011,Halcyon Global Ltd,Ltd,holding company,CY,AD878783,2020-12-16
+B201161,00-1789058,Maplewood Garage LLC,LLC,auto repair,TX,AD100697,2023-11-11
+B203029,00-9880632,Mosaic Builders Inc,Corporation,construction,OR,AD713652,2024-11-07
+B206025,00-5162149,Harborview Renovations LLC,LLC,construction,OH,AD281712,2014-02-18
 B206516,00-1957267,Stonebridge Family Holdings LLC,LLC,holding company,DE,AD849442,2019-04-14
-B212858,00-8403257,Maplewood Builders LLC,LLC,construction,MN,AD416251,2017-05-29
-B217307,00-8528036,Orchard Auto Repair LLC,LLC,auto repair,CA,AD294110,2010-11-16
-B218246,00-1890658,Ironwood Software Inc,S-Corporation,software,OR,AD474691,2008-04-29
-B218463,00-1558499,Northstar Capital LLC,LLC,consulting,WY,AD849442,2024-10-24
-B218553,00-1161245,Summit Advisors Inc,S-Corporation,consulting,NJ,AD569035,2014-12-22
-B223611,00-8999877,Maplewood Foods LP,Partnership,grocery,MN,AD278399,2018-06-10
-B225679,00-2955064,Kestrel Partners LLC,LLC,holding company,DE,AD351321,2016-04-12
-B228165,00-3126989,Maplewood Bistro LP,Partnership,restaurant,NC,AD725310,2020-07-06
-B233952,00-7075954,Prairie Mercantile LP,Partnership,retail,NV,AD653296,2007-12-13
-B235910,00-7633144,Keystone Kitchen LP,Partnership,restaurant,OH,AD563988,2018-07-12
-B240247,00-6022575,Copperfield Freight International SA,SA,logistics,PA,AD597321,2019-11-15
+B208337,00-8640439,Harborview Beauty Bar LLC,LLC,salon,CO,AD444262,2004-12-09
+B212485,00-8048980,Oakmont Grill Inc,Corporation,restaurant,FL,AD604049,1999-03-26
+B212688,00-1387145,Vertex Realty LLC,LLC,property management,NJ,AD924104,1995-08-13
+B214320,00-3666244,Oakmont Boutique Inc,S-Corporation,retail,NC,AD864650,2004-11-09
+B217904,00-2042195,Union Grocers Inc,Corporation,grocery,NJ,AD215894,2023-06-20
+B218176,00-8198622,Golden Renovations Inc,S-Corporation,construction,TN,AD115403,2019-09-03
+B222412,00-7618079,Orchard Industries International Ltd,Ltd,manufacturing,VG,AD795183,2017-12-31
+B227759,00-2747650,Vesper Management LLC,LLC,retail,WY,AD351321,2025-01-24
+B229547,00-3340037,Shenzhen Textile Co Ltd,Corporation,manufacturing,CN,AD144802,1995-12-18
+B232639,00-4365954,Copperfield Builders Inc,S-Corporation,construction,OH,AD969620,2012-02-01
+B234974,00-8570840,Patriot Goods LLC,LLC,retail,FL,AD606614,2010-09-15
+B235368,00-9498989,Evergreen Tax & Accounting LLC,LLC,accounting,AZ,AD809313,2023-08-07
+B238699,00-5158659,Evergreen Components LLC,LLC,manufacturing,NV,AD852027,2022-08-17
+B239138,00-9790715,Trailhead Kitchen LLC,LLC,restaurant,NV,AD414502,2015-11-23
+B242264,00-3145294,Trailhead Freight Inc,S-Corporation,logistics,OR,AD822381,2010-06-30
+B242809,00-2461439,Orchard Realty LLC,LLC,property management,TN,AD689768,2024-05-26
+B248597,00-8176314,Highland Medical Group LLC,LLC,healthcare,DE,AD849442,1991-03-06
+B249011,00-3555752,Harborview Contracting Inc,S-Corporation,construction,DE,AD351321,2000-11-14
+B250766,00-7842095,Maplewood Mercantile Inc,Corporation,retail,TN,AD909521,2008-04-22
 B251041,00-1385048,Stonebridge Strategy Group LP,Partnership,consulting,OH,AD756864,2000-10-31
-B252677,00-9957596,Oakmont Auto Spa LLC,LLC,car wash,NC,AD846714,2003-11-04
-B254918,00-2299445,Frontier Taqueria LLC,LLC,restaurant,NJ,AD586847,2001-05-14
-B256553,00-6754247,Union Boutique Inc,S-Corporation,retail,CO,AD215194,2016-10-25
-B257640,00-8080286,Golden Outfitters LLC,LLC,retail,TX,AD327594,2001-11-17
-B258555,00-1055506,Falcon Consulting LP,Partnership,consulting,TX,AD393975,2016-05-16
-B268548,00-3204092,Heritage Family Holdings LLC,LLC,holding company,DE,AD294110,2013-01-09
-B270014,00-3287607,Cascade Tax & Accounting LLC,LLC,accounting,CO,AD794683,2001-01-04
-B270397,00-5377107,Falcon Auto Spa LLC,LLC,car wash,TX,AD195932,2005-11-12
-B271284,00-9889136,Mosaic Motors Service Inc,Corporation,auto repair,MN,AD793829,2015-06-03
-B272392,00-2678456,Redwood Family Holdings LLC,LLC,holding company,DE,AD351321,2009-06-29
-B274037,00-2675910,Vertex Grocers LLC,LLC,grocery,FL,AD673964,2002-11-04
-B274294,00-1954897,Mosaic Courier LLC,LLC,logistics,CA,AD397103,2001-11-07
-B276801,00-4474120,Bluebird Grill LLC,LLC,restaurant,TN,AD301786,2004-11-08
+B256900,00-2312624,Bluebird Law Group LP,Partnership,legal services,MN,AD270285,1992-09-06
+B259255,00-8604456,Heritage Bookkeeping LLC,LLC,accounting,CA,AD600064,2008-10-18
+B259786,00-1533287,Union Mercantile Inc,Corporation,retail,FL,AD695931,2021-05-26
+B259902,00-9656285,Silverline Cafe LLC,LLC,restaurant,FL,AD903588,1996-03-14
+B260298,00-6575477,Lakeside Mercantile LLC,LLC,retail,TN,AD402388,2004-12-01
+B263279,00-1924998,Patriot Law Group LLC,LLC,legal services,AZ,AD201678,2013-10-16
+B263892,00-4850299,Lumen Ventures FZE,FZE,holding company,AE,AD490299,2020-04-23
+B267859,00-1716699,Falcon Strategy Group LLC,LLC,consulting,TX,AD365458,2023-03-24
+B269225,00-5134491,Harborview Strategy Group LLC,LLC,consulting,NJ,AD160580,2004-10-03
+B270074,00-9746323,Riverside Boutique Inc,S-Corporation,retail,NJ,AD510407,1997-09-27
+B271595,00-9985707,Paragon Capital LLC,LLC,logistics,DE,AD289116,2025-02-28
+B272689,00-3439123,Bluebird Family Holdings LLC,LLC,holding company,DE,AD294110,2018-03-19
+B272912,00-5934942,Bluebird Beauty Bar Inc,S-Corporation,salon,TX,AD914890,1990-08-10
+B273968,00-3286596,Northgate Software International Ltd,Ltd,software,VG,AD439647,2015-01-11
+B276138,00-8549499,Cascade Market LP,Partnership,grocery,NV,AD699444,2019-07-25
+B276998,00-8259027,Horizon Outfitters LP,Partnership,retail,CA,AD669606,2006-12-16
+B277143,00-5869787,Maplewood Boutique LLC,LLC,retail,NC,AD596708,2017-09-16
 B278488,00-7767412,Westbrook Motors Inc,Corporation,auto dealer,NV,AD454014,1981-12-18
-B278925,00-5001091,Harborview Garage LLC,LLC,auto repair,FL,AD182080,1994-03-11
-B282372,00-3877712,Lakeside Realty LP,Partnership,property management,FL,AD311417,1995-06-07
-B283032,00-6536065,Harborview Residential Inc,Corporation,property management,NC,AD778657,1998-09-18
-B283211,00-3982478,Liberty Builders Inc,Corporation,construction,CO,AD681179,1994-06-18
-B287173,00-8802354,Highland Bistro LLC,LLC,restaurant,DE,AD294110,2011-03-07
-B288396,00-9856052,Riverside Realty LLC,LLC,property management,FL,AD207776,2003-12-11
-B289892,00-4908260,Liberty Outfitters LLC,LLC,retail,NJ,AD518283,1998-08-09
-B292111,00-2360456,Patriot Supply LP,Partnership,retail,TX,AD427831,2006-04-09
-B294717,00-4334071,Vertex Bistro Inc,Corporation,restaurant,NV,AD301819,2016-09-15
-B297389,00-9549536,Onyx Global LLC,LLC,logistics,WY,AD351321,2025-03-25
-B297516,00-7235973,Westbrook Garage LLC,LLC,auto repair,NJ,AD402147,2009-06-14
-B298857,00-5419500,Union Express Wash LLC,LLC,car wash,CO,AD252672,2015-11-23
-B304873,00-2672849,Summit Express Wash LLC,LLC,car wash,FL,AD126833,1990-05-03
-B305339,00-2939147,Ironwood Grocers LLC,LLC,grocery,OH,AD884050,2003-01-24
-B305505,00-9017180,Frontier & Associates Inc,S-Corporation,legal services,AZ,AD470545,2022-09-20
-B306838,00-3210200,Copperfield Realty LLC,LLC,property management,TN,AD506574,2002-07-30
-B307281,00-7348694,Bluebird Bookkeeping LLC,LLC,accounting,TX,AD131347,2012-03-06
-B307411,00-4219725,Patriot Kitchen LLC,LLC,restaurant,AZ,AD351321,2013-12-09
-B310007,00-3429075,Prairie Technologies LLC,LLC,software,OH,AD635203,2016-05-04
-B310034,00-4540961,Vertex Construction Inc,Corporation,construction,FL,AD269414,2013-12-19
-B311045,00-1141955,Juniper Cafe LP,Partnership,restaurant,TN,AD447419,1991-10-22
-B311449,00-2544175,Stonebridge Construction LLC,LLC,construction,OH,AD447470,2000-10-11
-B312235,00-6671704,Redwood Strategy Group LLC,LLC,consulting,AZ,AD978945,1994-11-23
-B315368,00-1977615,Falcon Family Clinic Inc,Corporation,healthcare,NJ,AD993768,1998-11-04
+B281769,00-5974847,Evergreen Components Inc,Corporation,manufacturing,OH,AD548357,2008-10-30
+B281804,00-8246591,Patriot Staffing LLC,LLC,consulting,CO,AD981585,2024-01-18
+B284305,00-9865412,Trailhead Manufacturing LLC,LLC,manufacturing,TN,AD632860,2005-01-01
+B289635,00-7868721,Atlas Auto Repair LLC,LLC,auto repair,FL,AD455877,2020-06-26
+B290492,00-3162604,Granite Bookkeeping Inc,Corporation,accounting,TN,AD683687,2010-03-22
+B291129,00-3215484,Brightwater Health Partners LLC,LLC,healthcare,NJ,AD456283,2011-06-22
+B291407,00-6843583,Golden Supply LLC,LLC,retail,FL,AD911033,2010-07-07
+B291588,00-8903741,Avalon Partners Ltd,Ltd,logistics,VG,AD439647,2023-01-22
+B292226,00-4070332,Granite Systems LLC,LLC,software,NC,AD830389,1996-05-07
+B292745,00-6166749,Cobalt Software International Ltd,Ltd,software,VG,AD795183,2012-04-24
+B295922,00-4033071,Sterling Transport LLC,LLC,logistics,FL,AD188077,2012-04-29
+B297460,00-3604201,Tidewater Consulting Group Ltd,Ltd,holding company,CY,AD878783,2019-01-01
+B297918,00-6710420,Stonebridge Family Holdings LLC,LLC,holding company,DE,AD351321,2011-10-25
+B301341,00-9694721,Westbrook Diner Inc,S-Corporation,restaurant,OR,AD884394,2016-05-08
+B304623,00-2348887,Cobalt Software LLC,LLC,software,DE,AD849442,2008-08-14
+B305505,00-9017180,Highland Strategy Group LLC,LLC,consulting,OR,AD945458,1994-10-14
+B306185,00-2939143,Juniper Goods Inc,S-Corporation,retail,MN,AD516509,1996-03-02
+B308626,00-6927008,Redwood Supply Inc,Corporation,retail,NC,AD662203,2024-02-24
+B308853,00-5283937,Prairie Property Management Inc,Corporation,property management,CA,AD771959,1993-02-14
+B308907,00-7238228,Belmont Capital LLC,LLC,consulting,WY,AD294110,2024-07-03
+B309402,00-5729876,Union Outfitters LLC,LLC,retail,OR,AD645238,2014-01-15
+B309936,00-4088232,Brightwater CPA Group LLC,LLC,accounting,TN,AD824380,2012-08-21
+B310577,00-3536889,Westbrook Health Partners LP,Partnership,healthcare,FL,AD579236,2008-06-05
+B310717,00-3454471,Bluebird Bookkeeping LLC,LLC,accounting,OH,AD318379,2012-12-02
+B313201,00-4106719,Beacon Freight International Ltd,Ltd,logistics,VG,AD795183,2012-09-21
 B315714,00-7488396,Orchard Construction LLC,LLC,construction,AZ,AD294110,1994-01-21
-B317300,00-6409082,Pioneer Market LLC,LLC,grocery,TN,AD592944,1996-01-11
-B318053,00-2105198,Copperfield Dental Inc,Corporation,healthcare,CO,AD813611,2013-10-29
-B319392,00-3271261,Riverside Goods Inc,S-Corporation,retail,FL,AD188724,2009-12-02
-B321008,00-6995957,Onyx Trading Ltd,Ltd,consulting,BZ,AD239496,2023-10-25
-B321736,00-2352944,Oakmont Health Partners Inc,Corporation,healthcare,AZ,AD294110,2003-08-25
-B322701,00-6141829,Trailhead Goods Inc,Corporation,retail,OR,AD574988,2017-02-04
-B322960,00-9277319,Atlas Hair Studio Inc,Corporation,salon,OR,AD533830,2005-12-26
-B327579,00-2007163,Sterling Outfitters Inc,Corporation,retail,CO,AD420436,2020-10-24
-B329031,00-7067798,Granite Logistics LLC,LLC,logistics,DE,AD849442,2007-08-13
-B332518,00-2455087,Atlas Garage Inc,S-Corporation,auto repair,AZ,AD889143,2017-06-04
+B316789,00-1175112,Westbrook Wash & Fold Inc,Corporation,laundromat,CO,AD294110,2017-11-18
+B317448,00-7765382,Celeste Holdings LLC,LLC,consulting,WY,AD351321,2025-01-28
+B318596,00-5358727,Prairie Motors Service LLC,LLC,auto repair,AZ,AD971471,1996-02-12
+B320907,00-5475808,Sterling Construction Inc,S-Corporation,construction,CA,AD991519,2017-02-04
+B322572,00-4324993,Riverside Fabrication LLC,LLC,manufacturing,OR,AD351321,2022-02-16
+B323705,00-6161517,Mosaic Advisors LLC,LLC,consulting,MN,AD362337,2003-09-25
+B325151,00-9651330,Cobalt Software LLC,LLC,software,AZ,AD562658,2010-10-29
+B329618,00-6044913,Stonebridge Property Management Inc,S-Corporation,property management,TN,AD214107,2000-11-01
+B332474,00-2736274,Prairie Tax & Accounting Inc,Corporation,accounting,NJ,AD204553,2002-04-21
+B332527,00-2719990,Stonebridge Courier Inc,S-Corporation,logistics,NJ,AD357827,2015-03-04
 B333696,00-4054628,Keystone Mortgage Corp,Corporation,mortgage lending,TN,AD870923,1996-12-25
-B337769,00-9482409,Copperfield Freight Inc,Corporation,logistics,TX,AD869777,1990-06-29
-B340566,00-5365496,Beacon Wash & Fold LLC,LLC,laundromat,NV,AD955533,2017-02-03
-B340861,00-4661747,Ironwood Laundry LLC,LLC,laundromat,TN,AD573710,2019-05-13
-B343462,00-1249280,Prairie Motors Service Inc,S-Corporation,auto repair,NV,AD351321,2011-09-18
-B344415,00-2050961,Frontier Car Wash LLC,LLC,car wash,FL,AD553689,2022-04-09
-B348543,00-7233195,Silverline Cafe Inc,S-Corporation,restaurant,CA,AD923871,2017-01-12
-B348570,00-5004344,Union Bookkeeping LLC,LLC,accounting,CO,AD881970,1998-06-08
+B334876,00-6599866,Highland Manufacturing LP,Partnership,manufacturing,NJ,AD761257,2011-03-15
+B335388,00-7084594,Pune Industrial Ltd,Corporation,retail,IN,AD266478,2002-05-27
+B338509,00-7971174,Oakmont Systems LLC,LLC,software,DE,AD289116,2003-08-11
+B338933,00-1221181,Keystone Motors Service Inc,S-Corporation,auto repair,FL,AD910323,2012-12-24
+B339893,00-7933619,Northgate Contracting LP,Partnership,construction,TN,AD296088,2013-03-20
+B344266,00-8046176,Liberty Outfitters LLC,LLC,retail,NJ,AD518283,1998-08-09
+B344515,00-4055720,Mosaic Contracting Inc,Corporation,construction,NC,AD119326,2015-05-02
+B348276,00-5402093,Ironwood Labs Inc,S-Corporation,software,CO,AD889860,1993-05-11
 B349589,00-2871464,Coastal Federal Bank NA,Corporation,banking,CO,AD739795,1974-12-12
-B355299,00-5452891,Clearview Car Wash Inc,S-Corporation,car wash,OR,AD508075,1995-08-11
-B355866,00-3757970,Patriot Dental Inc,S-Corporation,healthcare,NJ,AD689502,2022-01-10
-B356121,00-4182822,Harborview Salon LLC,LLC,salon,OH,AD289116,2001-12-26
-B357946,00-2640313,Atlas Garage LLC,LLC,auto repair,TX,AD957795,2018-03-02
-B362064,00-6278639,Lantern Realty LLC,LLC,property management,MN,AD574221,2010-01-02
-B362284,00-5866800,Atlas Family Holdings LLC,LLC,holding company,DE,AD351321,2014-05-08
+B351629,00-5639876,Crescent Realty LLC,LLC,property management,NV,AD129332,2024-06-10
+B352753,00-6367736,Horizon Realty LLC,LLC,property management,TX,AD893781,2008-05-05
+B353546,00-2850775,Elysian Investments Ltd,Ltd,holding company,CY,AD878783,2018-01-09
+B360421,00-6310725,Westbrook Builders Inc,Corporation,construction,TX,AD187887,2021-02-23
+B361854,00-5688304,Prairie Transport LLC,LLC,logistics,MN,AD627055,2024-05-25
+B363519,00-6282431,Pioneer Builders LLC,LLC,construction,DE,AD294110,2023-04-26
+B363794,00-7364624,Silverline Supply LLC,LLC,retail,CO,AD294110,2023-03-01
+B364140,00-7494680,Orchard Construction Inc,S-Corporation,construction,CO,AD675334,2010-10-29
 B364182,00-1618197,Granite Securities Inc,Corporation,securities brokerage,OH,AD464329,1994-08-22
-B364395,00-3633758,Falcon Hair Studio LLC,LLC,salon,DE,AD849442,2011-08-14
-B364731,00-8527043,Patriot Hair Studio LLC,LLC,salon,DE,AD351321,2013-12-29
-B368090,00-8568263,Orchard Grocers LLC,LLC,grocery,CO,AD602999,2017-02-20
-B370767,00-7488577,Keystone Mercantile LLC,LLC,retail,CA,AD849442,2020-01-17
-B373969,00-3039130,Redwood Family Clinic Inc,Corporation,healthcare,NJ,AD360134,2000-07-24
-B374463,00-9007095,Stonebridge Salon LLC,LLC,salon,TN,AD740354,2004-12-05
-B375923,00-1988426,Golden Laundry LLC,LLC,laundromat,MN,AD598695,2015-05-01
-B377386,00-2963124,Union Supply LLC,LLC,retail,NC,AD604046,2008-08-23
-B378741,00-1524672,Lantern Grill LLC,LLC,restaurant,TX,AD122752,1996-10-22
-B379365,00-2747848,Frontier Bistro LLC,LLC,restaurant,CA,AD392883,2008-05-08
+B364368,00-8990540,Crescent Garage LLC,LLC,auto repair,AZ,AD514275,2023-07-25
+B364627,00-1461089,Lantern Outfitters Inc,Corporation,retail,OH,AD439599,2021-02-19
+B367688,00-8753023,Horizon Tax & Accounting Inc,S-Corporation,accounting,CO,AD865745,1990-06-18
+B368096,00-8030147,Granite Bistro Inc,S-Corporation,restaurant,OH,AD966882,2004-12-06
+B368144,00-7722346,Golden Boutique Inc,Corporation,retail,TX,AD861017,2013-10-21
+B369057,00-1220730,Vertex Mercantile Inc,Corporation,retail,OR,AD372315,1997-04-26
+B369632,00-7904307,Maplewood Garage Inc,Corporation,auto repair,OR,AD857024,2001-05-17
+B370770,00-9675262,Sterling Family Holdings LLC,LLC,holding company,DE,AD849442,2002-05-28
+B371895,00-7104796,Horizon Advisors Inc,Corporation,consulting,OR,AD424936,2007-10-08
+B373211,00-2347973,Brightwater Market LLC,LLC,grocery,NV,AD318351,1994-02-12
+B373342,00-5716481,Vertex & Associates LLC,LLC,legal services,OR,AD779178,2005-01-12
+B373569,00-1555105,Orchard Builders LLC,LLC,construction,DE,AD294110,1998-08-02
+B373832,00-3442837,Juniper Labs LLC,LLC,software,TN,AD197187,1997-02-08
+B377227,00-1647293,Sterling Dental LLC,LLC,healthcare,NC,AD533840,2008-09-10
+B377505,00-6285985,Oakmont Family Holdings LLC,LLC,holding company,DE,AD289116,2016-01-05
+B379365,00-2747848,Northgate Software Inc,S-Corporation,software,TX,AD259006,2018-05-22
+B379801,00-2054825,Redwood Cafe Inc,S-Corporation,restaurant,OH,AD469843,2007-08-08
 B383922,00-6757295,Prairie Auto Group Inc,Corporation,auto dealer,TX,AD620102,1963-11-09
-B384156,00-5709667,Oakmont Contracting LP,Partnership,construction,MN,AD747334,2014-09-19
-B385232,00-5846211,Vesper Trading Ltd,Ltd,holding company,CY,AD878783,2016-01-13
-B387498,00-2097863,Summit Systems LLC,LLC,software,DE,AD849442,2003-08-05
-B390628,00-9158165,Brightwater Systems Inc,S-Corporation,software,AZ,AD455503,2001-12-27
-B391378,00-1941251,Harborview Boutique Inc,Corporation,retail,CA,AD871504,2018-05-03
-B393226,00-9178697,Evergreen Auto Repair LLC,LLC,auto repair,TX,AD576439,1990-05-03
-B397387,00-7760839,Golden Dental LLC,LLC,healthcare,MN,AD808090,2014-04-20
-B397389,00-4138515,Evergreen & Associates LP,Partnership,legal services,TX,AD267276,2000-10-26
-B403888,00-5416597,Redwood Market LLC,LLC,grocery,TN,AD723531,1990-08-19
-B406775,00-1158549,Pioneer Motors Service LLC,LLC,auto repair,NJ,AD738239,2010-01-16
-B408376,00-9590990,Trailhead Property Management Inc,Corporation,property management,OH,AD729060,2017-01-24
-B408539,00-9844522,Horizon Family Holdings LLC,LLC,holding company,DE,AD351321,2008-03-10
-B411071,00-1609968,Copperfield Express Wash LLC,LLC,car wash,OH,AD693290,2002-05-12
-B411855,00-5165845,Altura Advisory LLC,LLC,consulting,WY,AD289116,2024-12-12
-B412049,00-6066569,Clearview Supply LLC,LLC,retail,AZ,AD888246,1999-05-23
-B412067,00-3348166,Juniper Realty Inc,Corporation,property management,CA,AD391819,2018-05-26
-B413091,00-6172763,Mosaic Motors Service LLC,LLC,auto repair,AZ,AD199660,2002-01-18
-B413937,00-1611354,Brightwater Construction LLC,LLC,construction,CO,AD566141,1994-11-24
-B415138,00-8254733,Evergreen Legal Inc,Corporation,legal services,DE,AD294110,1990-05-29
-B416132,00-7331972,Lakeside Medical Supply LLC,LLC,retail,NJ,AD128304,2017-02-16
-B416140,00-7852985,Corvus Investments LLC,LLC,consulting,WY,AD289116,2024-10-26
-B416377,00-6633439,Mosaic Foods LLC,LLC,grocery,CA,AD438935,2012-07-01
-B416751,00-5293095,Patriot Family Clinic LLC,LLC,healthcare,AZ,AD294110,2020-02-17
-B417856,00-9188038,Pioneer Realty LLC,LLC,property management,NV,AD586909,1995-05-19
-B419962,00-5151072,Golden Labs Inc,S-Corporation,software,CO,AD632013,1995-10-22
-B422158,00-7434196,Sterling Supply Inc,S-Corporation,retail,OH,AD100697,2021-03-13
+B384221,00-5427445,Crescent Law Group Inc,Corporation,legal services,DE,AD289116,2006-10-23
+B384497,00-9008125,Avalon Investments LLC,LLC,consulting,WY,AD351321,2024-08-06
+B388162,00-5075103,Izmir Textile Ltd,Corporation,logistics,TR,AD836559,2001-08-25
+B388774,00-6912778,Atlas Boutique Inc,Corporation,retail,DE,AD289116,2007-03-27
+B390535,00-9242165,Solace Advisory Ltd,Ltd,holding company,VG,AD795183,2013-11-26
+B393393,00-5546101,Milan Textile Ltd,Corporation,retail,IT,AD671699,2012-07-15
+B395088,00-4614087,Prairie Strategy Group Inc,S-Corporation,consulting,OH,AD152962,1990-09-15
+B401140,00-6201652,Silverline Cafe LLC,LLC,restaurant,FL,AD612416,2015-05-06
+B402144,00-7866698,Harborview Cafe Inc,Corporation,restaurant,TX,AD394207,2018-08-19
+B407695,00-4697110,Heritage Family Holdings LLC,LLC,holding company,DE,AD849442,2011-07-17
+B408182,00-2146865,Granite Foods LLC,LLC,grocery,NV,AD289116,2020-12-30
+B409052,00-7311070,Frontier Consulting Inc,Corporation,consulting,NJ,AD318756,2011-07-13
+B413567,00-4349899,Maplewood Strategy Group Inc,Corporation,consulting,TX,AD763497,2001-08-07
+B416419,00-8552888,Evergreen Contracting LLC,LLC,construction,NV,AD840055,2009-03-07
+B416870,00-6183026,Heritage Construction LLC,LLC,construction,TX,AD242989,2024-10-26
+B417609,00-4593604,Stonebridge Kitchen LLC,LLC,restaurant,AZ,AD606755,2023-12-09
+B419576,00-8688564,Bluebird Family Holdings LLC,LLC,holding company,DE,AD849442,2005-12-22
 B423984,00-7375698,Main Street Capital Lending Inc,Corporation,commercial lending,NV,AD829322,1983-05-09
-B424121,00-3313554,Falcon Dental Inc,Corporation,healthcare,CA,AD158856,2020-02-25
-B425504,00-4020774,Oakmont Diner Inc,Corporation,restaurant,NC,AD218576,2022-11-30
-B427438,00-6557947,Frontier Grocers LLC,LLC,grocery,MN,AD985910,2009-08-28
-B430151,00-4193528,Horizon Cafe Inc,Corporation,restaurant,DE,AD294110,2021-06-11
-B430613,00-4575431,Union Tax & Accounting LLC,LLC,accounting,NC,AD648145,1998-10-08
-B432119,00-6750382,Crescent Property Management LLC,LLC,property management,OR,AD763315,1996-10-10
-B434447,00-1135321,Horizon Strategy Group Inc,S-Corporation,consulting,OH,AD410987,2001-12-31
-B434835,00-2267799,Sterling Advisors Inc,S-Corporation,consulting,NC,AD895099,2007-05-20
-B437012,00-7334469,Patriot Laundromat LP,Partnership,laundromat,FL,AD456981,1990-01-20
-B438691,00-6286433,Frontier Medical Group LLC,LLC,healthcare,AZ,AD708017,2006-10-03
-B445189,00-2403399,Westbrook Industries Inc,S-Corporation,manufacturing,TX,AD971495,2003-08-13
+B424149,00-8065700,Horizon Outfitters LLC,LLC,retail,TX,AD602105,1994-06-18
+B428226,00-8768780,Highland Grill LLC,LLC,restaurant,FL,AD168733,2009-10-28
+B432193,00-4843936,Silverline Foods LP,Partnership,grocery,NJ,AD907948,2023-01-22
+B433225,00-6010747,Clearview Wash & Fold Inc,S-Corporation,laundromat,AZ,AD418455,2019-01-16
+B433805,00-1360455,Juniper Family Holdings LLC,LLC,holding company,DE,AD351321,2000-09-05
+B440621,00-2493033,Patriot Mercantile LLC,LLC,retail,TX,AD211518,2011-02-08
+B440641,00-6776068,Silverline Residential LLC,LLC,property management,FL,AD328108,1997-04-18
+B441604,00-3012198,Orchard Freight LLC,LLC,logistics,CA,AD468533,2011-12-13
+B441894,00-2008464,Milan Textile Ltd,Corporation,manufacturing,IT,AD533552,1997-05-15
 B445211,00-6529897,Union Escrow Services Inc,Corporation,real estate services,TX,AD639000,2002-07-22
-B450619,00-7181706,Maplewood Software LLC,LLC,software,TX,AD248296,1996-04-24
-B454716,00-8638334,Northgate Components LLC,LLC,manufacturing,OH,AD766165,1994-04-22
-B459235,00-3582094,Pioneer Systems LLC,LLC,software,FL,AD453012,2015-06-27
-B459369,00-6625627,Golden Realty LLC,LLC,property management,TN,AD186743,2021-05-22
-B459735,00-2943170,Sterling Bistro Inc,S-Corporation,restaurant,NJ,AD997489,1993-03-12
-B461495,00-2395278,Silverline Laundromat LLC,LLC,laundromat,MN,AD932566,2019-11-28
-B461500,00-9544315,Crescent Transport LP,Partnership,logistics,NV,AD403296,2017-04-05
-B462996,00-4970295,Clearview Legal LLC,LLC,legal services,OH,AD244544,2021-03-21
-B467087,00-9966536,Westbrook Market Inc,Corporation,grocery,FL,AD130603,2002-04-14
-B470266,00-4579638,Liberty Outfitters Inc,Corporation,retail,CO,AD672874,1998-07-13
-B478453,00-9239258,Keystone Taqueria LLC,LLC,restaurant,OR,AD866700,2005-11-30
-B480097,00-2698481,Patriot Fabrication LLC,LLC,manufacturing,NJ,AD906198,1995-04-01
-B481985,00-1238935,Redwood Hair Studio LLC,LLC,salon,TN,AD495600,1997-08-04
-B482494,00-6551622,Horizon Market Inc,S-Corporation,grocery,NJ,AD783503,2015-01-22
+B450208,00-8459800,Mosaic Taqueria LLC,LLC,restaurant,TX,AD328008,2007-09-22
+B451601,00-8486256,Falcon Residential LLC,LLC,property management,CA,AD186743,2021-05-22
+B452875,00-3552830,Ironwood Labs Inc,Corporation,software,CO,AD473906,2013-06-17
+B452947,00-7702318,Summit Supply Inc,S-Corporation,retail,TX,AD849442,2000-12-16
+B454502,00-3897475,Stonebridge Cafe Inc,S-Corporation,restaurant,NV,AD868115,2004-04-09
+B456344,00-2012582,Horizon IT Services LLC,LLC,consulting,AZ,AD467922,2024-03-21
+B456451,00-8275493,Vantage Holdings Ltd,Ltd,holding company,SC,AD434201,2024-06-26
+B456852,00-3862809,Juniper Grocers LLC,LLC,grocery,AZ,AD401348,2005-12-28
+B456872,00-7699608,Keystone Consulting LLC,LLC,consulting,NV,AD654919,2006-12-06
+B457216,00-4977125,Northgate Family Holdings LLC,LLC,holding company,DE,AD849442,2016-11-06
+B458019,00-9731696,Patriot Foods LP,Partnership,grocery,CO,AD534220,2016-01-01
+B461783,00-5657141,Cascade Motors Service LLC,LLC,auto repair,FL,AD356185,2003-11-14
+B463481,00-3256910,Silverline Boutique LLC,LLC,retail,NV,AD459043,2017-09-18
+B464331,00-6728129,Maplewood Mercantile Inc,S-Corporation,retail,CO,AD413104,2005-06-30
+B465903,00-6221286,Taichung Export Ltd,Corporation,retail,TW,AD795496,1995-09-24
+B474207,00-3946296,Atlas Goods LLC,LLC,retail,FL,AD945932,1994-04-22
+B477872,00-8495153,Frontier Legal Inc,Corporation,legal services,TX,AD507097,2004-06-28
+B479961,00-4484633,Pioneer Realty LLC,LLC,property management,CO,AD729884,2005-05-20
+B480154,00-4307056,Stonebridge & Associates LLC,LLC,legal services,TX,AD453075,2012-05-27
 B483284,00-1891102,Summit Card Company,Corporation,financial services,AZ,AD864986,1997-09-01
-B485673,00-4836937,Beacon Grocers Inc,Corporation,grocery,NV,AD908383,2008-08-06
-B489903,00-6251628,Highland Tax & Accounting LLC,LLC,accounting,NV,AD168733,2009-10-28
+B484797,00-6991471,Lakeside Family Clinic LLC,LLC,healthcare,CA,AD903263,1998-03-24
+B487420,00-9257892,Vertex Manufacturing LLC,LLC,manufacturing,TX,AD181107,1993-03-08
+B488566,00-4653383,Redwood Consulting Inc,Corporation,consulting,NV,AD142010,2024-11-27
+B489612,00-9904264,Silverline Contracting Inc,Corporation,construction,MN,AD589416,1992-08-05
 B492138,00-4599173,Orchard Industries LLC,LLC,manufacturing,TX,AD359877,2017-06-05
-B494110,00-4155804,Lakeside Courier LLC,LLC,logistics,AZ,AD130813,2022-01-08
-B494330,00-3170359,Evergreen Family Holdings LLC,LLC,holding company,DE,AD294110,2013-06-18
-B496392,00-6050530,Silverline Dental LLC,LLC,healthcare,OH,AD859416,2000-07-11
-B497633,00-9713019,Maplewood Consulting LLC,LLC,consulting,TX,AD309229,1994-11-12
-B497637,00-7417916,Prairie CPA Group Inc,S-Corporation,accounting,CO,AD651960,2019-08-19
-B498333,00-9897451,Trailhead Builders Inc,S-Corporation,construction,NC,AD561512,2005-08-25
-B500148,00-5083283,Redwood Systems Inc,S-Corporation,software,NC,AD304655,2014-02-12
-B501582,00-3201770,Mosaic Manufacturing LLC,LLC,manufacturing,TX,AD166672,1992-06-14
-B502855,00-5179570,Bluebird Laundry Inc,S-Corporation,laundromat,TN,AD174697,2013-06-13
+B494018,00-5685233,Cobalt Outfitters Inc,S-Corporation,retail,OH,AD588390,2012-04-04
+B494427,00-7824106,Maplewood Medical Supply LLC,LLC,retail,FL,AD222301,2019-02-13
+B495605,00-1776355,Cobalt Bookkeeping Inc,Corporation,accounting,OR,AD773078,2009-03-04
+B497554,00-6257903,Horizon Family Holdings LLC,LLC,holding company,DE,AD289116,2000-11-14
+B497637,00-7417916,Lakeside Strategy Group Inc,S-Corporation,consulting,NV,AD651960,2019-08-19
 B503072,00-3720161,Cascade Diner LLC,LLC,restaurant,CO,AD305946,1997-03-11
-B503819,00-5638533,Harborview Builders LLC,LLC,construction,TN,AD614005,2003-04-22
-B505805,00-9789357,Silverline Health Partners Inc,Corporation,healthcare,NC,AD884427,2010-11-17
-B508610,00-7004439,Lantern Beauty Bar LP,Partnership,salon,OH,AD465034,2022-11-26
-B508831,00-7676665,Cobalt Goods LLC,LLC,retail,CO,AD289116,1994-09-22
-B518447,00-1662293,Sterling Contracting LLC,LLC,construction,TX,AD349312,2004-05-10
-B523967,00-4874556,Harborview Tax & Accounting Inc,S-Corporation,accounting,FL,AD394898,2020-10-05
-B531305,00-4475689,Evergreen Supply LP,Partnership,retail,TX,AD383282,2019-03-02
-B531604,00-3475507,Juniper Laundry LP,Partnership,laundromat,OR,AD691948,2019-01-10
-B531728,00-9148594,Mosaic Salon LLC,LLC,salon,DE,AD289116,2003-06-27
-B534012,00-1302518,Marlin Capital LLC,LLC,holding company,WY,AD351321,2016-03-13
-B535003,00-2711076,Carrick Management Ltd,Ltd,logistics,VG,AD795183,2020-02-01
+B508610,00-7004439,Lantern Bistro LP,Partnership,restaurant,NV,AD465034,2022-11-26
+B511466,00-8570923,Golden Auto Repair LLC,LLC,auto repair,NV,AD740768,2006-11-11
+B514350,00-7250038,Northgate Family Clinic LP,Partnership,healthcare,OR,AD964673,2000-09-24
+B515264,00-7486773,Westbrook Taqueria Inc,Corporation,restaurant,FL,AD899810,2017-04-12
+B517354,00-8364236,Harborview Transport LLC,LLC,logistics,AZ,AD876235,2020-02-23
+B528064,00-5275539,Cobalt Strategy Group LLC,LLC,consulting,CA,AD170904,2018-10-10
+B528414,00-1307281,Frontier Diner LLC,LLC,restaurant,MN,AD513965,2009-01-20
+B529114,00-4523104,Clearview Grocers LP,Partnership,grocery,TN,AD195138,1996-11-04
+B530607,00-5384262,Juniper Taqueria Inc,S-Corporation,restaurant,TX,AD552219,2015-02-27
+B533971,00-3629480,Talisman Consulting Group SA,SA,holding company,PA,AD119708,2024-07-14
 B535305,00-4301549,Golden Property Management Inc,Corporation,property management,OR,AD572917,2015-12-03
-B540366,00-8130913,Highland Contracting LLC,LLC,construction,MN,AD325544,2019-08-21
-B543443,00-3843359,Westbrook Boutique Inc,S-Corporation,retail,OH,AD811740,2009-02-04
-B544463,00-6439492,Beacon Outfitters LLC,LLC,retail,NJ,AD818548,2016-07-03
-B549086,00-7416786,Juniper Industries Inc,Corporation,manufacturing,CO,AD203975,1993-11-14
-B550708,00-1297927,Altura Advisory Ltd,Ltd,logistics,SC,AD343811,2019-02-14
-B551064,00-2055339,Copperfield Auto Repair LLC,LLC,auto repair,OH,AD458244,2012-04-18
-B551519,00-2595965,Ironwood Strategy Group Inc,Corporation,consulting,AZ,AD712671,2004-07-29
-B552400,00-8468125,Mosaic Hair Studio Inc,S-Corporation,salon,FL,AD704123,2022-02-03
-B552485,00-7261184,Horizon & Associates Inc,S-Corporation,legal services,OH,AD957844,2013-09-27
-B557942,00-4457662,Westbrook Cafe LLC,LLC,restaurant,AZ,AD917255,2009-01-30
-B558085,00-9455164,Clearview Civil Works LLC,LLC,construction,OH,AD825013,2017-09-06
-B558470,00-6596555,Copperfield Medical Group Inc,S-Corporation,healthcare,NJ,AD889211,1993-03-01
-B559271,00-3507869,Lantern Hair Studio LLC,LLC,salon,CA,AD351321,2008-12-19
-B560206,00-3931945,Juniper Consulting Inc,Corporation,consulting,AZ,AD899679,2006-12-29
-B560949,00-3457202,Arcadia Advisory SA,SA,consulting,PA,AD119708,2022-07-07
-B561348,00-3143621,Westbrook Tax & Accounting LLC,LLC,accounting,NV,AD884222,1992-09-12
-B562002,00-2413786,Falcon Advisors Inc,S-Corporation,consulting,TN,AD625245,2011-07-16
-B564619,00-3482751,Bluebird Auto Repair LLC,LLC,auto repair,CA,AD681645,2010-05-31
-B566066,00-4117239,Summit Cafe Inc,Corporation,restaurant,OR,AD588243,1991-04-12
-B569578,00-8453203,Summit Medical Group Inc,Corporation,healthcare,NC,AD627121,2014-04-14
+B537123,00-3124541,Cascade Strategy Group Inc,S-Corporation,consulting,TN,AD264046,2010-10-21
+B537886,00-7015228,Bluebird Legal Inc,Corporation,legal services,TX,AD109665,2012-07-21
+B537908,00-1636905,Juniper Family Holdings LLC,LLC,holding company,DE,AD294110,2014-04-09
+B539797,00-2546243,Bluebird Freight LLC,LLC,logistics,DE,AD294110,2012-11-15
+B540366,00-8130913,Riverside Hair Studio LLC,LLC,salon,NJ,AD188389,2023-10-05
+B540719,00-1473960,Northgate Residential LLC,LLC,property management,TX,AD645341,1994-08-31
+B541817,00-1346709,Evergreen Software LLC,LLC,software,CA,AD183096,1991-01-18
+B544463,00-6439492,Maplewood Grocers LLC,LLC,grocery,TX,AD818548,2016-07-03
+B545291,00-7819777,Busan Trading Ltd,Corporation,manufacturing,KR,AD976246,2017-10-28
+B547216,00-5055812,Oakmont Foods LLC,LLC,grocery,DE,AD351321,2009-10-01
+B551318,00-9666594,Oakmont Salon LLC,LLC,salon,CA,AD289958,2024-02-03
+B551972,00-3477856,Orchard Boutique LP,Partnership,retail,TX,AD239430,2005-10-17
+B559880,00-9479226,Stonebridge Builders LLC,LLC,construction,OR,AD783624,2013-07-26
+B562702,00-6046219,Cobalt Advisors LLC,LLC,consulting,CO,AD169249,1992-01-19
+B563580,00-1839594,Lantern Strategy Group LLC,LLC,consulting,CO,AD637314,1992-06-13
+B565147,00-6161787,Trailhead Strategy Group Inc,S-Corporation,consulting,NJ,AD913852,2005-10-30
+B565348,00-2494333,Heritage Property Management LLC,LLC,property management,TX,AD812979,2023-06-05
+B568926,00-2816743,Bluebird Mercantile LLC,LLC,retail,AZ,AD506984,2004-06-09
 B569591,00-3881577,Pinnacle Trust NA,Corporation,banking,NJ,AD795114,1961-03-23
-B571019,00-7288244,Westbrook Builders Inc,Corporation,construction,DE,AD289116,1992-09-02
-B574127,00-6666690,Northgate Advisors LLC,LLC,consulting,FL,AD350076,1994-04-30
-B574156,00-7285696,Prairie Foods LLC,LLC,grocery,MN,AD667253,2018-11-22
-B583180,00-3934182,Lakeside Family Holdings LLC,LLC,holding company,DE,AD351321,2002-06-30
-B586243,00-4021224,Bluebird Outfitters LP,Partnership,retail,FL,AD861113,1992-03-17
-B586291,00-7155002,Falcon Builders LLC,LLC,construction,CO,AD496634,2022-04-05
-B588503,00-3384180,Heritage Strategy Group Inc,S-Corporation,consulting,CA,AD838072,2000-11-14
-B588769,00-8764203,Copperfield Renovations Inc,S-Corporation,construction,AZ,AD488267,2018-05-28
-B589416,00-9217266,Prairie Cafe Inc,S-Corporation,restaurant,OH,AD393707,2016-08-23
-B591199,00-8159578,Falcon Courier LP,Partnership,logistics,DE,AD849442,2022-10-15
-B593166,00-3878987,Harborview Diner LLC,LLC,restaurant,NC,AD904540,2001-01-17
-B597146,00-6331615,Orchard Wash & Fold Inc,S-Corporation,laundromat,NC,AD418455,2019-01-16
-B597583,00-3820581,Sterling Bistro LLC,LLC,restaurant,OH,AD263971,2014-06-14
-B598091,00-4630010,Liberty Legal LLC,LLC,legal services,TX,AD750288,2014-03-27
-B598332,00-7854631,Mosaic Outfitters LLC,LLC,retail,NV,AD513965,2009-01-20
-B598783,00-7670244,Summit Mercantile Inc,Corporation,retail,NC,AD491503,2021-04-05
-B598893,00-7506190,Falcon Software LLC,LLC,software,AZ,AD648992,2006-02-20
-B602714,00-8067975,Crescent Labs Inc,S-Corporation,software,TX,AD351321,1993-01-03
-B605911,00-3766616,Orchard Motors Service LP,Partnership,auto repair,OH,AD657870,1999-12-23
-B606246,00-4395691,Solace Holdings Ltd,Ltd,holding company,CY,AD878783,2019-01-01
-B606940,00-6025954,Brightwater CPA Group Inc,Corporation,accounting,OH,AD616977,2011-04-22
-B615031,00-5364035,Juniper Family Holdings LLC,LLC,holding company,DE,AD351321,2017-02-18
-B617206,00-5426387,Cobalt Components LLC,LLC,manufacturing,NV,AD165513,2010-04-11
-B617926,00-1300220,Atlas Diner Inc,Corporation,restaurant,OH,AD693020,2009-02-15
-B618215,00-7946962,Frontier Construction Inc,S-Corporation,construction,CO,AD553243,1999-09-30
-B618640,00-7142457,Horizon Boutique LP,Partnership,retail,OR,AD902090,2016-04-20
-B619362,00-6369466,Prairie Boutique Inc,S-Corporation,retail,MN,AD482790,2001-07-20
-B623129,00-5796882,Northgate Legal LLC,LLC,legal services,CO,AD553793,2002-08-20
-B629681,00-6265040,Highland Tax & Accounting Inc,S-Corporation,accounting,FL,AD931783,2006-08-31
-B629888,00-2205180,Beacon Tax & Accounting LP,Partnership,accounting,DE,AD849442,1996-09-17
+B570266,00-2281528,Pune Components Ltd,Corporation,manufacturing,IN,AD451907,2007-01-23
+B571524,00-2987868,Bluebird Foods Inc,S-Corporation,grocery,CO,AD849442,2023-09-16
+B572745,00-7009062,Hamburg Industrial GmbH,Corporation,retail,DE,AD294042,2004-05-16
+B575137,00-2194516,Ironwood Laundromat Inc,Corporation,laundromat,OH,AD653306,1996-03-06
+B578256,00-2394251,Stonebridge Laundromat LLC,LLC,laundromat,AZ,AD319486,2015-05-07
+B578272,00-1365274,Lantern Boutique LP,Partnership,retail,TX,AD294110,1991-05-19
+B581505,00-7941556,Coral Bay Global Opportunities Fund Ltd,Ltd,investment fund,KY,AD471775,2011-04-01
+B583413,00-9432276,Golden Construction LP,Partnership,construction,OR,AD975583,2011-04-21
+B584795,00-4962630,Sterling Dental LLC,LLC,healthcare,FL,AD351321,1999-03-27
+B585428,00-7700419,Heritage Law Group Inc,Corporation,legal services,FL,AD523084,2023-01-03
+B586996,00-3785243,Shenzhen Textile Co Ltd,Corporation,manufacturing,CN,AD348360,2014-09-16
+B589393,00-5721246,Lakeside Courier LLC,LLC,logistics,MN,AD356881,2003-08-13
+B595838,00-1381845,Sterling Boutique LLC,LLC,retail,CO,AD737017,2008-03-22
+B596083,00-9630512,Summit Labs LLC,LLC,software,TX,AD983315,2005-08-18
+B596395,00-8313748,Silverline Taqueria Inc,Corporation,restaurant,NV,AD639799,2010-09-03
+B596872,00-5389665,Stonebridge Components LLC,LLC,manufacturing,MN,AD599828,1995-10-19
+B600160,00-8248450,Belmont Management LLC,LLC,retail,DE,AD849442,2024-04-24
+B603211,00-5807380,Summit Outfitters Inc,Corporation,retail,CO,AD584367,2019-05-23
+B605124,00-1227394,Beacon Freight LLC,LLC,logistics,DE,AD289116,1995-08-28
+B605311,00-2455204,Granite Boutique Inc,S-Corporation,retail,AZ,AD647450,2009-06-02
+B609885,00-2077844,Stonebridge Family Holdings LLC,LLC,holding company,DE,AD294110,2006-03-20
+B610746,00-3635465,Trailhead Law Group LLC,LLC,legal services,FL,AD701374,2020-09-29
+B612292,00-2882772,Cobalt Laundromat LLC,LLC,laundromat,MN,AD152604,2021-03-08
+B612632,00-8588273,Stonebridge Consulting LLC,LLC,consulting,AZ,AD472109,2003-04-09
+B613368,00-2975193,Maplewood Staffing LLC,LLC,consulting,TN,AD330626,2023-07-22
+B615392,00-8442740,Lantern Boutique Inc,S-Corporation,retail,DE,AD849442,1997-04-24
+B616744,00-4721566,Harborview Labs Inc,Corporation,software,FL,AD296585,2016-06-27
+B620316,00-5550025,Cascade Family Holdings LLC,LLC,holding company,DE,AD289116,2001-02-24
+B622521,00-3076284,Oakmont Motors Service Inc,Corporation,auto repair,TN,AD981251,1999-03-12
+B624621,00-2685888,Stonebridge Garage Inc,S-Corporation,auto repair,DE,AD289116,2024-01-07
+B626268,00-3224515,Tidewater Ventures FZE,FZE,consulting,AE,AD469522,2022-04-24
+B626938,00-7293284,Cobalt Law Group LLC,LLC,legal services,AZ,AD849442,1995-07-23
+B629260,00-8220303,Frontier Diner LLC,LLC,restaurant,OH,AD751613,1995-11-23
+B629278,00-3609250,Cascade Laundromat Inc,S-Corporation,laundromat,CO,AD925174,1993-11-22
 B630108,00-5149023,Summit Family Holdings LLC,LLC,holding company,DE,AD351321,2006-12-28
-B630905,00-3268163,Cobalt Fabrication Inc,S-Corporation,manufacturing,TX,AD533116,2001-12-01
-B631191,00-3852790,Lakeside Express Wash Inc,S-Corporation,car wash,TX,AD335519,2007-03-20
-B631877,00-5325841,Liberty Medical Group Inc,S-Corporation,healthcare,FL,AD874982,2014-09-19
-B634097,00-7941440,Juniper Boutique Inc,S-Corporation,retail,FL,AD512808,2009-11-25
-B634797,00-9416223,Frontier Realty LLC,LLC,property management,CA,AD894215,2003-06-25
-B635030,00-9327435,Cascade Renovations Inc,Corporation,construction,TX,AD920154,1997-08-09
-B639087,00-3213508,Meridian International LLC,LLC,consulting,WY,AD849442,2024-06-09
-B639452,00-6346109,Mosaic Diner LLC,LLC,restaurant,CA,AD761322,2000-02-15
-B640896,00-2111294,Horizon Technologies LLC,LLC,software,TX,AD421164,2019-06-03
-B641719,00-6243256,Beacon Supply LLC,LLC,retail,TX,AD845443,2005-04-26
-B645904,00-4144868,Dunmore Consulting Group LLC,LLC,consulting,DE,AD849442,2024-09-16
-B646743,00-4000986,Copperfield & Associates Inc,Corporation,legal services,OH,AD389888,2016-08-09
-B647450,00-3418938,Riverside Realty LLC,LLC,property management,DE,AD289116,2019-06-21
-B647934,00-5852527,Oakmont Consulting LP,Partnership,consulting,DE,AD289116,2021-12-22
+B631766,00-8962902,Oakmont Outfitters Inc,S-Corporation,retail,NJ,AD329230,2022-02-03
+B635799,00-7617150,Polaris Consulting Group LLC,LLC,retail,DE,AD294110,2024-09-22
+B636092,00-2856443,Westbrook Bistro LLC,LLC,restaurant,AZ,AD844713,2016-10-20
+B637202,00-8989882,Union Health Partners Inc,Corporation,healthcare,OR,AD208970,1994-06-04
+B638361,00-1127469,Equinox Strategic Consulting LLC,LLC,consulting,DE,AD849442,2024-09-18
+B639390,00-4739639,Silverline Transport LLC,LLC,logistics,DE,AD351321,1994-08-15
+B640520,00-9326866,Stonebridge Outfitters LLC,LLC,retail,TN,AD329264,2024-08-17
+B643823,00-5996714,Heritage Taqueria Inc,Corporation,restaurant,NV,AD407101,1999-03-28
 B648255,00-6457952,Pioneer Consulting Inc,S-Corporation,consulting,NJ,AD990339,2013-12-29
-B653295,00-8720592,Harborview Industries International Ltd,Ltd,manufacturing,VG,AD439647,2016-01-23
-B654148,00-6028976,Highland Property Management LLC,LLC,property management,CO,AD755714,2005-04-19
-B655554,00-9757633,Golden Motors Service Inc,S-Corporation,auto repair,TN,AD400562,2004-05-28
-B658095,00-7462949,Northgate Medical Group Inc,S-Corporation,healthcare,NJ,AD455220,2013-10-13
-B658376,00-6397447,Brightwater Express Wash Inc,S-Corporation,car wash,NC,AD486658,2018-02-11
-B659264,00-6636096,Sterling Legal Inc,S-Corporation,legal services,CA,AD368720,2001-09-22
-B663793,00-5517802,Lumen Strategic Consulting LLC,LLC,consulting,DE,AD289116,2024-05-10
-B668840,00-9138384,Celeste Resources Ltd,Ltd,logistics,CY,AD568169,2024-05-24
+B650126,00-7540109,Juniper Port Logistics LLC,LLC,logistics,NJ,AD155925,2021-01-12
+B650419,00-5921208,Crescent Cafe LLC,LLC,restaurant,NV,AD171492,2000-08-29
+B651253,00-7187531,Stonebridge Medical Group LLC,LLC,healthcare,FL,AD808573,2001-03-11
+B654943,00-6361343,Summit Boutique LLC,LLC,retail,AZ,AD965270,2004-03-27
+B656123,00-4988626,Monarch Global LLC,LLC,consulting,DE,AD351321,2024-10-11
+B657697,00-1013872,Union Beauty Bar LLC,LLC,salon,OH,AD848612,2017-08-16
+B659258,00-4679631,Atlas Manufacturing Inc,S-Corporation,manufacturing,AZ,AD361916,2016-07-04
+B661677,00-4228709,Orchard Diner LP,Partnership,restaurant,AZ,AD478452,2010-09-14
+B661791,00-6775904,Ironwood Builders LLC,LLC,construction,CA,AD298166,2003-07-13
 B672069,00-1003743,Prairie Advisors LLC,LLC,consulting,FL,AD204563,2001-03-06
-B681969,00-2010534,Atlas Market Inc,Corporation,grocery,OH,AD970083,2008-07-21
-B684965,00-1670892,Copperfield Bistro Inc,Corporation,restaurant,OR,AD748103,2009-11-21
-B686201,00-1346355,Evergreen Hair Studio Inc,S-Corporation,salon,DE,AD289116,2019-03-17
-B690796,00-9987970,Ironwood Kitchen Inc,Corporation,restaurant,TX,AD955067,2021-08-11
-B693088,00-7364624,Juniper & Associates Inc,S-Corporation,legal services,CO,AD759847,2003-05-01
-B695422,00-1843734,Mosaic Logistics LLC,LLC,logistics,DE,AD351321,2009-02-13
-B695464,00-5111547,Crescent Fabrication Inc,Corporation,manufacturing,NC,AD124605,1995-09-03
-B699093,00-8068413,Sterling Grill LLC,LLC,restaurant,MN,AD849442,1994-06-01
-B703580,00-9968122,Arcadia Family Trust,Trust,trust,KY,AD928324,2015-06-12
-B704204,00-9603233,Avalon Ventures LLC,LLC,logistics,WY,AD849442,2024-12-06
-B707778,00-5265086,Keystone Family Holdings LLC,LLC,holding company,DE,AD849442,2007-12-21
-B707827,00-7559838,Oakmont Mercantile Inc,Corporation,retail,NV,AD881754,2009-02-15
-B709752,00-2440937,Cobalt Kitchen LLC,LLC,restaurant,DE,AD294110,1990-05-28
-B710928,00-6744701,Copperfield Advisors LLC,LLC,consulting,AZ,AD550676,2021-03-27
-B718261,00-7936107,Evergreen Goods LLC,LLC,retail,DE,AD294110,2016-12-14
-B719925,00-2008435,Harborview Outfitters LLC,LLC,retail,AZ,AD752927,2021-07-20
-B720378,00-6472104,Evergreen Bookkeeping Inc,S-Corporation,accounting,CO,AD282549,2022-04-20
-B722616,00-7764099,Patriot Freight Inc,Corporation,logistics,NV,AD675020,1993-11-14
-B724513,00-2641195,Oakmont IT Services LLC,LLC,consulting,CA,AD608516,2023-10-28
-B724902,00-4391746,Sapphire Resources Ltd,Ltd,logistics,SC,AD343811,2024-08-19
-B727192,00-7694579,Silverline Systems Inc,S-Corporation,software,CA,AD487034,2021-09-04
-B728659,00-2245866,Union Supply LLC,LLC,retail,TN,AD473663,2009-01-14
-B728831,00-5803255,Juniper Contracting Inc,S-Corporation,construction,OH,AD871096,2007-04-25
-B729082,00-3205725,Riverside Bookkeeping Inc,Corporation,accounting,CA,AD586697,2021-08-20
-B732555,00-5321128,Summit Diner Inc,Corporation,restaurant,CA,AD115540,1998-04-08
-B736806,00-6483593,Keystone Transport LLC,LLC,logistics,NJ,AD201086,1994-08-14
-B737751,00-6710953,Cobalt Family Holdings LLC,LLC,holding company,DE,AD849442,2009-07-06
-B738307,00-6328406,Sterling Goods LP,Partnership,retail,CO,AD669454,2015-05-01
-B742027,00-6052416,Granite Logistics International Ltd,Ltd,logistics,CY,AD568169,2012-03-13
-B742339,00-6794773,Highland Family Holdings LLC,LLC,holding company,DE,AD289116,2017-06-02
-B742732,00-8707094,Vertex Mercantile Inc,S-Corporation,retail,OH,AD570928,2021-09-03
-B745049,00-5617200,Prairie Residential LLC,LLC,property management,TN,AD506609,2010-06-18
-B746876,00-9068004,Frontier Taqueria LLC,LLC,restaurant,NV,AD377458,2002-12-01
+B674835,00-9088649,Patriot Software Inc,Corporation,software,CO,AD480804,2006-08-15
+B675666,00-4108798,Juniper Tax & Accounting LLC,LLC,accounting,OH,AD787880,2019-12-12
+B676943,00-3475507,Juniper Laundry LP,Partnership,laundromat,OR,AD691948,2019-01-10
+B678571,00-8112850,Northgate Express Wash Inc,S-Corporation,car wash,DE,AD294110,1991-09-11
+B678613,00-2190389,Elysian Management Ltd,Ltd,holding company,SC,AD434201,2022-06-16
+B679211,00-6560961,Mosaic Strategy Group LLC,LLC,consulting,OR,AD501065,1996-09-06
+B679657,00-3411904,Heritage Construction LLC,LLC,construction,CA,AD437835,2022-02-25
+B680094,00-8672313,Trailhead Industries Inc,S-Corporation,manufacturing,FL,AD481985,2024-02-23
+B683513,00-4284488,Lakeside Construction Inc,Corporation,construction,TN,AD518024,1997-12-29
+B687810,00-9480877,Sterling Builders LLC,LLC,construction,AZ,AD577299,2000-06-17
+B689190,00-8852192,Ironwood Advisors LLC,LLC,consulting,TX,AD918193,2017-02-18
+B691622,00-1649870,Mosaic Freight LLC,LLC,logistics,DE,AD294110,2000-01-24
+B693883,00-5095088,Pioneer Grocers Inc,Corporation,grocery,TN,AD837767,2022-01-03
+B694094,00-4053877,Avalon Capital LLC,LLC,consulting,WY,AD351321,2024-10-11
+B700641,00-2947129,Everly Partners LLC,LLC,consulting,WY,AD294110,2024-09-06
+B706111,00-2584340,Keystone Mercantile Inc,Corporation,retail,TN,AD374929,2003-04-13
+B710252,00-7009884,Elysian Trading LLC,LLC,consulting,DE,AD849442,2024-12-29
+B714813,00-7700034,Carrick Trading LLC,LLC,consulting,DE,AD294110,2023-02-02
+B714818,00-1158549,Pioneer Motors Service LLC,LLC,auto repair,NJ,AD738239,2010-01-16
+B715438,00-2705162,Vertex CPA Group Inc,Corporation,accounting,NJ,AD489193,1997-07-12
+B716510,00-3380262,Stonebridge Salon Inc,S-Corporation,salon,OH,AD652157,2009-04-02
+B717090,00-6025954,Cobalt Grill Inc,Corporation,restaurant,FL,AD616977,2011-04-22
+B718170,00-8662314,Bluebird Consulting Inc,Corporation,consulting,TN,AD118069,2024-01-24
+B718261,00-7936107,Falcon Express Wash LLC,LLC,car wash,DE,AD294110,2016-12-14
+B719788,00-5026752,Meridian Investments Ltd,Ltd,consulting,BZ,AD727084,2023-08-07
+B720691,00-4762450,Vertex Mercantile Inc,Corporation,retail,OR,AD292771,2015-11-19
+B721187,00-7680457,Evergreen Motors Service Inc,S-Corporation,auto repair,NJ,AD882855,1997-09-05
+B722880,00-6809008,Sapphire Holdings Ltd,Ltd,holding company,CY,AD878783,2022-10-24
+B723001,00-8974351,Cobalt Transport Inc,Corporation,logistics,OH,AD571668,2014-11-28
+B724250,00-3852803,Zenith Holdings LLC,LLC,logistics,WY,AD351321,2024-06-14
+B726634,00-8364657,Ironwood Supply LLC,LLC,retail,TX,AD293307,2008-12-16
+B730100,00-2958501,Cobalt Car Wash Inc,S-Corporation,car wash,MN,AD922108,2011-03-11
+B730408,00-2352944,Golden Advisors LLC,LLC,consulting,DE,AD289116,2015-08-31
+B733077,00-8637072,Taichung Trading Ltd,Corporation,retail,TW,AD818928,2004-03-07
+B741238,00-8214895,Liberty Realty Inc,Corporation,property management,CA,AD321396,2017-02-09
+B744994,00-8265663,Crescent Hair Studio Inc,S-Corporation,salon,NC,AD393678,2005-01-14
+B745842,00-9836787,Union Property Management LLC,LLC,property management,TX,AD351321,1996-02-15
+B746758,00-8036061,Meridian International Ltd,Ltd,logistics,SC,AD434201,2019-02-13
+B746777,00-9502703,Zenith Advisory Ltd,Ltd,holding company,CY,AD568169,2020-04-06
 B750800,00-2163123,Harborline Home Loans Inc,Corporation,mortgage lending,FL,AD841490,1997-12-15
-B750876,00-9705163,Prairie Grill Inc,S-Corporation,restaurant,NC,AD119124,1999-11-25
-B756065,00-2274875,Cygnus Ventures LLC,LLC,logistics,DE,AD351321,2024-11-08
-B756519,00-7697150,Prairie Kitchen LLC,LLC,restaurant,TN,AD300625,2021-07-18
-B758366,00-2729297,Crescent Technologies Inc,Corporation,software,NC,AD613751,2014-03-30
+B751206,00-9530775,Bluebird Property Management LLC,LLC,property management,TN,AD931630,1990-09-26
+B753629,00-8137688,Liberty Garage LLC,LLC,auto repair,AZ,AD812642,2012-10-17
 B758654,00-2908941,Apex Card Services Inc,Corporation,financial services,OR,AD593290,1986-03-10
-B759844,00-3752773,Evergreen Labs LLC,LLC,software,FL,AD866542,2011-06-12
-B764100,00-2527727,Crescent Strategy Group Inc,S-Corporation,consulting,NV,AD888564,1999-09-07
-B767748,00-6738146,Horizon Supply Inc,Corporation,retail,OR,AD377303,2021-11-22
-B771031,00-5426924,Silverline Diner LLC,LLC,restaurant,DE,AD294110,2010-06-28
-B771284,00-7841780,Highland Realty LLC,LLC,property management,TN,AD309333,1990-07-18
-B776647,00-1364519,Oakmont Taqueria Inc,Corporation,restaurant,AZ,AD490418,2016-06-27
-B784534,00-8083436,Union Express Wash LLC,LLC,car wash,MN,AD547973,2018-10-27
-B784797,00-1349387,Liberty Supply Inc,S-Corporation,retail,FL,AD629260,1992-04-30
-B788103,00-5515009,Redwood Supply Inc,Corporation,retail,FL,AD469889,2002-08-03
-B788652,00-2378018,Falcon Outfitters LLC,LLC,retail,OH,AD875474,2016-09-20
+B759222,00-6758872,Stonebridge Cafe Inc,S-Corporation,restaurant,OH,AD789698,2012-01-22
+B761909,00-6082961,Highland Family Holdings LLC,LLC,holding company,DE,AD294110,2005-04-23
+B762760,00-7036948,Heritage Family Holdings LLC,LLC,holding company,DE,AD294110,2007-09-10
+B763479,00-2013197,Roberts Tax Pros LLC,LLC,accounting,OH,AD261591,2023-09-01
+B765216,00-5123119,Cobalt Diner Inc,S-Corporation,restaurant,TX,AD710457,2019-04-09
+B765229,00-6638882,Prairie Contracting LLC,LLC,construction,AZ,AD463222,1996-04-03
+B766165,00-6966780,Mosaic Renovations Inc,Corporation,construction,TX,AD105093,2016-01-20
+B771305,00-1238971,Redwood Laundry Inc,Corporation,laundromat,TN,AD565825,2023-02-13
+B771942,00-7952757,Silverline Transport Inc,S-Corporation,logistics,OR,AD958756,1994-07-17
+B775019,00-3459040,Silverline Fabrication Inc,S-Corporation,manufacturing,CO,AD296182,2019-06-17
+B776443,00-7991589,Granite Family Holdings LLC,LLC,holding company,DE,AD294110,2001-01-29
+B776647,00-1364519,Maplewood Legal LLC,LLC,legal services,OH,AD836906,2016-06-27
+B780377,00-6870649,Pioneer Diner Inc,S-Corporation,restaurant,CA,AD498762,2011-12-25
+B783137,00-6053177,Northgate Builders Inc,S-Corporation,construction,MN,AD297325,2004-08-30
+B784218,00-8294469,Redwood Grill LLC,LLC,restaurant,NC,AD113059,2023-03-01
 B789055,00-6330826,Summit Ford & Kia Inc,Corporation,auto dealer,CA,AD868980,1998-11-13
-B790296,00-5358996,Clearview Construction Inc,S-Corporation,construction,CO,AD329879,2021-09-20
-B793203,00-8545808,Clearview Staffing LLC,LLC,consulting,OH,AD803583,2023-10-16
-B793931,00-5587876,Cascade Grill LP,Partnership,restaurant,OH,AD722839,1999-11-08
-B796539,00-5719019,Valor Capital Ltd,Ltd,consulting,VG,AD795183,2015-07-12
-B798038,00-3274568,Juniper Taqueria Inc,S-Corporation,restaurant,TX,AD552219,2015-02-27
-B801029,00-6276396,Clearview Car Wash Inc,S-Corporation,car wash,AZ,AD160192,2004-12-08
-B807192,00-2244838,Valor Partners SA,SA,consulting,PA,AD119708,2021-05-14
-B808794,00-4130073,Lakeside Family Holdings LLC,LLC,holding company,DE,AD294110,2014-02-13
-B809693,00-8187261,Cascade Motors Service Inc,S-Corporation,auto repair,NJ,AD140014,2011-03-26
-B810885,00-4784455,Lantern Beauty Bar LLC,LLC,salon,DE,AD294110,2000-07-22
-B812622,00-5348107,Beacon Goods Inc,S-Corporation,retail,OH,AD373211,1997-06-01
-B812896,00-9757685,Pioneer & Associates LLC,LLC,legal services,FL,AD582002,2007-01-05
-B814387,00-1975661,Cobalt Contracting LLC,LLC,construction,FL,AD457323,2004-09-28
+B789866,00-6463013,Lakeside & Associates LLC,LLC,legal services,MN,AD862242,2013-12-24
+B790664,00-4232677,Redwood Supply Inc,Corporation,retail,OR,AD188679,2005-04-23
+B797927,00-6589640,Bluebird Contracting LP,Partnership,construction,CA,AD981210,2006-11-14
+B799486,00-4005955,Beacon Strategy Group LLC,LLC,consulting,OH,AD100274,1993-10-20
+B802289,00-1543554,Westbrook Diner LLC,LLC,restaurant,TX,AD448760,1998-10-11
+B802294,00-4333995,Brightwater Boutique Inc,Corporation,retail,MN,AD329788,1991-12-11
+B803893,00-5696902,Mosaic Logistics LLC,LLC,logistics,DE,AD351321,2009-02-13
+B804158,00-7691858,Brightwater Fabrication Inc,Corporation,manufacturing,OH,AD735158,2014-01-16
+B808711,00-6284412,Falcon Taqueria Inc,Corporation,restaurant,TX,AD920154,1997-08-09
+B809591,00-5823650,Harborview Wash & Fold LLC,LLC,laundromat,AZ,AD239201,1990-05-08
+B812407,00-3918796,Silverline Labs LLC,LLC,software,CA,AD765480,2007-12-08
+B814567,00-7401658,Lakeside Auto Repair LLC,LLC,auto repair,OR,AD221291,2023-10-10
+B815166,00-6181523,Summit Family Clinic Inc,Corporation,healthcare,NC,AD814200,2024-04-18
 B815508,00-9696807,Harborview Industries LP,Partnership,manufacturing,AZ,AD578894,2001-01-01
-B817259,00-4857056,Lakeside Renovations LLC,LLC,construction,FL,AD257064,2015-10-31
-B817632,00-9528951,Vesper Investments Ltd,Ltd,holding company,CY,AD878783,2022-10-16
-B817752,00-3501692,Liberty Medical Group Inc,S-Corporation,healthcare,TX,AD678861,2014-11-21
-B821519,00-4719205,Stonebridge Realty Inc,Corporation,property management,TN,AD185700,2000-01-16
-B822207,00-6856751,Orchard Builders LLC,LLC,construction,FL,AD437521,2022-07-27
-B823863,00-9682104,Patriot Supply Inc,Corporation,retail,OH,AD394207,2018-08-19
-B824612,00-2240972,Summit Auto Spa LP,Partnership,car wash,CA,AD294110,1999-09-25
-B826953,00-3875945,Zenith Investments LLC,LLC,consulting,DE,AD294110,2024-01-24
-B828694,00-2560401,Liberty Car Wash Inc,Corporation,car wash,NJ,AD651108,1994-03-17
-B832022,00-8583126,Redwood Beauty Bar LLC,LLC,salon,OH,AD289116,1990-05-30
-B837159,00-7714793,Orchard Realty LP,Partnership,property management,NV,AD720198,2018-01-03
-B840636,00-8794954,Sterling Goods LLC,LLC,retail,AZ,AD754236,2006-07-27
-B841865,00-1985171,Evergreen Builders Inc,Corporation,construction,CA,AD398738,2007-01-09
-B842295,00-1712436,Granite Consulting LLC,LLC,consulting,DE,AD351321,2009-10-01
-B845215,00-7312727,Cobalt Outfitters LLC,LLC,retail,OR,AD294110,2006-11-17
+B819375,00-2292742,Golden Outfitters LLC,LLC,retail,OH,AD105889,2018-01-19
+B819480,00-1067983,Busan Export Ltd,Corporation,manufacturing,KR,AD216093,2003-12-12
+B819525,00-5113811,Monterrey Textile SA de CV,Corporation,manufacturing,MX,AD759598,2017-12-30
+B822066,00-2750842,Vertex Goods Inc,S-Corporation,retail,FL,AD342985,2020-11-03
+B822202,00-7027527,Highland Contracting LLC,LLC,construction,MN,AD234263,2009-07-16
+B825378,00-3897452,Patriot Taqueria LLC,LLC,restaurant,NV,AD845456,2023-09-01
+B828540,00-1997198,Heritage Family Holdings LLC,LLC,holding company,DE,AD351321,2008-08-12
+B829796,00-4377426,Sterling Goods LLC,LLC,retail,OR,AD146766,2010-05-06
+B830942,00-9551227,Westbrook Medical Group Inc,S-Corporation,healthcare,NV,AD194802,2004-08-09
+B831865,00-8188647,Horizon Staffing LLC,LLC,consulting,NV,AD771153,2023-08-26
+B833230,00-1161245,Summit Advisors Inc,S-Corporation,consulting,NJ,AD569035,2014-12-22
+B834880,00-3405008,Harborview Law Group LLC,LLC,legal services,CO,AD545718,1999-04-05
+B836000,00-6280102,Golden Renovations LP,Partnership,construction,TX,AD111066,2019-03-15
+B842606,00-6736974,Solace Advisory SA,SA,holding company,PA,AD597321,2022-03-24
+B843164,00-9626856,Clearview Family Clinic LLC,LLC,healthcare,MN,AD193906,2023-10-26
+B843452,00-1682938,Union Advisors Inc,S-Corporation,consulting,OR,AD919917,2012-09-13
+B843937,00-6162518,Cascade Market Inc,Corporation,grocery,NV,AD782861,2022-01-04
+B845614,00-5552511,Highland Family Holdings LLC,LLC,holding company,DE,AD289116,2019-05-30
+B845791,00-7438871,Evergreen Outfitters LLC,LLC,retail,TN,AD507961,2019-08-31
+B846078,00-8438557,Lantern Dental LP,Partnership,healthcare,DE,AD351321,1998-01-07
+B846375,00-2745475,Golden Residential Inc,S-Corporation,property management,MN,AD321532,2006-01-07
+B847940,00-6721783,Orchard & Associates Inc,Corporation,legal services,TN,AD511358,2024-06-05
 B848613,00-1764385,Juniper Residential Inc,Corporation,property management,NC,AD870430,2017-08-06
-B851276,00-6616999,Corvus Global FZE,FZE,holding company,AE,AD469522,2020-10-17
-B852265,00-7222338,Brightwater CPA Group LLC,LLC,accounting,TN,AD824380,2012-08-21
-B853622,00-1753784,Brightwater Freight LLC,LLC,logistics,AZ,AD516592,2001-06-18
-B854602,00-2932318,Riverside Supply LLC,LLC,retail,TX,AD120524,1992-05-30
-B854842,00-9774652,Juniper Outfitters LLC,LLC,retail,CA,AD438333,1994-10-23
-B859812,00-1884277,Harborview Logistics Inc,Corporation,logistics,NC,AD518602,2014-11-05
+B851293,00-2412768,Crescent Family Holdings LLC,LLC,holding company,DE,AD849442,2007-11-30
+B854175,00-4608818,Patriot Kitchen LLC,LLC,restaurant,FL,AD994958,2010-11-05
+B855395,00-6097692,Trailhead Components LLC,LLC,manufacturing,NC,AD312779,1999-10-15
+B859000,00-8632106,Brightwater Construction LLC,LLC,construction,AZ,AD800827,2015-05-31
+B859812,00-1884277,Harborview Strategy Group Inc,Corporation,consulting,NC,AD518602,2014-11-05
+B860911,00-5635962,Clearview Supply LLC,LLC,retail,DE,AD289116,2002-04-17
 B861939,00-8857686,Metro Power & Light Co,Corporation,utilities,AZ,AD313944,1981-08-25
-B865091,00-6077124,Copperfield Goods Inc,S-Corporation,retail,MN,AD675334,2010-10-29
-B866389,00-9396134,Stonebridge Garage LLC,LLC,auto repair,AZ,AD351321,2012-09-18
-B869770,00-1113002,Frontier Fabrication Inc,S-Corporation,manufacturing,TX,AD285259,2016-09-18
-B871570,00-9021204,Northgate Family Holdings LLC,LLC,holding company,DE,AD294110,2008-01-14
-B872576,00-3220664,Silverline Family Holdings LLC,LLC,holding company,DE,AD849442,2011-10-17
-B873394,00-9997258,Maplewood Goods Inc,Corporation,retail,CO,AD849442,2008-02-05
-B874359,00-2008102,Trailhead Port Logistics LLC,LLC,logistics,TX,AD105029,2021-02-17
-B875388,00-2324755,Horizon Technologies LP,Partnership,software,OH,AD602954,2021-12-24
+B862252,00-6561422,Pioneer Garage Inc,S-Corporation,auto repair,TX,AD546501,2019-08-20
+B862809,00-9857901,Halcyon Family Trust,Trust,trust,KY,AD928324,2013-10-27
+B866389,00-9396134,Stonebridge Foods LLC,LLC,grocery,AZ,AD351321,2012-09-18
+B867001,00-2374810,Ironwood Strategy Group LLC,LLC,consulting,DE,AD351321,2018-12-10
 B875935,00-6803828,PayFlow Merchant Services Inc,Corporation,payment processing,OR,AD399624,1984-07-22
-B876298,00-5175200,Riverside Diner Inc,S-Corporation,restaurant,OH,AD284634,2018-02-12
-B877498,00-8065416,Atlas Garage LLC,LLC,auto repair,TX,AD792802,2014-03-11
-B882191,00-9669636,Lantern Foods LLC,LLC,grocery,AZ,AD417609,1993-07-22
-B882505,00-7605008,Union Bistro Inc,S-Corporation,restaurant,NC,AD360938,1996-02-19
-B883424,00-9934062,Maplewood Car Wash Inc,Corporation,car wash,AZ,AD427827,2015-11-12
-B885774,00-5984857,Pioneer Bistro Inc,Corporation,restaurant,FL,AD251835,2002-03-22
+B877910,00-4966681,Arcadia Advisory LLC,LLC,holding company,WY,AD849442,2018-03-10
+B878003,00-5309767,Redwood Strategy Group LLC,LLC,consulting,OR,AD795088,2006-04-03
+B878354,00-3647605,Trailhead Freight Inc,S-Corporation,logistics,DE,AD294110,2021-01-02
+B881321,00-8900926,Atlas Renovations LLC,LLC,construction,TN,AD583781,2007-08-21
+B882335,00-2291440,Trailhead Fabrication LLC,LLC,manufacturing,TN,AD847887,2006-02-01
+B883675,00-4049635,Westbrook & Associates LP,Partnership,legal services,FL,AD620047,2007-04-13
+B884198,00-8937869,Heritage Boutique LLC,LLC,retail,TX,AD300830,2018-08-08
 B885888,00-9177873,First Meridian Bank NA,Corporation,banking,AZ,AD125464,1978-10-20
-B886880,00-5930101,Copperfield Wash & Fold LLC,LLC,laundromat,TN,AD848006,1998-12-25
-B888102,00-7390022,Lantern Construction LLC,LLC,construction,FL,AD441707,2009-01-25
-B889051,00-5698496,Granite Renovations Inc,S-Corporation,construction,OH,AD289116,1990-09-08
-B890322,00-8761395,Juniper Law Group Inc,S-Corporation,legal services,MN,AD238903,2016-06-05
-B890827,00-1068771,Summit Strategy Group LLC,LLC,consulting,TX,AD625427,2021-01-25
+B885889,00-8802354,Highland Bistro LLC,LLC,restaurant,DE,AD294110,2024-09-15
+B886181,00-9911179,Lantern Cafe Inc,Corporation,restaurant,CO,AD726980,2024-07-04
+B887376,00-2618411,Oakmont Advisors LP,Partnership,consulting,TX,AD287051,1993-10-07
+B887893,00-4182822,Pioneer Salon LLC,LLC,salon,CO,AD289116,2001-12-26
+B888684,00-3973607,Prairie Advisors LP,Partnership,consulting,FL,AD330541,2007-09-09
 B891552,00-2658162,Lantern Legal Inc,Corporation,legal services,TN,AD893113,2017-10-09
-B891649,00-6863716,Ironwood Motors Service LLC,LLC,auto repair,TX,AD178666,2003-01-25
-B895319,00-7206921,Liberty Beauty Bar LLC,LLC,salon,CA,AD315306,2014-06-12
-B896277,00-2633252,Belmont Investments Ltd,Ltd,consulting,SC,AD434201,2022-06-03
-B897225,00-2371525,Patriot Cafe LLC,LLC,restaurant,NC,AD898796,2008-05-09
-B898952,00-5143482,Copperfield Facilities LLC,LLC,consulting,FL,AD384828,2023-09-21
-B899671,00-5542515,Atlas Construction Inc,Corporation,construction,NC,AD130623,1991-09-27
+B893238,00-8653347,Silverline Builders LLC,LLC,construction,FL,AD142104,2016-05-28
+B893242,00-1138775,Crescent Motors Service LLC,LLC,auto repair,OH,AD665252,2018-10-17
+B893952,00-9499170,Bluebird Bookkeeping LLC,LLC,accounting,TX,AD131347,2012-03-06
+B894954,00-1675269,Patriot Grill Inc,Corporation,restaurant,CO,AD926412,2010-02-07
+B896314,00-9512213,Evergreen Legal LLC,LLC,legal services,FL,AD671587,2016-01-22
+B899372,00-4032354,Copperfield Supply Inc,Corporation,retail,CA,AD623512,2024-12-10
+B899566,00-5559048,Sterling Mercantile Inc,Corporation,retail,NJ,AD289116,2016-01-04
+B900706,00-5375924,Lakeside Renovations Inc,S-Corporation,construction,TX,AD947695,2002-04-10
 B900905,00-5305775,Landmark Title & Escrow Inc,Corporation,real estate services,CO,AD299595,1970-10-30
-B911712,00-3222492,Highland Boutique Inc,Corporation,retail,OR,AD813897,1992-08-01
-B915103,00-6407347,Granite Motors Service Inc,Corporation,auto repair,DE,AD849442,2022-07-25
+B903460,00-3575331,Riverside Taqueria Inc,S-Corporation,restaurant,AZ,AD931783,2006-08-31
+B904413,00-1407740,Maplewood Boutique LLC,LLC,retail,OH,AD289116,2023-05-08
+B907906,00-6285673,Horizon Dental Inc,Corporation,healthcare,AZ,AD335586,2001-04-14
+B908361,00-4429601,Union Construction LLC,LLC,construction,CA,AD305953,2023-01-28
+B909084,00-8863773,Monterrey Industrial SA de CV,Corporation,retail,MX,AD107134,2002-10-01
+B911424,00-2604243,Trailhead Fabrication LLC,LLC,manufacturing,NV,AD681741,2020-02-02
+B911874,00-2962932,Sterling Builders Inc,S-Corporation,construction,AZ,AD774733,2010-05-02
+B912548,00-8539628,Mosaic Family Holdings LLC,LLC,holding company,DE,AD849442,2010-04-13
 B915682,00-2409788,Beacon Investments Inc,Corporation,securities brokerage,CO,AD707110,1969-10-05
-B917802,00-4561648,Frontier Grill LLC,LLC,restaurant,NJ,AD929043,1994-03-20
-B921272,00-9118208,Stonebridge Software LLC,LLC,software,OH,AD220274,1999-02-07
+B915973,00-3313554,Union Hair Studio LLC,LLC,salon,OR,AD158856,2020-02-25
+B917691,00-2364642,Redwood Boutique Inc,S-Corporation,retail,AZ,AD768061,1998-11-09
+B917773,00-2963124,Union Market LLC,LLC,grocery,NV,AD604046,2008-08-23
+B918464,00-1040967,Trailhead Logistics LLC,LLC,logistics,AZ,AD249961,2001-10-28
+B919608,00-1082893,Granite Contracting Inc,Corporation,construction,TX,AD591827,2012-03-09
+B919620,00-2530854,Cascade Boutique LLC,LLC,retail,TX,AD878337,2016-02-24
+B919722,00-8569705,Cascade Consulting Inc,S-Corporation,consulting,FL,AD149266,1997-08-26
 B921849,00-7205045,Lumen Broadband Inc,Corporation,utilities,CA,AD273101,1986-10-20
-B930605,00-1781573,Orchard Builders LLC,LLC,construction,FL,AD955087,2011-03-11
-B931411,00-2185318,Lantern Mercantile LLC,LLC,retail,DE,AD294110,2013-07-03
-B933238,00-5606827,Avalon Trading LLC,LLC,consulting,DE,AD294110,2023-11-25
-B935251,00-8432158,Golden Manufacturing LLC,LLC,manufacturing,OR,AD840411,2009-01-09
+B922822,00-6378875,Ironwood Construction LLC,LLC,construction,CA,AD246701,2024-01-12
+B928155,00-1390539,Lakeside Goods Inc,S-Corporation,retail,NC,AD510671,1992-11-20
+B929531,00-8879747,Heritage Software Inc,S-Corporation,software,AZ,AD584698,2017-06-16
+B933022,00-9743013,Westbrook Car Wash LLC,LLC,car wash,OR,AD849442,2023-05-29
+B934114,00-6570154,Juniper Civil Works LLC,LLC,construction,AZ,AD356038,2018-07-24
+B936143,00-2455087,Frontier Family Holdings LLC,LLC,holding company,DE,AD294110,2004-12-21
+B936589,00-2568685,Falcon Garage Inc,S-Corporation,auto repair,OR,AD214754,2024-09-14
 B938160,00-4639939,Bluewater Marine Sales Inc,Corporation,boat dealer,TN,AD823688,1982-10-16
-B938543,00-9801548,Westbrook Construction LP,Partnership,construction,FL,AD551624,2011-08-03
+B938438,00-3456184,Maplewood Residential LLC,LLC,property management,TN,AD995873,2016-11-25
 B939372,00-1397340,Atlas Family Holdings LLC,LLC,holding company,DE,AD294110,2018-05-07
-B940507,00-7225033,Ironwood Construction LLC,LLC,construction,TN,AD960494,1994-11-21
-B942281,00-5497462,Evergreen Labs International Ltd,Ltd,software,CY,AD878783,2017-05-26
-B942579,00-8640439,Riverside Bookkeeping Inc,S-Corporation,accounting,NC,AD282708,1996-08-31
+B940500,00-8131532,Patriot Contracting LLC,LLC,construction,FL,AD366748,2004-08-14
+B940602,00-5041107,Valor Partners LLC,LLC,holding company,DE,AD849442,2018-04-09
+B944654,00-4661404,Redwood Express Wash LLC,LLC,car wash,FL,AD565785,2011-01-19
 B946058,00-8690031,Citywide Water Authority Inc,Corporation,utilities,AZ,AD561825,1962-01-23
-B946846,00-9156498,Riverside Grocers Inc,Corporation,grocery,TX,AD634756,2016-10-02
-B947540,00-8255425,Liberty Fabrication LLC,LLC,manufacturing,CA,AD978360,2019-08-03
-B953057,00-2661094,Heritage Laundromat Inc,S-Corporation,laundromat,TX,AD489701,2012-08-22
-B954088,00-3158147,Mosaic Builders LLC,LLC,construction,OH,AD177489,1994-10-25
-B955192,00-3591484,Frontier Realty Inc,Corporation,property management,CA,AD342526,2010-05-05
-B955633,00-7865587,Westbrook Car Wash LLC,LLC,car wash,OR,AD849442,2007-12-10
-B958765,00-6518967,Cascade Diner LLC,LLC,restaurant,MN,AD467041,2021-08-30
-B960419,00-7134572,Orchard Software Inc,S-Corporation,software,MN,AD366642,2016-07-26
-B962198,00-5813070,Maplewood Construction Inc,S-Corporation,construction,FL,AD507625,1992-04-23
-B965742,00-3390366,Lantern Components Inc,S-Corporation,manufacturing,CO,AD823893,2004-05-18
-B980194,00-2585302,Northgate Bookkeeping Inc,Corporation,accounting,TX,AD226063,1996-04-21
-B983939,00-5227467,Ross Tax Pros LLC,LLC,accounting,CO,AD558629,2023-09-01
-B983962,00-5241420,Bluebird Freight LP,Partnership,logistics,DE,AD351321,2009-08-20
+B948787,00-9064596,Ironwood Supply Inc,Corporation,retail,MN,AD141571,1999-03-10
+B960009,00-6110049,Toronto Trading Ltd,Corporation,logistics,CA,AD253591,2017-08-19
+B961397,00-5864984,Evergreen Auto Spa Inc,S-Corporation,car wash,NJ,AD570696,2021-12-18
+B966615,00-9419581,Crescent Cafe LLC,LLC,restaurant,TX,AD294110,2001-03-24
+B967883,00-5647673,Evergreen Strategy Group LLC,LLC,consulting,TX,AD420114,2019-07-25
+B972414,00-8944399,Cascade Outfitters LLC,LLC,retail,OH,AD978360,2023-12-21
+B973628,00-4216399,Horizon Laundry LP,Partnership,laundromat,OH,AD496025,2018-07-10
+B976398,00-9406514,Orchard Construction LLC,LLC,construction,CO,AD317192,1990-04-11
+B977216,00-5954147,Ho Components JSC,Corporation,manufacturing,VN,AD612207,2016-10-19
+B979773,00-8083987,Bluebird Beauty Bar LLC,LLC,salon,AZ,AD200866,2023-08-24
+B979980,00-5042684,Lantern Garage Inc,Corporation,auto repair,TN,AD352212,1997-09-11
+B981753,00-7450328,Silverline Salon Inc,S-Corporation,salon,CA,AD480798,1993-11-16
+B982856,00-7437080,Highland Construction LLC,LLC,construction,DE,AD849442,1995-08-11
+B983962,00-5241420,Vertex Kitchen LP,Partnership,restaurant,DE,AD351321,2009-08-20
+B984836,00-8662218,Bluebird Family Holdings LLC,LLC,holding company,DE,AD289116,2017-03-12
 B985108,00-4272787,Stonebridge Bistro Inc,S-Corporation,restaurant,MN,AD903422,2000-12-02
-B987061,00-6521619,Granite Transport Inc,Corporation,logistics,TX,AD333027,2000-07-30
+B989311,00-4323165,Riverside Construction Inc,Corporation,construction,NV,AD474191,2024-06-11
+B992101,00-7340009,Westbrook Beauty Bar Inc,S-Corporation,salon,OR,AD135571,2005-08-17
 B992239,00-3238501,Mosaic Diner LP,Partnership,restaurant,TN,AD222976,2008-08-17
-B993304,00-1373077,Harborview Law Group LLC,LLC,legal services,CO,AD545718,1999-04-05
-B994988,00-8487886,Redwood Wash & Fold LLC,LLC,laundromat,TN,AD499986,2000-11-25
-B998025,00-4806653,Lantern Wash & Fold LLC,LLC,laundromat,NC,AD737724,2015-06-14
+B993506,00-7638443,Kestrel Strategic Consulting LLC,LLC,consulting,DE,AD351321,2024-09-30
+B993937,00-9113609,Evergreen Technologies Inc,Corporation,software,NC,AD841936,2024-03-24
+B996563,00-9339349,Orchard Family Holdings LLC,LLC,holding company,DE,AD849442,2018-01-05

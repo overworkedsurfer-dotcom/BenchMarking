@@ -190,6 +190,7 @@ withdrawn from).
 def plant_structuring(w: World, task_id: str) -> None:
     rng = w.rng
     positives = w.pick(lambda p: adult_customer(p, 24, 64), 4)
+    w.expect(task_id, "person_ids", [p["person_id"] for p in positives])
     for i, p in enumerate(positives):
         pid = p["person_id"]
         acct = w.checking_of(pid)
@@ -263,7 +264,7 @@ def structuring_rule(w: World) -> list[str]:
 
 
 # ================================================================ SMURFING
-def plant_smurfing(w: World, task_id: str) -> None:
+def plant_smurfing(w: World, task_id: str, structuring_task_id: str = "aml_structuring_01") -> None:
     rng = w.rng
     boss = w.pick(lambda p: adult_customer(p, 30, 60))[0]
     relatives = [r for r in boss["_children"] + boss["_parents"] + [boss["_spouse"]] if r and r not in w.reserved
@@ -275,6 +276,7 @@ def plant_smurfing(w: World, task_id: str) -> None:
                                industry=rng.choice(["retail", "logistics", "consulting"]))
     city = boss["_city"]
     smurfs = w.pick(lambda p: adult_customer(p, 19, 38) and p["_city"] == city, rng.randint(5, 6))
+    w.expect(structuring_task_id, "person_ids", [s["person_id"] for s in smurfs])
     start = w.r_date(date(2025, 4, 1), date(2025, 8, 1))
     total = 0.0
     for s in smurfs:
@@ -434,6 +436,7 @@ accounts' online banking, who is not one of the recruited account holders.
 def plant_ato(w: World, task_id: str) -> None:
     rng = w.rng
     victims = w.pick(lambda p: adult_customer(p, 30, 85) and p["_online"] and p["_salary"] > 35_000, 3)
+    w.expect(task_id, "victim_person_ids", [v["person_id"] for v in victims])
     att_devices = [w.new_device(), w.new_device()]
     for i, v in enumerate(victims):
         pid = v["person_id"]
@@ -456,6 +459,7 @@ def plant_ato(w: World, task_id: str) -> None:
             amt = odd_amount(w, 3_800, 19_000)
             tid = w.add_txn(ts, vacct, macct, amt, rng.choice(["wire", "p2p"]), "")
             w.add_login(ts, pid, dev, ip, cc, "transfer", tid)
+            w.expect(task_id, "fraudulent_txn_ids", [tid])
             ts += timedelta(minutes=rng.randint(5, 40))
         w.add_txn(ts + timedelta(hours=rng.uniform(1, 5)), macct, None, money(amt * 0.9), "cash_withdrawal", "ATM",
                   branch=w.branch_for(macct, mule["_city"]))

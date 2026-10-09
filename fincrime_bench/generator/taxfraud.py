@@ -42,23 +42,27 @@ def plant_unreported(w: World, task_id: str) -> None:
     singles = _single_returns(w)
     used: list[str] = []
 
-    def take(cond) -> dict:
-        opts = [r for r in singles if r["return_id"] not in used and cond(r)]
+    def take(cond, positive: bool = False) -> dict:
+        # positives must not have income outside third-party reporting (e.g. rents) that would mask the shortfall
+        opts = [r for r in singles if r["return_id"] not in used and cond(r)
+                and (not positive or r["other_income"] == 0)]
         r = rng.choice(opts)
         used.append(r["return_id"])
         w.reserve(r["_primary"])
+        if positive:
+            w.expect(task_id, "taxpayers", [w.P[r["_primary"]]["tin"]])
         return r
 
     regular = [b for b in w.businesses if b["_infra"] is None and b.get("_size", 0) > 0]
     # (a) self-employed omits a 1099-NEC (and the cash it was paid alongside)
-    r = take(lambda r: any(a >= 12_000 for _b, a in w.P[r["_primary"]]["_nec"]))
+    r = take(lambda r: any(a >= 12_000 for _b, a in w.P[r["_primary"]]["_nec"]), True)
     p = w.P[r["_primary"]]
     nec = max(a for _b, a in p["_nec"])
     r["business_gross_receipts"] = money(r["business_gross_receipts"] - nec - p["_extra_se"])
     r["business_expenses"] = money(min(r["business_expenses"], r["business_gross_receipts"] * 0.3))
     recompute(w, r)
     # (b) second W-2 job never reported
-    r = take(lambda r: r["wages"] > 20_000)
+    r = take(lambda r: r["wages"] > 20_000, True)
     p = w.P[r["_primary"]]
     emp2 = rng.choice([b for b in regular if b["business_id"] != p["employer_id"]])
     gross2 = odd_amount(w, 14_000, 38_000)
@@ -68,7 +72,7 @@ def plant_unreported(w: World, task_id: str) -> None:
         w.add_txn(w.r_daytime(date(YEAR, m, 27), 5, 7), w.checking_of(emp2["business_id"]), acct,
                   gross2 * 0.82 / 12, "ach", "PAYROLL")
     # (c) gig-platform payments (1099-K) never reported
-    r = take(lambda r: True)
+    r = take(lambda r: True, True)
     p = w.P[r["_primary"]]
     gig = odd_amount(w, 18_000, 52_000)
     proc = w.infra["processor"][0]
@@ -77,13 +81,13 @@ def plant_unreported(w: World, task_id: str) -> None:
         w.add_txn(w.r_daytime(date(YEAR, 1, 6) + timedelta(weeks=wk), 3, 5), w.checking_of(proc),
                   w.checking_of(p["person_id"]), gig / 26, "ach", "PAYFLOW PAYOUT")
     # (d) wages under-reported on the return
-    r = take(lambda r: r["wages"] > 45_000)
+    r = take(lambda r: r["wages"] > 45_000, True)
     r["wages"] = money(r["wages"] - odd_amount(w, 12_500, 29_000))
     recompute(w, r)
     # (e, f) non-filers with substantial third-party income
     info = _info_by_tin(w)
     for _ in range(2):
-        r = take(lambda r: r["num_dependents"] == 0 and info.get(w.P[r["_primary"]]["tin"], 0) > 40_000)
+        r = take(lambda r: r["num_dependents"] == 0 and info.get(w.P[r["_primary"]]["tin"], 0) > 40_000, True)
         _drop_return(w, r)
     # ---- decoys: line misclassification (total unchanged) and small omissions (< $10k)
     decoys = []
@@ -166,6 +170,7 @@ def plant_lifestyle(w: World, pop_task_id: str, est_task_id: str) -> None:
     singles = [r for r in _single_returns(w) if 25_000 <= r["total_income"] <= 75_000
                and r["_primary"] not in owned_2025]
     chosen = rng.sample(singles, 4)
+    w.expect(pop_task_id, "person_ids", [r["_primary"] for r in chosen])
     titles = w.infra["title"]
     for i, r in enumerate(chosen):
         pid = r["_primary"]
@@ -208,7 +213,7 @@ def plant_lifestyle(w: World, pop_task_id: str, est_task_id: str) -> None:
         else:
             price = odd_amount(w, 1_200_000, 1_600_000)
             loan = money(price * 0.4)
-            day = w.r_date(date(2025, 3, 1), date(2025, 11, 1))
+            day = w.r_date(date(2025, 4, 20), date(2025, 11, 1))
             llc, llc_acct = us_shell(w, [(pid, 100.0)], pid, date(2023, rng.randint(1, 12), rng.randint(1, 28)),
                                      industry="consulting")
             for k in range(4):
@@ -226,6 +231,7 @@ def plant_lifestyle(w: World, pop_task_id: str, est_task_id: str) -> None:
     r5 = rng.choice(joints)
     s = r5["_primary"] if rng.random() < 0.5 else r5["_secondary"]
     w.reserve(r5["_primary"], r5["_secondary"])
+    w.expect(pop_task_id, "person_ids", [s])
     p5 = w.P[s]
     house = odd_amount(w, 720_000, 940_000)
     car = odd_amount(w, 58_000, 72_000)
@@ -425,6 +431,7 @@ def plant_dependents(w: World, task_id: str) -> None:
             r2 = rng.choice([x for x in ind if x is not r1 and x["_primary"] not in w.reserved])
         w.reserve(r1["_primary"], r2["_primary"])
         bump(r2, kid)
+        w.expect(task_id, "return_ids", [r1["return_id"], r2["return_id"]])
     # deceased dependents (died before 2025) and one valid claim for a parent who died during 2025
     for k, (died, age) in enumerate([(date(2023, rng.randint(1, 12), rng.randint(1, 28)), rng.randint(70, 90)),
                                       (date(2024, rng.randint(1, 12), rng.randint(1, 28)), rng.randint(6, 15)),
@@ -444,6 +451,8 @@ def plant_dependents(w: World, task_id: str) -> None:
         bump(r, d["person_id"])
         if k == 2:
             valid_decoy = r["return_id"]
+        else:
+            w.expect(task_id, "return_ids", [r["return_id"]])
 
     def gold() -> dict:
         return {"return_ids": dependents_rule(w)}
@@ -486,6 +495,7 @@ def plant_skimming(w: World, task_id: str) -> None:
     positives = high_cash[:2] + [b for b in cands if b["_ind"] == "restaurant"][:1]
     if len(positives) < 3:
         positives = cands[:3]
+    w.expect(task_id, "businesses", [b["business_id"] for b in positives])
     for b in positives:
         w.reserve(b["business_id"])
         r = w.returns_by_id[w.return_of[b["ein"]]]

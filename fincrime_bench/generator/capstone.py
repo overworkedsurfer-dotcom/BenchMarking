@@ -177,6 +177,7 @@ def plant_capstone_audit(w: World, task_id: str) -> None:
         w.add_txn(w.r_daytime(buy - timedelta(days=50 - 18 * k)), o_acct, q_acct, amt, "international_wire",
                   "LOAN DISBURSEMENT")
         received += amt
+    w.expect("tax_lifestyle_01", "person_ids", [q])
     w.add_asset("real_estate", "Single-family residence", q, buy, price, "cash",
                 address_id=w.new_address(qp["_city"], qp["_state"]))
     w.add_txn(w.r_daytime(buy), q_acct, w.checking_of(rng.choice(w.infra["title"])), price, "wire", "CLOSING FUNDS")

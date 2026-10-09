@@ -112,6 +112,7 @@ class World:
         self.hh_counter = 0
         self.preparer_ids: list[str] = []
         self.deferred: dict = {}
+        self.expected: dict[tuple[str, str], list[str]] = {}  # planted positives for rule-derived golds
         self.nominees: list[str] = []
 
     # ------------------------------------------------------------------ utils
@@ -135,6 +136,9 @@ class World:
 
     def age(self, p: dict) -> int:
         return p["_age"]
+
+    def expect(self, task_id: str, field_name: str, ids: list[str]) -> None:
+        self.expected.setdefault((task_id, field_name), []).extend(ids)
 
     def is_reserved(self, eid: str) -> bool:
         return eid in self.reserved
@@ -330,11 +334,17 @@ class World:
         self._family_links()
         self._businesses()
         self._employment()
+        self._foreign_counterparties()
         self._accounts()
+        self._account_extras()
         self._phones()
         self._online_banking()
         self._assets()
+        self._business_assets()
         self._transactions()
+        self._international_flows()
+        self._misc_banking()
+        self._misc_banking_extra()
         self._calls()
         self._logins()
 
@@ -510,10 +520,14 @@ class World:
             addr = rng.choice(self.reg_agent_addrs) if use_agent else self.new_address(city, st, "commercial")
             juris = "DE" if use_agent and rng.random() < 0.6 else st
             inc = self.r_date(date(1990, 1, 1), date(2022, 12, 31))
+            if rng.random() < 0.13:
+                inc = self.r_date(date(2023, 1, 1), date(2024, 12, 15))
             n_emp = rng.randint(elo, ehi)
             b = self.new_business(name, etype, ind, juris, addr, inc, city=city, _size=n_emp,
                                   _pay_freq=rng.choice([12, 24]))
             b["_rev"] = n_emp * rpe * rng.uniform(0.75, 1.3)
+            if etype == "LLC" and ind not in N.CASH_INTENSIVE and rng.random() < 0.1:
+                b["_files_return"] = False  # single-member LLC reported on the owner's return
             # owners
             n_own = rng.choices([1, 2, 3], [55, 33, 12])[0]
             if rng.random() < 0.08 and holding_cos:
@@ -644,6 +658,8 @@ class World:
     def _accounts(self) -> None:
         rng = self.rng
         for b in self.businesses:
+            if b.get("_foreign"):
+                continue
             if b["jurisdiction"] in [o[0] for o in N.OFFSHORE]:
                 cc = b["jurisdiction"]
                 bank = [o[2] for o in N.OFFSHORE if o[0] == cc][0]
@@ -684,6 +700,8 @@ class World:
             if age < 12 or rng.random() > (0.82 if age < 18 else 0.95):
                 continue
             act = self.r_date(date(2012, 1, 1), date(2024, 11, 30))
+            if rng.random() < 0.07:
+                act = self.r_date(date(2025, 1, 5), date(2025, 10, 31))
             if age < 18 and p["_parents"]:
                 sub, plan = p["_parents"][0], "postpaid"
             elif rng.random() < 0.13:
@@ -893,7 +911,9 @@ class World:
                 to = rng.choice(fam)
                 ts = self.r_dt(Y_START, Y_END - timedelta(days=1))
                 tid = self.add_txn(ts, acct, self.checking_of(to), rng.choice([20, 25, 40, 50, 60, 75, 100, 150, 200, 300, 450]),
-                                   "p2p", rng.choice(["dinner", "rent share", "gift", "thanks", "tickets", "groceries", ""]))
+                                   "p2p", rng.choice(["dinner", "rent share", "gift", "thanks", "tickets", "groceries", "", "loan",
+                                                    "loan repayment", "for you", "gas money", "investment",
+                                                    "for books", "services", "invoice"]))
                 self.p2p_txns.append((p["person_id"], tid, ts))
         # ---- businesses: revenue
         self.biz_revenue_deposits: dict[str, float] = defaultdict(float)
@@ -913,12 +933,15 @@ class World:
                     card_total += money(amt)
                 b["_card_total"] = money(card_total)
             if cash > 0:
-                n = max(24, min(300, math.ceil(cash / 3_600)))
+                big = cash > 420_000 and rng.random() < 0.6
+                n = max(26, min(104, math.ceil(cash / 16_000))) if big else max(24, min(300, math.ceil(cash / 3_600)))
                 handlers = [o for o, _ in b["_owners"] if o.startswith("P")] + b["_employees"][:2]
                 handlers = [h for h in handlers if self.P[h]["_age"] >= 18] or [None]
                 for _ in range(n):
                     day = self.r_date(date(YEAR, 1, 2), date(YEAR, 12, 30))
                     amt = cash / n * rng.uniform(0.55, 1.45)
+                    if big:
+                        amt = max(10_600.0, cash / n * rng.uniform(0.75, 1.35))
                     h = rng.choice(handlers)
                     self.add_txn(self.r_daytime(day, 9, 17), None, bacct, amt, "cash_deposit", "",
                                  branch=self.branch_for(bacct, b["_city"]), conducted_by=h)
@@ -929,7 +952,7 @@ class World:
                     payer = rng.choice(payers)
                     ts = self.r_daytime(self.r_date(date(YEAR, 1, 2), date(YEAR, 12, 30)))
                     self.add_txn(ts, self.checking_of(payer["business_id"]), bacct, b2b / n * rng.uniform(0.5, 1.5),
-                                 rng.choice(["ach", "ach", "wire", "check"]), f"INV {rng.randint(1000, 99999)}")
+                                 rng.choice(["ach", "ach", "wire", "check"]), self._invoice_memo(b))
         # ---- businesses: expenses (rent, utilities)
         for b in regular:
             bacct = self.checking_of(b["business_id"])
@@ -951,6 +974,16 @@ class World:
             clients = rng.sample(regular, rng.randint(2, 5))
             shares = [rng.random() + 0.2 for _ in clients]
             tot = sum(shares)
+            if p["occupation"] in ("Rideshare Driver", "Personal Trainer", "Photographer", "Tutor",
+                                   "Freelance Designer") and rng.random() < 0.6:
+                # gig-platform income paid out by the processor (reported on a 1099-K)
+                gig = documented * rng.uniform(0.3, 0.7)
+                documented -= gig
+                p["_k1099"] = money(gig)
+                if acct:
+                    for wk in range(0, 52, 2):
+                        self.add_txn(self.r_daytime(date(YEAR, 1, 6) + timedelta(weeks=wk), 3, 5), proc, acct,
+                                     gig / 26, "ach", "PAYFLOW PAYOUT")
             for c, s in zip(clients, shares):
                 amt_total = documented * s / tot
                 k = rng.randint(2, 10)
@@ -1102,6 +1135,7 @@ class World:
             if not p["_online"]:
                 continue
             pid = p["person_id"]
+            self.add_login(self.r_dt(Y_START, datetime(YEAR, 2, 20)), pid, p["_devices"][0], ip_for(pid), "US", "login")
             for _ in range(rng.randint(4, 16)):
                 ts = self.r_dt(Y_START, Y_END)
                 self.add_login(ts, pid, device_for(pid, ts), ip_for(pid), "US", "login")
@@ -1115,10 +1149,22 @@ class World:
             if rng.random() < 0.035:
                 # legit travel abroad on the usual device
                 cc = rng.choice(N.FOREIGN_TRAVEL_COUNTRIES)
-                start = self.r_dt(Y_START, Y_END - timedelta(days=15))
+                start = self.r_dt(datetime(YEAR, 3, 1), Y_END - timedelta(days=15))
                 for k in range(rng.randint(2, 5)):
                     ts = start + timedelta(days=rng.randint(0, 10), hours=rng.randint(0, 12))
                     self.add_login(ts, pid, p["_devices"][0], self.foreign_ip(), cc, "login")
+                if rng.random() < 0.25:  # forgot the password on holiday
+                    self.add_login(start + timedelta(hours=rng.randint(1, 30)), pid, p["_devices"][0],
+                                   self.foreign_ip(), cc, "password_reset")
+                friends = [c for c, _k in p["_contacts"] if self.checking_of(c)]
+                if friends and self.checking_of(pid) and rng.random() < 0.35:
+                    ts = start + timedelta(days=rng.randint(0, 10), hours=rng.randint(0, 12))
+                    tid = self.add_txn(ts, self.checking_of(pid), self.checking_of(rng.choice(friends)),
+                                       rng.choice([40, 75, 120, 200, 350]), "p2p", rng.choice(["dinner", "tour", "taxi"]))
+                    self.add_login(ts, pid, p["_devices"][0], self.foreign_ip(), cc, "transfer", tid)
+            if rng.random() < 0.02:
+                ts = self.r_dt(Y_START, Y_END)
+                self.add_login(ts, pid, device_for(pid, ts), ip_for(pid), "US", "change_phone")
         seen_payees: dict[str, list[str]] = defaultdict(list)
         for pid, tid, ts in sorted(self.p2p_txns, key=lambda x: x[2]):
             p = self.P[pid]
@@ -1132,3 +1178,203 @@ class World:
                 self.add_login(ts - timedelta(minutes=rng.randint(1, 20)), pid, dev, ip, "US", "add_payee")
             self.add_login(ts, pid, dev, ip, "US", "transfer", txn_id=tid)
         self.login_upgrades = upgrades
+
+    # ------------------------------------------------- realism: legit look-alikes
+    # Every feature that planted schemes use (foreign wires, 2025 account openings, new LLCs, teller cash,
+    # large cash deposits, new phones, third-party signers) must also occur in ordinary background activity,
+    # otherwise a model could find the planted entities by filtering on rare features instead of investigating.
+    def _new_foreign_person(self, cc: str, city: str, last: str | None = None) -> dict:
+        rng = self.rng
+        addr = self.new_address(city, cc, "residential", country=cc)
+        p = self.new_person(rng.choice(N.FIRST_NAMES), last or rng.choice(N.LAST_NAMES), rng.randint(25, 80), addr,
+                            city, cc, occupation=rng.choice(N.FOREIGN_OCCUPATIONS))
+        del self.TIN[p["tin"]]
+        p["tin"] = None
+        p["_foreign"] = True
+        return p
+
+    def _foreign_counterparties(self) -> None:
+        rng = self.rng
+        self.foreign_suppliers: list[str] = []
+        for cc, city, bank in N.FOREIGN_SUPPLIERS:
+            for _ in range(rng.randint(1, 2)):
+                suffix = {"MX": "SA de CV", "DE": "GmbH", "CN": "Co Ltd", "VN": "JSC"}.get(cc, "Ltd")
+                name = f"{city.split()[0]} {rng.choice(['Industrial', 'Trading', 'Components', 'Textile', 'Export'])} {suffix}"
+                inc = self.r_date(date(1995, 1, 1), date(2018, 1, 1))
+                b = self.new_business(name, "Corporation", rng.choice(["manufacturing", "logistics", "retail"]), cc,
+                                      self.new_address(city, cc, "commercial", country=cc), inc, city=None,
+                                      _infra="foreign", _foreign=True, _files_return=False, _size=0)
+                self.new_account(b["business_id"], bank, cc, "business_checking", inc + timedelta(days=40))
+                self.foreign_suppliers.append(b["business_id"])
+        fund = self.new_business("Coral Bay Global Opportunities Fund Ltd", "Ltd", "investment fund", "KY",
+                                 self.offshore_addrs["KY"][0], date(2011, 4, 1), city=None, _infra="foreign_fund",
+                                 _foreign=True, _files_return=False, _size=0)
+        self.new_account(fund["business_id"], "Caymanian Fiduciary Bank", "KY", "business_checking", date(2011, 5, 1))
+        self.fund_id = fund["business_id"]
+
+    def _account_extras(self) -> None:
+        rng = self.rng
+        self.new_2025_accounts: list[tuple[str, str, str, date]] = []
+        for p in self.persons:
+            prim = self.checking_of(p["person_id"]) if p.get("_customer") else None
+            if not prim:
+                continue
+            if p["_age"] >= 75 and rng.random() < 0.3:
+                kids = [c for c in p["_children"] if self.P[c]["_age"] >= 30]
+                if kids:
+                    self.A[prim]["authorized_signer_id"] = kids[0]
+            if rng.random() < 0.07:
+                opened = self.r_date(date(YEAR, 1, 10), date(YEAR, 11, 10))
+                bank = self.A[prim]["bank_name"] if rng.random() < 0.6 else self._pick_bank()
+                acct = self.new_account(p["person_id"], bank, "US", "savings" if rng.random() < 0.6 else "checking",
+                                        opened)
+                self.new_2025_accounts.append((p["person_id"], prim, acct, opened))
+
+    def _business_assets(self) -> None:
+        rng = self.rng
+        for b in self.businesses:
+            if b["_infra"] is not None or not b.get("_size"):
+                continue
+            if rng.random() < 0.22:
+                price = max(250_000, b["_rev"] * rng.uniform(0.3, 1.1))
+                self.add_asset("real_estate", "Commercial building", b["business_id"],
+                               self.r_date(date(2000, 1, 1), date(2023, 12, 1)), price, "mortgage",
+                               price * rng.uniform(0.55, 0.8), address_id=b["address_id"])
+            if rng.random() < 0.3:
+                price = rng.uniform(24_000, 72_000)
+                self.add_asset("vehicle", self._vehicle_desc(price), b["business_id"],
+                               self.r_date(date(2016, 1, 1), date(2024, 11, 1)), price, "loan", price * 0.8)
+
+    def _international_flows(self) -> None:
+        rng = self.rng
+        regular = [b for b in self.businesses if b["_infra"] is None and b.get("_size", 0) > 0]
+        importers = [b for b in regular if b["_ind"] in ("retail", "manufacturing", "grocery", "auto repair",
+                                                         "construction", "software", "logistics")]
+        for b in importers:
+            if rng.random() > 0.35:
+                continue
+            acct = self.checking_of(b["business_id"])
+            for sup in rng.sample(self.foreign_suppliers, rng.randint(1, 2)):
+                n = rng.randint(3, 12)
+                for _ in range(n):
+                    amt = b["_rev"] * rng.uniform(0.02, 0.07) / n
+                    self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 6), date(YEAR, 12, 20)), 8, 16), acct,
+                                 self.accounts_of[sup][0], amt, "international_wire",
+                                 rng.choice([f"PO {rng.randint(10000, 99999)}", "TRADE SETTLEMENT",
+                                             f"INVOICE {rng.randint(1000, 9999)} PAYMENT"]))
+        for sub in self.businesses:
+            parent = sub.get("_offshore_sub")
+            if not parent:
+                continue
+            pacct, sacct = self.checking_of(parent), self.accounts_of[sub["business_id"]][0]
+            for frm, to, memos, k in ((pacct, sacct, ["INTERCOMPANY FUNDING", "INTERCOMPANY", "ADVISORY FEE",
+                                                      "MANAGEMENT FEE", "SERVICES AGREEMENT"], rng.randint(3, 8)),
+                                      (sacct, pacct, ["INTERCOMPANY SETTLEMENT", "INTERCOMPANY", "DIVIDEND",
+                                                      "TRADE SETTLEMENT"], rng.randint(2, 6))):
+                for _ in range(k):
+                    self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 6), date(YEAR, 12, 20)), 8, 16), frm, to,
+                                 self.B[parent]["_rev"] * rng.uniform(0.004, 0.02), "international_wire",
+                                 rng.choice(memos))
+        customers = [p for p in self.persons if p.get("_customer") and 22 <= p["_age"] <= 75
+                     and self.checking_of(p["person_id"])]
+        for p in customers:
+            r = rng.random()
+            acct = self.checking_of(p["person_id"])
+            if r < 0.045 and p["_salary"] > 15_000:
+                cc, city, bank = rng.choice(N.REMITTANCE)
+                rel = self._new_foreign_person(cc, city, p["last_name"])
+                racct = self.new_account(rel["person_id"], bank, cc, "checking", self.r_date(date(2010, 1, 1),
+                                                                                            date(2024, 1, 1)))
+                self.add_rel(p["person_id"], rel["person_id"], rng.choice(["sibling", "parent"]))
+                for _ in range(rng.randint(4, 12)):
+                    amt = rng.choice([150, 200, 250, 300, 400, 500, 600, 800, 1000, 1200]) * rng.uniform(0.97, 1.03)
+                    self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 3), date(YEAR, 12, 28))), acct, racct, amt,
+                                 "international_wire", "FAMILY SUPPORT")
+            elif r < 0.055:
+                cc, city, bank = rng.choice(N.REMITTANCE + N.FOREIGN_SUPPLIERS[:3])
+                rel = self._new_foreign_person(cc, city, p["last_name"])
+                racct = self.new_account(rel["person_id"], bank, cc, "checking", date(2008, 3, 1))
+                self.add_rel(rel["person_id"], p["person_id"], "parent")
+                for _ in range(rng.randint(1, 2)):
+                    self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 3), date(YEAR, 12, 28))), racct, acct,
+                                 rng.uniform(2_000, 38_000), "international_wire", rng.choice(["GIFT", "INHERITANCE"]))
+            elif p["_salary"] > 180_000 and r < 0.2:
+                facct = self.accounts_of[self.fund_id][0]
+                for _ in range(rng.randint(1, 2)):
+                    self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 3), date(YEAR, 11, 28))), acct, facct,
+                                 rng.uniform(25_000, 150_000), "international_wire", "SUBSCRIPTION")
+                if rng.random() < 0.4:
+                    self.add_txn(self.r_daytime(self.r_date(date(YEAR, 6, 1), date(YEAR, 12, 28))), facct, acct,
+                                 rng.uniform(4_000, 30_000), "international_wire", "DISTRIBUTION")
+
+    def _misc_banking(self) -> None:
+        rng = self.rng
+        for pid, prim, acct, opened in self.new_2025_accounts:
+            for _ in range(rng.randint(2, 6)):
+                day = self.r_date(min(opened + timedelta(days=2), date(YEAR, 12, 20)), date(YEAR, 12, 28))
+                self.add_txn(self.r_daytime(day), prim, acct, rng.choice([100, 200, 250, 500, 750, 1000, 1500, 2000]),
+                             "ach", "TRANSFER")
+        for p in self.persons:
+            acct = self.checking_of(p["person_id"]) if p.get("_customer") and p["_age"] >= 18 else None
+            if acct and rng.random() < 0.04:
+                for _ in range(rng.randint(1, 2)):
+                    day = self.r_date(date(YEAR, 1, 5), date(YEAR, 12, 28))
+                    self.add_txn(self.r_daytime(day, 9, 17), acct, None, rng.uniform(500, 4_800), "cash_withdrawal", "",
+                                 branch=self.branch_for(acct, p["_city"]), conducted_by=p["person_id"])
+
+    def _invoice_memo(self, payee: dict) -> str:
+        rng = self.rng
+        if payee["_ind"] in ("consulting", "legal services", "accounting", "software") and rng.random() < 0.5:
+            return rng.choice([f"CONSULTING SERVICES INV {rng.randint(100, 999)}", "ADVISORY FEE", "MANAGEMENT FEE",
+                               f"MARKETING SERVICES INV {rng.randint(100, 999)}", "ADVISORY RETAINER",
+                               f"CONSULTING SERVICES Q{rng.randint(1, 4)}"])
+        return rng.choice([f"INV {rng.randint(1000, 99999)}", f"INV {rng.randint(1000, 99999)}",
+                           f"INVOICE {rng.randint(1000, 9999)} PAYMENT", "SERVICES", "MARKETING", "MEDIA BUYING"
+                           if payee["_ind"] == "software" else "SERVICES"])
+
+    def _misc_banking_extra(self) -> None:
+        """Owner draws, loans, capital injections, refunds and isolated near-threshold cash deposits."""
+        rng = self.rng
+        regular = [b for b in self.businesses if b["_infra"] is None and b.get("_size", 0) > 0]
+        lenders = [self.checking_of(b) for b in self.infra["lender"]]
+        sba = self.checking_of(self.infra["sba_lender"][0])
+        utilities = [self.checking_of(b) for b in self.infra["utility"]]
+        for b in regular:
+            bacct = self.checking_of(b["business_id"])
+            owners = [o for o, _p in b["_owners"] if o.startswith("P") and self.checking_of(o)]
+            if owners and rng.random() < 0.45:
+                o = rng.choice(owners)
+                n = rng.randint(3, 10)
+                for _ in range(n):
+                    self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 10), date(YEAR, 12, 28))), bacct,
+                                 self.checking_of(o), b["_rev"] * rng.uniform(0.01, 0.04) / n * 4, "ach",
+                                 rng.choice(["OWNER DRAW", "DISTRIBUTION", "MANAGEMENT FEE", "SHAREHOLDER DISTRIBUTION"]))
+            if rng.random() < 0.04:
+                self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 10), date(YEAR, 11, 28))), sba, bacct,
+                             rng.uniform(50_000, 400_000), "ach", "SBA 7A LOAN DISBURSEMENT")
+            if owners and rng.random() < 0.04:
+                self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 10), date(YEAR, 11, 28))),
+                             self.checking_of(owners[0]), bacct, rng.uniform(10_000, 80_000), "wire",
+                             "CAPITAL CONTRIBUTION")
+            if rng.random() < 0.03:
+                self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 10), date(YEAR, 12, 28))), rng.choice(utilities),
+                             bacct, rng.uniform(40, 600), "ach", "REFUND")
+        for p in self.persons:
+            acct = self.checking_of(p["person_id"]) if p.get("_customer") and p["_age"] >= 21 else None
+            if not acct:
+                continue
+            r = rng.random()
+            if r < 0.02:
+                self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 10), date(YEAR, 11, 28))), rng.choice(lenders),
+                             acct, rng.uniform(5_000, 35_000), "ach", "LOAN DISBURSEMENT")
+            elif r < 0.03:
+                self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 10), date(YEAR, 12, 28))), rng.choice(utilities),
+                             acct, rng.uniform(20, 300), "ach", "REFUND")
+            elif r < 0.045:
+                # one or two isolated near-threshold cash deposits (sold a car, cashed savings) — not structuring
+                first = self.r_date(date(YEAR, 1, 10), date(YEAR, 6, 30))
+                days = [first] + ([first + timedelta(days=rng.randint(50, 150))] if rng.random() < 0.3 else [])
+                for d in days:
+                    self.add_txn(self.r_daytime(d, 9, 17), None, acct, rng.uniform(7_100, 9_950), "cash_deposit",
+                                 rng.choice(["", "", "vehicle sale"]), branch=self.branch_for(acct, p["_city"]),
+                                 conducted_by=p["person_id"])

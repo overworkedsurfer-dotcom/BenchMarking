@@ -93,6 +93,9 @@ def build_tax_background(w: World) -> None:
         for bid, amt in p["_div"]:
             info("1099-DIV", w.B[bid]["ein"], p["tin"], amt)
     proc_ein = w.B[w.infra["processor"][0]]["ein"]
+    for p in w.persons:
+        if p.get("_k1099"):
+            info("1099-K", proc_ein, p["tin"], p["_k1099"])
     for b in w.businesses:
         if b.get("_card_total"):
             info("1099-K", proc_ein, b["ein"], b["_card_total"])
@@ -109,7 +112,7 @@ def build_tax_background(w: World) -> None:
             "wh": sum(wh for _b, _g, wh in p["_w2"]),
             "interest": sum(a for _b, a in p["_int"]),
             "dividends": sum(a for _b, a in p["_div"]),
-            "se_gross": sum(a for _b, a in p["_nec"]) + p["_extra_se"],
+            "se_gross": sum(a for _b, a in p["_nec"]) + p["_extra_se"] + p.get("_k1099", 0.0),
             "other": p["_rent_income"],
         }
 
@@ -187,9 +190,17 @@ def build_tax_background(w: World) -> None:
     # ---------------------------------------------------------- entity returns
     acct_holder = {a["account_id"]: a["holder_id"] for a in T["accounts"]}
     inflow: dict[str, float] = defaultdict(float)
+    owners_of: dict[str, list[str]] = defaultdict(list)
+    for o in T["ownership"]:
+        owners_of[o["owned_id"]].append(o["owner_id"])
     for t in T["transactions"]:
         if t["to_account"]:
-            inflow[acct_holder[t["to_account"]]] += t["amount"]
+            h = acct_holder[t["to_account"]]
+            memo = (t["memo"] or "").upper()
+            src = acct_holder.get(t["from_account"]) if t["from_account"] else None
+            if "LOAN" in memo or "CAPITAL" in memo or src == h or src in owners_of.get(h, []):
+                continue  # not revenue
+            inflow[h] += t["amount"]
     w.biz_inflow_at_filing = dict(inflow)
     for b in w.businesses:
         if b["jurisdiction"] not in w.city_state.values() and b["jurisdiction"] not in ("DE", "WY"):

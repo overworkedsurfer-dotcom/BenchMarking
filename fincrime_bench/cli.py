@@ -164,6 +164,15 @@ def cmd_leaderboard(a) -> int:
     return 0
 
 
+def cmd_tool(a) -> int:
+    from .db import Warehouse, ensure_db
+    from .tools import Toolbox
+    args = json.loads(a.args) if a.args else {}
+    tb = Toolbox(Warehouse(ensure_db(a.data)), max_output_chars=a.max_chars)
+    print(tb.call(a.name, args))
+    return 0
+
+
 def cmd_schema(a) -> int:
     from .schema import ALL_TABLES
     for name, spec in ALL_TABLES.items():
@@ -233,6 +242,14 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("run_dirs", nargs="+", help="run directories, or a parent directory containing runs")
     p.add_argument("--out", help="write markdown here (and .json alongside)")
     p.set_defaults(fn=cmd_leaderboard)
+
+    p = sub.add_parser("tool", help="call a model-facing tool by hand, e.g. tool sql_query '{\"query\": \"...\"}'")
+    p.add_argument("name", help="list_tables | describe_table | sql_query | entity_profile | graph_neighbors | "
+                                "find_paths")
+    p.add_argument("args", nargs="?", help="JSON object of arguments")
+    p.add_argument("--data", default=DEFAULT_DATA)
+    p.add_argument("--max-chars", type=int, default=8000)
+    p.set_defaults(fn=cmd_tool)
 
     p = sub.add_parser("schema", help="print the data dictionary as markdown")
     p.set_defaults(fn=cmd_schema)

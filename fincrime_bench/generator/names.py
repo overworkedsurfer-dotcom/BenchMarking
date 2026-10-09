@@ -143,3 +143,19 @@ FOREIGN_TRAVEL_COUNTRIES = ["MX", "CA", "GB", "FR", "IT", "ES", "JP", "DE", "PT"
 ATTACKER_COUNTRIES = ["RO", "NG", "VN", "UA", "BR", "ID", "RU"]
 
 CARRIERS = ["Vertex Wireless", "Nimbus Mobile", "Coastline Cellular", "PrairieTel"]
+
+# Legitimate foreign counterparties (country, city, bank)
+FOREIGN_SUPPLIERS = [
+    ("CN", "Shenzhen", "Pearl River Commercial Bank"), ("MX", "Monterrey", "Banco Regiomontano"),
+    ("DE", "Hamburg", "Hanse Handelsbank"), ("VN", "Ho Chi Minh City", "Saigon Trade Bank"),
+    ("IN", "Pune", "Deccan Commerce Bank"), ("CA", "Toronto", "Maple Commercial Bank"),
+    ("IT", "Milan", "Banca Lombarda Commerciale"), ("KR", "Busan", "Busan Harbor Bank"),
+    ("TW", "Taichung", "Formosa Trade Bank"), ("TR", "Izmir", "Aegean Commerce Bank"),
+]
+REMITTANCE = [
+    ("MX", "Guadalajara", "Banco Regiomontano"), ("PH", "Cebu", "Visayas Savings Bank"),
+    ("IN", "Hyderabad", "Deccan Commerce Bank"), ("NG", "Lagos", "Lagoon Commercial Bank"),
+    ("GT", "Quetzaltenango", "Banco del Altiplano"), ("VN", "Da Nang", "Saigon Trade Bank"),
+    ("CO", "Medellin", "Banco Antioqueno"), ("PL", "Krakow", "Wisla Savings Bank"),
+]
+FOREIGN_OCCUPATIONS = ["Engineer", "Teacher", "Shop Owner", "Nurse", "Farmer", "Accountant", "Retired", "Driver"]
