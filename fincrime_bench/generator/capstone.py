@@ -99,7 +99,7 @@ Report:
 - organizer_person_id: the natural person who ultimately owns and profits from the operation.
 - victim_person_ids: every person who lost money to this operation (people who were called but did not pay \
 are not victims).
-- total_victim_losses: total amount (USD) all victims paid into the operation's accounts in 2025.
+- total_victim_losses: the total (USD) of all payments the victims made to the operation in 2025.
 - organizer_unreported_income: the amount (USD) the organizer personally received from the operation in 2025 \
 that does not appear on their 2025 tax return.
 """

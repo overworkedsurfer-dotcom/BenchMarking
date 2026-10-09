@@ -43,10 +43,10 @@ Start from one elderly victim's complaint. Map the mule accounts, the collector 
 **Decoys:** small transfers from mules' families, recruited account holders, and the collector's nominee holder.
 
 ### `aml_ato_01`: account takeover (population scan)
-Fraudulent transfers follow a credential reset from a never-before-seen device on a foreign IP, a new payee, and an immediate transfer to a mule. One attacker device is reused across two victims.
+Fraudulent transfers follow a credential reset from a never-before-seen device on a foreign IP, a new payee, and a quick transfer to a mule, with irregular timing. One attacker device is reused across two victims.
 
 **Decoys:**
-- travellers logging in, and sometimes resetting passwords, from abroad on their usual device
+- travellers logging in, and sometimes resetting passwords or changing phones, from abroad on their usual device; the travel destinations include the countries attackers' IPs geolocate to
 - phone upgrades with password resets
 - a customer who resets their password on a new phone and wires a car dealer for a car they really bought
 
@@ -62,10 +62,10 @@ List every natural person with at least 25% effective ownership. Effective owner
 
 - **01 (easy):** a holding LLC plus direct members. A 10% member and a non-owning "Managing Director" are decoys.
 - **02 (medium):** two paths to the same person, a foreign holding layer with a nominee director, and a person whose 28% comes only through an indirect chain.
-- **03 (hard):** a US LLC owned 80% by a Cyprus company, which is owned by a BVI company, which is owned by a Cayman trust whose beneficiaries hold 75% / 25%. Traps:
+- **03 (hard):** a US LLC owned 80% by a Cyprus company, which is owned 100% by a BVI company. The BVI company is owned 70% by a Cayman trust (beneficiaries 75% / 25%) and 30% by a Delaware LLC. The 25% trust beneficiary also owns that Delaware LLC, and reaches 38% only by **summing both paths** (14% + 24%); neither path alone crosses 25%. Traps:
   - an expired 100% shareholder of record
   - a trustee, which is a control-only role
-  - two people at exactly 20%, just under the threshold
+  - a direct 20% member just under the threshold
   - nominee directors
 
 ### `own_kickback_01/02`: insider kickback vendor
@@ -86,7 +86,10 @@ Four crew members call a prepaid "handler" number, the only contact they all sha
 - **01:** the handler calls the boss's registered phone.
 - **02:** the handler calls the boss's anonymous burner. The boss must be found by **co-location**: their personal phone places calls from the same cell tower within minutes of the burner's calls, many times over.
 
-**Decoys:** the handler's occasional calls to random people. Subscribers of family-plan lines can be someone other than the user.
+**Decoys:**
+- the handler's occasional calls to random people
+- in 02, a family member of the boss who is sometimes at the same tower, but far less consistently
+- subscribers of family-plan lines can be someone other than the user
 
 ### `tel_burner_01/02`: replacement phones
 A suspect drops their registered phone on a given date and continues on an anonymous prepaid number. In 02 they switch twice. The replacement keeps the suspect's inner circle of contacts.
@@ -108,6 +111,8 @@ Find taxpayers whose return falls at least $10k short of their W-2/1099 total, a
 - unreported gig-platform 1099-K income
 - understated wages
 - two non-filers
+
+Information returns are gross amounts, so the comparison is against gross income (receipts before expenses).
 
 **Traps:**
 - joint returns: a spouse's W-2 appears under the spouse's TIN, not the filer's
@@ -142,9 +147,11 @@ Find duplicate claims, for example by a grandparent of a child already claimed b
 **Decoy:** a parent who died during 2025, which is still valid.
 
 ### `tax_skimming_01`: bank-deposits method (hard)
-Cash businesses report roughly what their card processor reports (1099-K) and keep most cash off the books. Quantify the gap between deposited revenue and reported receipts.
+Salons, laundromats and car washes report their card and customer receipts but only a sliver of their cash, so they understate by 28–60%. Quantify the gap between deposited revenue and reported receipts.
 
-**Decoys:** businesses whose deposits include SBA loan proceeds or owner capital contributions. These are not revenue, and some background businesses have them too.
+**Decoys:**
+- businesses whose deposits include SBA loan proceeds, owner capital contributions or refunds; these are not revenue, and some background businesses have them too
+- sweeps between a business's own accounts
 
 ---
 

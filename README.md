@@ -89,9 +89,9 @@ Defaults: 40 investigative tool calls, 60 model turns, and tool output truncated
 | AML | `aml_mule_01/02` | medium/hard | From one romance-scam complaint, map mule accounts, the collector and all victims, then identify the operator through a shared device (01) or a shared home IP (02) in the online-banking log |
 | AML | `aml_ato_01` | medium | Account takeovers: new device, foreign IP, password reset, new payee, fast transfer. Decoys: travellers, phone upgrades, a legitimate car purchase |
 | AML | `aml_roundtrip_01` | hard | An "investment" that is the company's own money cycled through US and offshore shells; find the cycle and the investor's beneficial owner |
-| Ownership | `own_ubo_01..03` | easy → hard | Effective beneficial ownership through holding chains, multiple paths, trusts, expired stakes and nominee directors |
+| Ownership | `own_ubo_01..03` | easy → hard | Effective beneficial ownership through holding chains, trusts, expired stakes and nominee directors; in 03 one owner crosses 25% only by summing two paths |
 | Ownership | `own_kickback_01/02` | medium/hard | A vendor that siphons company money offshore to an insider (directly, or via the insider's spouse); decoy vendors are genuinely new businesses |
-| Telecom | `tel_chain_01/02` | medium/hard | Contact chaining from a crew to its coordinator and boss; in 02 the boss uses an anonymous burner, found by cell-tower co-location with their personal phone |
+| Telecom | `tel_chain_01/02` | medium/hard | Contact chaining from a crew to its coordinator and boss; in 02 the boss uses an anonymous burner, found by cell-tower co-location with their personal phone (a relative is a weaker co-location decoy) |
 | Telecom | `tel_burner_01/02` | medium/hard | Identify the replacement number(s) after a suspect drops their phone, using contact-set overlap; decoys include a relative switching phones at the same time |
 | Tax | `tax_unreported_01` | medium | Match returns against W-2/1099s: omitted income and non-filers. Traps: joint returns, income reported on a different line, small omissions under the threshold |
 | Tax | `tax_lifestyle_01` | medium | Expenditure method: asset purchases that reported income and documented sources (loans, asset sales) cannot explain |

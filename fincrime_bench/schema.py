@@ -97,7 +97,7 @@ TABLES: dict[str, dict] = {
         ),
         "columns": [
             ("txn_id", "TEXT", "Unique transaction id."),
-            ("timestamp", "TEXT", "ISO-8601 local time, YYYY-MM-DDTHH:MM:SS."),
+            ("timestamp", "TEXT", "ISO-8601 local time as text, YYYY-MM-DDTHH:MM:SS (note the T: SQLite datetime() uses a space, so compare as text or use strftime('%Y-%m-%dT%H:%M:%S', ...))."),
             ("from_account", "TEXT", "Debited account (NULL for cash deposits)."),
             ("to_account", "TEXT", "Credited account (NULL for cash withdrawals)."),
             ("amount", "REAL", "USD amount."),
@@ -124,7 +124,7 @@ TABLES: dict[str, dict] = {
         ),
         "columns": [
             ("event_id", "TEXT", "Unique event id."),
-            ("timestamp", "TEXT", "ISO-8601."),
+            ("timestamp", "TEXT", "ISO-8601 local time as text, YYYY-MM-DDTHH:MM:SS (note the T: SQLite datetime() uses a space, so compare as text or use strftime('%Y-%m-%dT%H:%M:%S', ...))."),
             ("person_id", "TEXT", "Customer credentials used."),
             ("device_id", "TEXT", "Device fingerprint."),
             ("ip_address", "TEXT", "Source IP."),
@@ -151,7 +151,7 @@ TABLES: dict[str, dict] = {
         "description": "Call detail records (voice calls and SMS) for 2025.",
         "columns": [
             ("call_id", "TEXT", "Unique record id."),
-            ("timestamp", "TEXT", "ISO-8601 start time."),
+            ("timestamp", "TEXT", "ISO-8601 local time as text, YYYY-MM-DDTHH:MM:SS (note the T: SQLite datetime() uses a space, so compare as text or use strftime('%Y-%m-%dT%H:%M:%S', ...))."),
             ("caller", "TEXT", "Originating phone_number."),
             ("callee", "TEXT", "Receiving phone_number."),
             ("duration_sec", "INTEGER", "Duration in seconds (0 for SMS)."),

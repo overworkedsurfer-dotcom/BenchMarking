@@ -118,3 +118,47 @@ def test_no_label_leakage_in_data(T):
         for r in rows:
             for v in r.values():
                 assert not GIVEAWAYS.search(v or ""), f"{name}: {v}"
+
+
+def test_no_activity_before_account_opened(T):
+    opened = {r["account_id"]: r["open_date"] for r in T["accounts"]}
+    for r in T["transactions"]:
+        for col in ("from_account", "to_account"):
+            if r[col]:
+                assert r["timestamp"][:10] >= opened[r[col]], (r["txn_id"], col, opened[r[col]])
+
+
+def test_people_are_adults_when_acting(T):
+    dob = {r["person_id"]: r["dob"] for r in T["persons"]}
+    for r in T["ownership"]:
+        if r["owner_id"] in dob:
+            assert int(r["start_date"][:4]) - int(dob[r["owner_id"]][:4]) >= 18, r
+    for r in T["assets"]:
+        if r["owner_id"] in dob:
+            assert int(r["purchase_date"][:4]) - int(dob[r["owner_id"]][:4]) >= 18, r
+        if r["asset_type"] == "vehicle":
+            assert int(r["description"][:4]) <= int(r["purchase_date"][:4]) + 1, r
+
+
+def test_layering_intermediaries_never_overdrawn(bench, T):
+    """Freshly opened pass-through accounts never send more than they have received so far.
+
+    (Long-standing accounts have an unknown opening balance from before 2025, so only accounts opened
+    from 2024 on are checked.)"""
+    opened = {r["account_id"]: r["open_date"] for r in T["accounts"]}
+    by_acct = {}
+    for r in T["transactions"]:
+        if r["from_account"]:
+            by_acct.setdefault(r["from_account"], []).append((r["timestamp"], -float(r["amount"])))
+        if r["to_account"]:
+            by_acct.setdefault(r["to_account"], []).append((r["timestamp"], float(r["amount"])))
+    for t in bench.tasks:
+        if t["scheme"] != "layering":
+            continue
+        for acct in bench.keys[t["task_id"]]["answer"]["accounts"]:
+            if opened[acct] < "2024-01-01":
+                continue
+            bal = 0.0
+            for _ts, amt in sorted(by_acct[acct]):
+                bal += amt
+                assert bal > -1.0, (t["task_id"], acct, bal)

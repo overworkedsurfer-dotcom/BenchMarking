@@ -75,6 +75,12 @@ def plant_contact_chain(w: World, task_id: str, difficulty: str) -> None:
     else:
         burner = w.new_phone(None, "prepaid", start - timedelta(days=rng.randint(1, 15)))
         partners = _contact_phones(w, boss["person_id"], start) or [rng.choice(list(w.PHONE))]
+        near = [x for x in [boss["_spouse"]] + boss["_children"] + boss["_parents"]
+                if x and x not in w.reserved and w.P[x]["_city"] == city and _single_registered_phone(w, w.P[x])]
+        companion = near[0] if near else w.pick(lambda p: _phone_ok(w, 25, 70)(p) and p["_city"] == city)[0]["person_id"]
+        w.reserve(companion)
+        companion_phone = w.P[companion]["_phones"][0]
+        decoys["boss_person_id"] = [companion]
         for _ in range(rng.randint(32, 44)):
             base = rng.choice(crew_call_times)
             ts = base + timedelta(minutes=rng.randint(5, 50)) if rng.random() < 0.6 else _rand_ts(w, start, end)
@@ -87,6 +93,11 @@ def plant_contact_chain(w: World, task_id: str, difficulty: str) -> None:
                     callee = rng.choice(partners)
                     if callee != boss_phone and w.PHONE[callee]["_act"] <= when.date():
                         w.add_call(when, boss_phone, callee, tower=tower)
+                if rng.random() < 0.3:  # someone close to the boss is sometimes nearby as well
+                    when = ts + timedelta(minutes=rng.choice([-1, 1]) * rng.randint(3, 25))
+                    callee = rng.choice(partners)
+                    if callee not in (boss_phone, companion_phone) and w.PHONE[callee]["_act"] <= when.date():
+                        w.add_call(when, companion_phone, callee, tower=tower)
             else:
                 w.add_call(ts, handler, burner, tower=handler_tower)
         target_phone = burner
@@ -100,7 +111,7 @@ def plant_contact_chain(w: World, task_id: str, difficulty: str) -> None:
             ph = w.active_phone(p["person_id"], ts.date())
             if ph:
                 w.add_call(ts, handler, ph, tower=handler_tower)
-    decoys["boss_person_id"] = noise_ids
+    decoys["boss_person_id"] = decoys.get("boss_person_id", []) + noise_ids
     names = ", ".join(f"{w.full_name(c['person_id'])} ({c['person_id']})" for c in crew)
     if difficulty == "medium":
         prompt = f"""

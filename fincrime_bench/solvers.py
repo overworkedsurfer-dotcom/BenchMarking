@@ -327,7 +327,8 @@ def solve_skimming(task: dict, wh: Warehouse) -> dict:
                      "(SELECT COALESCE(SUM(t.amount), 0) FROM transactions t JOIN accounts a ON a.account_id = "
                      "t.to_account LEFT JOIN accounts fa ON fa.account_id = t.from_account WHERE a.holder_id = "
                      "b.business_id AND UPPER(COALESCE(t.memo, '')) NOT LIKE '%LOAN%' AND UPPER(COALESCE(t.memo, '')) "
-                     "NOT LIKE '%CAPITAL%' AND COALESCE(fa.holder_id, '') <> b.business_id AND COALESCE(fa.holder_id, "
+                     "NOT LIKE '%CAPITAL%' AND UPPER(COALESCE(t.memo, '')) NOT LIKE '%REFUND%' "
+                     "AND COALESCE(fa.holder_id, '') <> b.business_id AND COALESCE(fa.holder_id, "
                      "'') NOT IN (SELECT owner_id FROM ownership WHERE owned_id = b.business_id)) revenue "
                      "FROM businesses b JOIN tax_returns r ON r.filer_tin = b.ein "
                      "WHERE b.industry IN ('restaurant', 'salon', 'laundromat', 'car wash')")

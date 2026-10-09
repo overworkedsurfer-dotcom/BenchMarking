@@ -140,7 +140,7 @@ OFFSHORE = [
 ]
 
 FOREIGN_TRAVEL_COUNTRIES = ["MX", "CA", "GB", "FR", "IT", "ES", "JP", "DE", "PT", "CR", "GR"]
-ATTACKER_COUNTRIES = ["RO", "NG", "VN", "UA", "BR", "ID", "RU"]
+ATTACKER_COUNTRIES = ["RO", "NG", "VN", "UA", "BR", "ID", "GB", "NL", "DE"]
 
 CARRIERS = ["Vertex Wireless", "Nimbus Mobile", "Coastline Cellular", "PrairieTel"]
 

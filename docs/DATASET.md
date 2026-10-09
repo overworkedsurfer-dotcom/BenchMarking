@@ -11,12 +11,12 @@
 3. **Businesses.** About 370 companies in 16 industries, with owners (sometimes through family holding companies), officers, employees and revenue. The rest are infrastructure (utilities, card issuers, a payment processor, lenders, title companies, brokers, dealers, banks), foreign suppliers and legitimate offshore subsidiaries.
 4. **Banking.** Accounts (some opened during 2025, some with family members as authorized signers) and a year of transactions:
    - payroll, rent and mortgage, utilities, card payments, person-to-person transfers, ATM and teller cash
-   - card settlements and cash deposits for merchants, business-to-business invoices, owner draws, SBA loans, capital contributions
+   - card settlements and cash deposits for merchants, business-to-business invoices, owner draws, SBA loans, capital contributions, sweeps between a business's own accounts
    - interest, international supplier payments, intercompany flows, remittances, gifts and fund subscriptions
 5. **Online banking.** Devices (including shared household devices and phone upgrades), home and mobile IPs, travel abroad, password resets, payees and transfers.
 6. **Telecom.** Phones (postpaid and prepaid, family plans, number changes) and calls driven by a social graph of household, relatives, coworkers and friends, plus random noise calls.
 7. **Assets.** Homes, vehicles, boats and commercial property, with financing and 2025 purchases and sales consistent with income.
-8. **Tax.** Information returns (W-2, 1099-NEC/K/INT/DIV/MISC) derived from the activity above, then honest 1040s (single, joint, separate, head of household; dependents; paid preparers; refunds) and entity returns (1120/1120S/1065) whose receipts match deposited revenue.
+8. **Tax.** Information returns (W-2, 1099-NEC/K/INT/DIV/MISC, including gig-platform 1099-Ks) derived from the activity above, then honest 1040s (single, joint, separate, head of household; dependents; paid preparers; refunds) and entity returns (1120/1120S/1065) whose receipts match deposited revenue.
 9. **Schemes.** Each scheme reserves its actors (so schemes never overlap), injects records and decoys, and registers a task. Rule-based answer keys are computed after all planting, and the generator checks that they equal the planted cases.
 
 **Design rule:** every feature a scheme relies on must also occur in legitimate background activity. That covers international wires, accounts opened in 2025, newly incorporated LLCs, offshore entities, teller cash, cash deposits over $10k and near the threshold, prepaid phones activated in 2025, password resets from abroad, third-party signers, owner draws, "management fee" memos, loans and more. Models therefore have to follow the specific evidence chain rather than filter on a rare value.
@@ -116,7 +116,7 @@ All 2025 money movements. from_account is NULL for cash deposits; to_account is 
 | column | type | description |
 |---|---|---|
 | `txn_id` | TEXT | Unique transaction id. |
-| `timestamp` | TEXT | ISO-8601 local time, YYYY-MM-DDTHH:MM:SS. |
+| `timestamp` | TEXT | ISO-8601 local time as text, YYYY-MM-DDTHH:MM:SS (note the T: SQLite datetime() uses a space, so compare as text or use strftime('%Y-%m-%dT%H:%M:%S', ...)). |
 | `from_account` | TEXT | Debited account (NULL for cash deposits). |
 | `to_account` | TEXT | Credited account (NULL for cash withdrawals). |
 | `amount` | REAL | USD amount. |
@@ -143,7 +143,7 @@ Online/mobile banking audit log. person_id is the customer whose credentials wer
 | column | type | description |
 |---|---|---|
 | `event_id` | TEXT | Unique event id. |
-| `timestamp` | TEXT | ISO-8601. |
+| `timestamp` | TEXT | ISO-8601 local time as text, YYYY-MM-DDTHH:MM:SS (note the T: SQLite datetime() uses a space, so compare as text or use strftime('%Y-%m-%dT%H:%M:%S', ...)). |
 | `person_id` | TEXT | Customer credentials used. |
 | `device_id` | TEXT | Device fingerprint. |
 | `ip_address` | TEXT | Source IP. |
@@ -171,7 +171,7 @@ Call detail records (voice calls and SMS) for 2025.
 | column | type | description |
 |---|---|---|
 | `call_id` | TEXT | Unique record id. |
-| `timestamp` | TEXT | ISO-8601 start time. |
+| `timestamp` | TEXT | ISO-8601 local time as text, YYYY-MM-DDTHH:MM:SS (note the T: SQLite datetime() uses a space, so compare as text or use strftime('%Y-%m-%dT%H:%M:%S', ...)). |
 | `caller` | TEXT | Originating phone_number. |
 | `callee` | TEXT | Receiving phone_number. |
 | `duration_sec` | INTEGER | Duration in seconds (0 for SMS). |

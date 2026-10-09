@@ -42,10 +42,13 @@ def plant_unreported(w: World, task_id: str) -> None:
     singles = _single_returns(w)
     used: list[str] = []
 
-    def take(cond, positive: bool = False) -> dict:
-        # positives must not have income outside third-party reporting (e.g. rents) that would mask the shortfall
+    def slack(r: dict) -> float:
+        """Income reported beyond third-party amounts (cash, rents): it would mask a planted omission."""
+        return _income_lines(r) - _info_by_tin(w).get(w.P[r["_primary"]]["tin"], 0.0)
+
+    def take(cond, positive: bool = False, expected_slack=lambda r: 0.0) -> dict:
         opts = [r for r in singles if r["return_id"] not in used and cond(r)
-                and (not positive or r["other_income"] == 0)]
+                and (not positive or abs(slack(r) - expected_slack(r)) < 1.0)]
         r = rng.choice(opts)
         used.append(r["return_id"])
         w.reserve(r["_primary"])
@@ -55,7 +58,8 @@ def plant_unreported(w: World, task_id: str) -> None:
 
     regular = [b for b in w.businesses if b["_infra"] is None and b.get("_size", 0) > 0]
     # (a) self-employed omits a 1099-NEC (and the cash it was paid alongside)
-    r = take(lambda r: any(a >= 12_000 for _b, a in w.P[r["_primary"]]["_nec"]), True)
+    r = take(lambda r: any(a >= 12_000 for _b, a in w.P[r["_primary"]]["_nec"]), True,
+             expected_slack=lambda r: w.P[r["_primary"]]["_extra_se"])  # the omitted cash goes too
     p = w.P[r["_primary"]]
     nec = max(a for _b, a in p["_nec"])
     r["business_gross_receipts"] = money(r["business_gross_receipts"] - nec - p["_extra_se"])
@@ -125,10 +129,12 @@ about them on information returns (W-2, 1099-NEC, 1099-K, 1099-INT, 1099-DIV, 10
 
 Identify every individual taxpayer (TIN) whose income reported to the IRS — on their return, or not at all if \
 they did not file — falls short of the third-party-reported income by at least $10,000, and estimate the \
-understated amount (third-party total minus the income they reported). Taxpayers sometimes report income on a \
-different line of the return than the information return would suggest; that alone is not under-reporting.
+understated amount (third-party total minus the income they reported). Information returns report gross amounts, \
+so compare against gross income reported (business receipts before expenses). Taxpayers sometimes report income \
+on a different line of the return than the information return would suggest; that alone is not under-reporting.
 
-Report taxpayers: a list of {"id": <TIN>, "value": <understated amount in USD>}.
+Report taxpayers: a list of {"id": <TIN>, "value": <understated amount in USD>}; for a joint return use the \
+primary filer's TIN.
 """
     fields = [field("taxpayers", "id_number_map", 1.0,
                     "List of {id: TIN, value: understated USD}.", value_weight=0.4, rel_tol=0.02, zero_at=0.25)]
@@ -491,17 +497,17 @@ def plant_skimming(w: World, task_id: str) -> None:
              and w.return_of.get(b["ein"]) and w.biz_inflow_at_filing.get(b["business_id"], 0) > 150_000
              and any(o.startswith("P") for o, _ in b["_owners"])]
     rng.shuffle(cands)
-    high_cash = [b for b in cands if b["_ind"] != "restaurant"]
-    positives = high_cash[:2] + [b for b in cands if b["_ind"] == "restaurant"][:1]
-    if len(positives) < 3:
-        positives = cands[:3]
+    positives = [b for b in cands if b["_ind"] != "restaurant"][:3]
     w.expect(task_id, "businesses", [b["business_id"] for b in positives])
     for b in positives:
         w.reserve(b["business_id"])
         r = w.returns_by_id[w.return_of[b["ein"]]]
         dep = w.biz_inflow_at_filing[b["business_id"]]
-        card = b.get("_card_total", 0.0)
-        reported = max(card * rng.uniform(1.0, 1.03), dep * rng.uniform(0.42, 0.62))
+        cash = sum(t["amount"] for t in w.tables["transactions"] if t["channel"] == "cash_deposit"
+                   and t["to_account"] in w.accounts_of[b["business_id"]])
+        # report card receipts, other receipts and a sliver of the cash; keep the gap clearly above 20%
+        reported = dep - cash * rng.uniform(0.6, 0.85)
+        reported = min(reported, dep * rng.uniform(0.6, 0.72))
         r["business_gross_receipts"] = money(reported)
         r["business_expenses"] = money(reported * rng.uniform(0.85, 0.97))
         r["total_income"] = money(r["business_gross_receipts"] - r["business_expenses"])
@@ -533,9 +539,9 @@ keeping cash receipts off the books.
 
 Using the bank deposits method, identify every cash-intensive business whose gross receipts on its 2025 return \
 are understated by more than 20% relative to the business revenue deposited into its bank accounts, and \
-estimate the understated receipts (deposited revenue minus reported gross receipts). Deposits that are not \
-revenue — loan proceeds, owner capital contributions, transfers between the business's own accounts — must be \
-excluded.
+estimate the understated receipts (deposited revenue minus reported gross receipts). Deposited revenue includes \
+card settlements, cash deposits and payments from customers; deposits that are not revenue — loan proceeds, owner \
+capital contributions, refunds, transfers between the business's own accounts — must be excluded.
 
 Report businesses: a list of {"id": <business_id>, "value": <understated receipts in USD>}.
 """
@@ -564,7 +570,8 @@ def skimming_rule(w: World) -> list[dict]:
             if t["to_account"] and acct_holder[t["to_account"]] == bid:
                 memo = (t["memo"] or "").upper()
                 src_holder = acct_holder.get(t["from_account"]) if t["from_account"] else None
-                if "LOAN" in memo or "CAPITAL" in memo or src_holder == bid or src_holder in owners.get(bid, []):
+                if ("LOAN" in memo or "CAPITAL" in memo or "REFUND" in memo or src_holder == bid
+                        or src_holder in owners.get(bid, [])):
                     continue
                 rev += t["amount"]
         reported = w.returns_by_id[rid]["business_gross_receipts"]

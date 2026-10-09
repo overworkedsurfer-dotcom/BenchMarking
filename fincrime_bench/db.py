@@ -173,7 +173,7 @@ class Warehouse:
         return out
 
 
-def format_table(cols: list[str], rows: list[tuple], truncated: bool, max_cell: int = 120) -> str:
+def format_table(cols: list[str], rows: list[tuple], truncated: bool, max_cell: int = 400) -> str:
     def cell(v) -> str:
         if v is None:
             return ""

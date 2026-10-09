@@ -35,6 +35,7 @@ Warehouse tables (use describe_table for column meanings):
 Rules:
 - You may make at most {max_tool_calls} tool calls before you must submit.
 - Use exact IDs from the data. Monetary values are USD.
+- Timestamps are text 'YYYY-MM-DDTHH:MM:SS' (with a T); dates are 'YYYY-MM-DD'. SQLite LIKE is case-insensitive.
 - Finish by calling submit_answer exactly once with your final answer."""
 
 TEXT_PROTOCOL = """
@@ -174,6 +175,16 @@ class Agent:
         def try_submit(ans) -> str | None:
             """Returns an error message for the model, or None if accepted."""
             nonlocal submission
+            if isinstance(ans, dict) and isinstance(ans.get("answer"), str):
+                try:
+                    ans = {**ans, "answer": json.loads(ans["answer"])}
+                except json.JSONDecodeError:
+                    pass
+            if isinstance(ans, str):
+                try:
+                    ans = json.loads(ans)
+                except json.JSONDecodeError:
+                    pass
             if isinstance(ans, dict) and isinstance(ans.get("answer"), dict):
                 ans = ans["answer"]
             if not isinstance(ans, dict):
@@ -246,6 +257,13 @@ class Agent:
             assistant = _clean_assistant(msg)
             messages.append(assistant)
             if not tool_calls:
+                action = parse_text_action(content)
+                known = TOOLSETS[cfg.toolset]
+                if action and action[0] in known:  # model wrote the tool call as text: honour it
+                    result = self._exec(action[0], action[1], stats)
+                    messages.append({"role": "user", "content": f"Tool result ({action[0]}):\n{result}"
+                                     f"{self._budget_note(stats)}\n(Prefer native tool calls.)"})
+                    continue
                 ans = extract_answer_from_text(content, task)
                 if ans is not None and try_submit(ans) is None:
                     status = "submitted"

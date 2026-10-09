@@ -72,11 +72,15 @@ def plant_ubo(w: World, task_id: str, difficulty: str) -> None:
         w.add_owner(p7, tr, "beneficiary", 75.0, inc)
         w.add_owner(p8, tr, "beneficiary", 25.0, inc)
         w.add_owner(p9, tr, "trustee", None, inc)
-        s2, _ = offshore_shell(w, [(tr, 100.0)], cc="VG", inc=inc + timedelta(days=30), open_account=False)
+        s2, _ = offshore_shell(w, [(tr, 70.0)], cc="VG", inc=inc + timedelta(days=30), open_account=False)
         # a shareholder of S2 must be recorded as shareholder, not beneficiary
         for o in w.tables["ownership"]:
             if o["owned_id"] == s2 and o["owner_id"] == tr:
                 o["role"] = "shareholder"
+        # P8 also owns 30% of S2 through a Delaware LLC: 14% via the trust + 24% via the LLC = 38%
+        h4 = _us_llc(w, shell_name(w, "LLC"), "DE", inc + timedelta(days=10), "holding company")
+        w.add_owner(p8, h4, "member", 100.0, inc + timedelta(days=10))
+        w.add_owner(h4, s2, "shareholder", 30.0, inc + timedelta(days=40))
         s1, _ = offshore_shell(w, [], cc="CY", inc=date(2019, 1, 1), open_account=False)
         w.add_owner(p6, s1, "shareholder", 100.0, date(2019, 1, 1), end=date(2023, 5, 1))
         w.add_owner(s2, s1, "shareholder", 100.0, date(2023, 5, 1))
@@ -85,8 +89,8 @@ def plant_ubo(w: World, task_id: str, difficulty: str) -> None:
                     "logistics", agent=False)
         w.add_owner(s1, t, "member", 80.0, tinc)
         w.add_owner(p5, t, "member", 20.0, tinc)
-        gold = {p7: 60.0}
-        decoys = [p5, p6, p8, p9] + w.nominees
+        gold = {p7: 42.0, p8: 38.0}
+        decoys = [p5, p6, p9] + w.nominees
         context = "applied for a federal port-security grant"
     tb = w.B[t]
     acct = w.new_account(t, w._pick_bank(), "US", "business_checking",

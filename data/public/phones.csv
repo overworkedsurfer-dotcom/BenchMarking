@@ -21,7 +21,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15551105573,P635710,Coastline Cellular,postpaid,2016-01-17,
 +15551108684,,Vertex Wireless,prepaid,2015-12-15,
 +15551109334,P688745,Nimbus Mobile,postpaid,2012-07-13,
-+15551112583,,Nimbus Mobile,prepaid,2025-05-09,2025-08-11
 +15551130714,P917333,Nimbus Mobile,postpaid,2017-01-28,
 +15551137566,P630526,Vertex Wireless,postpaid,2015-07-24,
 +15551151626,P812175,Nimbus Mobile,postpaid,2025-07-16,
@@ -89,7 +88,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15551474548,P701203,PrairieTel,postpaid,2021-06-08,2025-07-17
 +15551478716,,Vertex Wireless,prepaid,2019-12-18,
 +15551480270,P814412,Vertex Wireless,postpaid,2025-02-09,
-+15551484953,P752379,PrairieTel,postpaid,2016-11-21,2025-05-09
++15551484953,P752379,PrairieTel,postpaid,2016-11-21,
 +15551489018,P724827,Coastline Cellular,postpaid,2016-02-19,
 +15551492859,P509333,Coastline Cellular,postpaid,2025-09-19,
 +15551498609,P526334,Vertex Wireless,postpaid,2019-04-24,
@@ -138,7 +137,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15551683010,P858793,Vertex Wireless,postpaid,2015-05-04,
 +15551692901,P929997,Nimbus Mobile,postpaid,2015-08-22,
 +15551693778,P574778,Coastline Cellular,postpaid,2018-06-18,
-+15551705398,,Nimbus Mobile,prepaid,2025-05-10,
 +15551706463,,Nimbus Mobile,prepaid,2021-12-14,
 +15551707146,P357268,Coastline Cellular,postpaid,2017-01-16,
 +15551712529,P445363,Coastline Cellular,postpaid,2025-09-11,
@@ -147,6 +145,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15551722590,P560250,Coastline Cellular,postpaid,2016-05-28,
 +15551724222,P872257,Coastline Cellular,postpaid,2020-10-28,
 +15551730914,P376763,PrairieTel,postpaid,2013-12-09,
++15551730959,,Nimbus Mobile,prepaid,2025-05-14,
 +15551732462,P746385,Vertex Wireless,postpaid,2023-09-20,
 +15551739468,P576300,Nimbus Mobile,postpaid,2025-10-29,
 +15551739742,P457058,Vertex Wireless,postpaid,2012-01-23,
@@ -178,6 +177,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15551896321,P109312,PrairieTel,postpaid,2014-11-27,
 +15551897755,P253041,Nimbus Mobile,postpaid,2022-08-16,
 +15551903812,P481361,Vertex Wireless,postpaid,2018-08-19,
++15551911949,,Nimbus Mobile,prepaid,2025-01-14,
 +15551914877,P777670,PrairieTel,postpaid,2021-12-16,
 +15551915983,P691930,Nimbus Mobile,postpaid,2020-09-15,
 +15551921784,P374011,Nimbus Mobile,postpaid,2017-09-01,2025-05-02
@@ -267,7 +267,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15552281692,P255998,PrairieTel,postpaid,2024-05-08,
 +15552284373,,Coastline Cellular,prepaid,2023-05-26,
 +15552292389,P774024,Nimbus Mobile,postpaid,2021-11-14,
-+15552294465,,Coastline Cellular,prepaid,2025-03-09,
 +15552295087,P410599,Nimbus Mobile,postpaid,2015-03-03,
 +15552299646,P996744,PrairieTel,postpaid,2022-07-18,
 +15552301184,P297478,Coastline Cellular,postpaid,2020-07-03,
@@ -295,6 +294,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15552418175,P655671,Nimbus Mobile,postpaid,2024-01-14,
 +15552425687,P750114,Coastline Cellular,postpaid,2014-10-22,
 +15552432860,P383834,Vertex Wireless,postpaid,2014-08-27,2025-10-10
++15552437623,,Vertex Wireless,prepaid,2025-05-17,
 +15552438409,P901125,PrairieTel,postpaid,2014-05-28,
 +15552455062,P261962,PrairieTel,postpaid,2025-08-14,
 +15552461028,P246557,Coastline Cellular,postpaid,2016-01-24,
@@ -368,7 +368,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15552759821,P696461,PrairieTel,postpaid,2017-05-23,
 +15552763457,P303127,PrairieTel,postpaid,2020-03-01,
 +15552764436,P827132,Vertex Wireless,postpaid,2023-08-16,
-+15552767187,,Coastline Cellular,prepaid,2025-08-11,
 +15552770260,P255203,Vertex Wireless,postpaid,2023-12-04,
 +15552770404,P212617,Vertex Wireless,postpaid,2021-05-02,
 +15552771907,P311437,Coastline Cellular,postpaid,2022-09-11,
@@ -404,6 +403,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15552895263,P756386,Coastline Cellular,postpaid,2025-04-04,
 +15552896363,P642981,Vertex Wireless,postpaid,2013-04-24,
 +15552905363,P378958,Coastline Cellular,postpaid,2024-07-21,
++15552908479,,PrairieTel,prepaid,2025-06-07,
 +15552909264,,Vertex Wireless,prepaid,2025-02-10,
 +15552912252,P314412,Coastline Cellular,postpaid,2017-10-31,
 +15552913357,,Vertex Wireless,prepaid,2024-05-25,
@@ -413,7 +413,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15552933770,P871713,Vertex Wireless,postpaid,2021-10-07,
 +15552937947,P656088,PrairieTel,postpaid,2025-05-16,
 +15552940337,P536456,PrairieTel,postpaid,2019-11-28,
-+15552941858,P603099,Vertex Wireless,postpaid,2018-01-30,
++15552941858,P603099,Vertex Wireless,postpaid,2018-01-30,2025-05-13
 +15552942309,P236141,Coastline Cellular,postpaid,2025-08-11,
 +15552944218,P727566,Coastline Cellular,postpaid,2013-08-04,
 +15552952254,P753441,PrairieTel,postpaid,2020-08-05,
@@ -438,7 +438,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15553023444,P547977,Nimbus Mobile,postpaid,2017-05-02,
 +15553044813,P163613,Coastline Cellular,postpaid,2025-05-08,
 +15553049148,P248733,Coastline Cellular,postpaid,2021-12-17,
-+15553051707,,Vertex Wireless,prepaid,2025-07-25,
 +15553053794,P981522,Vertex Wireless,postpaid,2017-11-12,
 +15553061514,P972113,Coastline Cellular,postpaid,2021-03-07,
 +15553062302,P130131,Nimbus Mobile,postpaid,2017-10-29,
@@ -476,11 +475,12 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15553199821,P961481,PrairieTel,postpaid,2019-01-09,
 +15553204947,P795479,Nimbus Mobile,postpaid,2024-02-16,
 +15553206639,P219941,Nimbus Mobile,postpaid,2018-05-11,
-+15553207362,P245553,Coastline Cellular,postpaid,2021-10-04,
++15553207362,P245553,Coastline Cellular,postpaid,2021-10-04,2025-06-06
 +15553214046,,Vertex Wireless,prepaid,2021-03-06,
 +15553225809,P807844,Vertex Wireless,postpaid,2019-08-21,
 +15553226071,P672668,Coastline Cellular,postpaid,2025-04-17,
 +15553227587,P321276,Nimbus Mobile,postpaid,2020-03-22,
++15553230929,,Coastline Cellular,prepaid,2025-05-13,2025-08-09
 +15553233404,P580330,Nimbus Mobile,postpaid,2021-11-05,2025-04-29
 +15553237163,P333063,PrairieTel,postpaid,2013-10-04,
 +15553240365,P316315,Nimbus Mobile,postpaid,2022-07-10,
@@ -560,6 +560,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15553515030,P612658,PrairieTel,postpaid,2013-08-05,
 +15553516626,P178523,Nimbus Mobile,postpaid,2017-03-12,
 +15553543854,P983623,Vertex Wireless,postpaid,2019-07-08,
++15553551129,,Nimbus Mobile,prepaid,2025-01-17,
 +15553559571,P520600,Vertex Wireless,postpaid,2016-09-05,
 +15553562453,P722822,PrairieTel,postpaid,2014-10-09,
 +15553569393,,PrairieTel,prepaid,2013-07-04,
@@ -611,6 +612,8 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15553791354,,Nimbus Mobile,prepaid,2013-06-06,
 +15553797613,P997949,Vertex Wireless,postpaid,2014-03-28,
 +15553798885,,Nimbus Mobile,prepaid,2022-11-20,
++15553802689,,Coastline Cellular,prepaid,2025-01-17,
++15553804021,,PrairieTel,prepaid,2025-03-01,
 +15553807693,,PrairieTel,prepaid,2017-08-25,
 +15553822514,P888895,PrairieTel,postpaid,2021-09-08,
 +15553827061,P546735,Nimbus Mobile,postpaid,2018-07-18,
@@ -630,7 +633,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15553883304,P990475,Nimbus Mobile,postpaid,2020-04-21,
 +15553884024,,Nimbus Mobile,prepaid,2014-10-26,
 +15553887129,P445137,Nimbus Mobile,postpaid,2023-01-13,2025-08-11
-+15553894220,P878482,Coastline Cellular,postpaid,2024-02-06,2025-05-13
++15553894220,P878482,Coastline Cellular,postpaid,2024-02-06,
 +15553895966,P787812,PrairieTel,postpaid,2013-06-13,2025-09-06
 +15553899785,P138901,Coastline Cellular,postpaid,2015-02-24,
 +15553908510,P483548,Nimbus Mobile,postpaid,2021-06-25,
@@ -656,7 +659,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15554022756,P842258,Coastline Cellular,postpaid,2025-10-15,
 +15554022911,P821654,Nimbus Mobile,postpaid,2025-05-17,
 +15554032737,P277502,Nimbus Mobile,postpaid,2020-06-07,
-+15554035582,,Nimbus Mobile,prepaid,2025-04-08,
 +15554036052,,PrairieTel,prepaid,2025-05-13,
 +15554041489,P939165,PrairieTel,postpaid,2016-12-08,
 +15554045670,P328931,Coastline Cellular,postpaid,2014-09-16,
@@ -699,7 +701,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15554313671,P875318,PrairieTel,postpaid,2019-12-19,
 +15554315420,,Vertex Wireless,prepaid,2015-03-19,
 +15554323318,P156145,Coastline Cellular,postpaid,2014-02-28,
-+15554330010,P474651,PrairieTel,postpaid,2022-03-29,2025-07-24
++15554330010,P474651,PrairieTel,postpaid,2022-03-29,
 +15554332651,P924222,PrairieTel,postpaid,2017-04-09,
 +15554343493,P736232,PrairieTel,postpaid,2015-06-24,
 +15554345536,P464681,PrairieTel,postpaid,2016-01-13,
@@ -859,7 +861,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15555147745,P322711,PrairieTel,postpaid,2014-06-26,
 +15555149453,P388693,Coastline Cellular,postpaid,2016-01-19,
 +15555150835,P900974,Coastline Cellular,postpaid,2023-01-22,
-+15555156433,P918331,Nimbus Mobile,postpaid,2018-07-26,2025-07-30
++15555156433,P918331,Nimbus Mobile,postpaid,2018-07-26,
 +15555162732,P387504,Coastline Cellular,postpaid,2023-08-20,
 +15555163191,P555909,Nimbus Mobile,postpaid,2018-08-31,
 +15555163897,P993781,PrairieTel,postpaid,2025-02-26,
@@ -1066,7 +1068,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15556051929,,PrairieTel,prepaid,2021-06-20,
 +15556054796,P988576,Vertex Wireless,postpaid,2013-04-21,
 +15556058228,P883368,Vertex Wireless,postpaid,2022-05-01,
-+15556063410,,Vertex Wireless,prepaid,2025-01-01,
 +15556064525,P225990,Vertex Wireless,postpaid,2025-04-11,2025-07-29
 +15556067888,P114916,Nimbus Mobile,postpaid,2017-08-17,
 +15556069976,P797355,Nimbus Mobile,postpaid,2023-10-19,
@@ -1085,6 +1086,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15556105916,P882113,PrairieTel,postpaid,2022-05-13,
 +15556108274,P936545,Coastline Cellular,postpaid,2019-12-21,
 +15556112401,P714301,Nimbus Mobile,postpaid,2025-10-08,
++15556122806,,PrairieTel,prepaid,2025-06-06,
 +15556123754,P832971,Nimbus Mobile,postpaid,2018-04-12,
 +15556133119,,Nimbus Mobile,prepaid,2015-05-13,
 +15556137480,P618231,Coastline Cellular,postpaid,2025-06-19,
@@ -1175,7 +1177,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15556550670,P511045,Nimbus Mobile,postpaid,2017-12-21,
 +15556553399,P386828,PrairieTel,postpaid,2022-05-02,
 +15556560003,P633781,Coastline Cellular,postpaid,2019-12-28,
-+15556561058,P350274,PrairieTel,postpaid,2023-04-08,
++15556561058,P350274,PrairieTel,postpaid,2023-04-08,2025-06-09
 +15556561346,P407809,PrairieTel,postpaid,2018-09-04,
 +15556564011,P592698,Coastline Cellular,postpaid,2021-02-03,
 +15556567980,,Vertex Wireless,prepaid,2019-11-26,2025-10-02
@@ -1254,6 +1256,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15556933998,P199567,Vertex Wireless,postpaid,2016-08-08,
 +15556935460,P359719,Nimbus Mobile,postpaid,2023-04-23,
 +15556937285,P428852,Coastline Cellular,postpaid,2016-05-06,
++15556937602,,Vertex Wireless,prepaid,2025-06-09,
 +15556944301,P927420,Nimbus Mobile,postpaid,2024-07-07,
 +15556946187,P189940,PrairieTel,postpaid,2014-03-25,
 +15556947131,P376757,Vertex Wireless,postpaid,2012-04-19,
@@ -1396,7 +1399,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15557544835,P304542,Coastline Cellular,postpaid,2012-11-02,
 +15557552785,P535720,Nimbus Mobile,postpaid,2014-08-29,
 +15557556246,P534767,Vertex Wireless,postpaid,2016-01-18,
-+15557560725,,Nimbus Mobile,prepaid,2025-07-24,
 +15557564591,P266610,Vertex Wireless,postpaid,2022-04-05,
 +15557564970,P462832,PrairieTel,postpaid,2022-06-21,
 +15557567967,P387826,Nimbus Mobile,postpaid,2013-10-27,
@@ -1512,8 +1514,8 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15558147377,P562656,Coastline Cellular,postpaid,2012-07-09,
 +15558147535,P266657,Nimbus Mobile,postpaid,2020-05-19,
 +15558154586,P679605,PrairieTel,postpaid,2019-12-06,
++15558154840,,PrairieTel,prepaid,2025-08-09,
 +15558161647,P491401,PrairieTel,postpaid,2012-11-13,
-+15558162188,,Nimbus Mobile,prepaid,2025-03-27,
 +15558168310,P555015,Nimbus Mobile,postpaid,2012-02-27,
 +15558172497,P924331,Vertex Wireless,postpaid,2021-02-21,
 +15558188751,P588441,Coastline Cellular,postpaid,2014-04-20,
@@ -1558,7 +1560,7 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15558492171,P606149,Vertex Wireless,postpaid,2023-04-12,
 +15558494679,P671079,PrairieTel,postpaid,2022-05-06,
 +15558495748,P275577,PrairieTel,postpaid,2022-05-12,
-+15558498845,P806542,Nimbus Mobile,postpaid,2014-10-03,
++15558498845,P806542,Nimbus Mobile,postpaid,2014-10-03,2025-05-17
 +15558499172,P631819,Nimbus Mobile,postpaid,2015-08-06,
 +15558508953,P778881,Nimbus Mobile,postpaid,2013-12-11,
 +15558512188,P333862,Vertex Wireless,postpaid,2025-06-30,2025-06-09
@@ -1588,7 +1590,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15558604258,P168990,Coastline Cellular,postpaid,2012-07-15,
 +15558607240,,Nimbus Mobile,prepaid,2019-06-14,
 +15558608613,,Coastline Cellular,prepaid,2019-08-30,
-+15558614856,,Vertex Wireless,prepaid,2025-07-30,
 +15558616868,P994661,Vertex Wireless,postpaid,2015-10-20,
 +15558619844,,Coastline Cellular,prepaid,2012-10-02,
 +15558621059,P216083,PrairieTel,postpaid,2015-06-02,
@@ -1675,7 +1676,6 @@ phone_number,subscriber_id,carrier,plan_type,activation_date,deactivation_date
 +15558924875,P268019,PrairieTel,postpaid,2013-02-21,2025-09-07
 +15558925041,P290314,Vertex Wireless,postpaid,2025-04-28,
 +15558928952,P286260,PrairieTel,postpaid,2020-09-20,
-+15558935376,,PrairieTel,prepaid,2025-05-13,
 +15558939301,P394144,Nimbus Mobile,postpaid,2012-02-01,
 +15558940037,P415790,Nimbus Mobile,postpaid,2013-12-09,
 +15558950515,,Vertex Wireless,prepaid,2012-05-06,

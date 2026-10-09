@@ -202,6 +202,12 @@ class World:
 
     def add_owner(self, owner_id: str, owned_id: str, role: str, pct: float | None, start: date,
                   end: date | None = None, title: str | None = None) -> None:
+        if owner_id in self.P:  # nobody holds a registry role before adulthood
+            adult = date.fromisoformat(self.P[owner_id]["dob"]) + timedelta(days=round(18.5 * 365))
+            if start < adult:
+                start = adult
+                if end is not None and start >= end:
+                    start = end - timedelta(days=365)
         self.tables["ownership"].append({
             "owner_id": owner_id, "owned_id": owned_id, "role": role,
             "ownership_pct": None if pct is None else round(pct, 2), "title": title,
@@ -742,6 +748,11 @@ class World:
                   loan: float = 0.0, sale_date: date | None = None, sale_price: float | None = None,
                   address_id: str | None = None) -> str:
         aid = self.ids.new("AS", 7)
+        if owner in self.P and purchase.year < YEAR:  # no purchases before adulthood
+            purchase = max(purchase, min(date.fromisoformat(self.P[owner]["dob"]) + timedelta(days=20 * 365),
+                                         date(YEAR - 1, 12, 15)))
+        if asset_type == "vehicle" and desc[:4].isdigit():  # model year consistent with purchase date
+            desc = f"{min(purchase.year + self.rng.randint(-4, 1), YEAR + 1)}{desc[4:]}"
         self.tables["assets"].append({
             "asset_id": aid, "asset_type": asset_type, "description": desc, "owner_id": owner,
             "purchase_date": d2s(purchase), "purchase_price": money(price), "financing": financing,
@@ -909,7 +920,7 @@ class World:
             fam = [f for f in fam if self.checking_of(f)]
             for _ in range(rng.randint(0, 7) if fam else 0):
                 to = rng.choice(fam)
-                ts = self.r_dt(Y_START, Y_END - timedelta(days=1))
+                ts = self.r_dt(Y_START + timedelta(hours=1), Y_END - timedelta(days=1))
                 tid = self.add_txn(ts, acct, self.checking_of(to), rng.choice([20, 25, 40, 50, 60, 75, 100, 150, 200, 300, 450]),
                                    "p2p", rng.choice(["dinner", "rent share", "gift", "thanks", "tickets", "groceries", "", "loan",
                                                     "loan repayment", "for you", "gas money", "investment",
@@ -1148,7 +1159,7 @@ class World:
                 self.add_login(ts, pid, device_for(pid, ts), ip_for(pid), "US", "password_reset")
             if rng.random() < 0.035:
                 # legit travel abroad on the usual device
-                cc = rng.choice(N.FOREIGN_TRAVEL_COUNTRIES)
+                cc = rng.choice(N.FOREIGN_TRAVEL_COUNTRIES + N.ATTACKER_COUNTRIES)
                 start = self.r_dt(datetime(YEAR, 3, 1), Y_END - timedelta(days=15))
                 for k in range(rng.randint(2, 5)):
                     ts = start + timedelta(days=rng.randint(0, 10), hours=rng.randint(0, 12))
@@ -1156,6 +1167,9 @@ class World:
                 if rng.random() < 0.25:  # forgot the password on holiday
                     self.add_login(start + timedelta(hours=rng.randint(1, 30)), pid, p["_devices"][0],
                                    self.foreign_ip(), cc, "password_reset")
+                if rng.random() < 0.08:  # lost the SIM abroad
+                    self.add_login(start + timedelta(hours=rng.randint(1, 60)), pid, p["_devices"][0],
+                                   self.foreign_ip(), cc, "change_phone")
                 friends = [c for c, _k in p["_contacts"] if self.checking_of(c)]
                 if friends and self.checking_of(pid) and rng.random() < 0.35:
                     ts = start + timedelta(days=rng.randint(0, 10), hours=rng.randint(0, 12))
@@ -1229,6 +1243,16 @@ class World:
                 acct = self.new_account(p["person_id"], bank, "US", "savings" if rng.random() < 0.6 else "checking",
                                         opened)
                 self.new_2025_accounts.append((p["person_id"], prim, acct, opened))
+
+    def _business_reserve_accounts(self) -> list[tuple[str, str]]:
+        out = []
+        for b in self.businesses:
+            if b["_infra"] is None and b.get("_size", 0) > 0 and self.rng.random() < 0.12:
+                main = self.checking_of(b["business_id"])
+                res = self.new_account(b["business_id"], self.A[main]["bank_name"], "US", "savings",
+                                       self.r_date(date(2012, 1, 1), date(2024, 6, 1)))
+                out.append((main, res))
+        return out
 
     def _business_assets(self) -> None:
         rng = self.rng
@@ -1333,8 +1357,13 @@ class World:
                            if payee["_ind"] == "software" else "SERVICES"])
 
     def _misc_banking_extra(self) -> None:
-        """Owner draws, loans, capital injections, refunds and isolated near-threshold cash deposits."""
+        """Owner draws, loans, capital injections, refunds, sweeps and isolated near-threshold cash deposits."""
         rng = self.rng
+        for main, res in self._business_reserve_accounts():
+            for _ in range(rng.randint(2, 8)):
+                frm, to = (main, res) if rng.random() < 0.6 else (res, main)
+                self.add_txn(self.r_daytime(self.r_date(date(YEAR, 1, 10), date(YEAR, 12, 28))), frm, to,
+                             rng.uniform(5_000, 60_000), "ach", "SWEEP" if frm == main else "TRANSFER FROM RESERVE")
         regular = [b for b in self.businesses if b["_infra"] is None and b.get("_size", 0) > 0]
         lenders = [self.checking_of(b) for b in self.infra["lender"]]
         sba = self.checking_of(self.infra["sba_lender"][0])

@@ -126,17 +126,20 @@ def plant_layering(w: World, task_id: str, difficulty: str, n_hops: int, exit_ki
                 w.add_txn(ts, a, dest, amt, _domestic_channel(w), rng.choice(["", "loan repayment", "invoice"]))
                 new_frontier = [(dest, amt, ts)]
         for a, m, t in frontier:
-            if distractors and rng.random() < 0.7:
+            for kind in ("before", "after"):
+                if not distractors or rng.random() > (0.7 if kind == "before" else 0.6):
+                    continue
                 other = w.checking_of(rng.choice([p for p in w.persons if w.checking_of(p["person_id"])
                                                   and p["person_id"] not in w.reserved][:600])["person_id"])
-                w.add_txn(t - timedelta(days=rng.uniform(1.0, 3.0)), a, other, money(m * rng.uniform(0.9, 0.99)),
-                          _domestic_channel(w), "")
-                decoy_accounts.append(other)
-            if distractors and rng.random() < 0.6:
-                other = w.checking_of(rng.choice([p for p in w.persons if w.checking_of(p["person_id"])
-                                                  and p["person_id"] not in w.reserved][:600])["person_id"])
-                w.add_txn(t + timedelta(hours=rng.uniform(3, 60)), a, other, money(m * rng.uniform(0.08, 0.25)),
-                          _domestic_channel(w), "")
+                if kind == "before":  # unrelated money passing through earlier
+                    tx, amt = t - timedelta(days=rng.uniform(1.0, 3.0)), money(m * rng.uniform(0.9, 0.99))
+                else:  # partial payment out of the account's own unrelated funds
+                    tx, amt = t + timedelta(hours=rng.uniform(3, 60)), money(m * rng.uniform(0.08, 0.25))
+                funder = w.checking_of(rng.choice([b for b in w.businesses if b["_infra"] is None
+                                                   and b.get("_size", 0) > 0])["business_id"])
+                w.add_txn(tx - timedelta(hours=rng.uniform(5, 40)), funder, a, money(amt * rng.uniform(1.01, 1.08)),
+                          rng.choice(["wire", "ach"]), rng.choice(["invoice", "services", "loan", ""]))
+                w.add_txn(tx, a, other, amt, _domestic_channel(w), "")
                 decoy_accounts.append(other)
         frontier = new_frontier
         trail_accounts.extend(nxt)
@@ -172,7 +175,9 @@ Report:
 intermediaries, and (if the funds left the country) the foreign destination account.
 - exit_account: the last account on the trail (the foreign destination account, or the account the cash was \
 withdrawn from).
-- beneficiary_person_id: the natural person who ultimately controls or benefits from the exit account.
+- beneficiary_person_id: the natural person who ultimately receives the benefit of the funds at the exit — for \
+a cash exit, whoever collected the cash; for a foreign account, the ultimate beneficial owner of the account \
+holder (not a director or other nominee).
 """
     fields = [
         field("accounts", "id_set", 0.5, "All account_ids that received the traced funds (order not scored)."),
@@ -412,11 +417,13 @@ online romance/investment scam. On {first[3].date().isoformat()} they sent {fmt_
 Investigate the money-mule network behind this account using transactions and the online-banking audit log.
 
 Report:
-- mule_accounts: account_ids of all mule accounts (accounts that received scam-victim money and passed it on).
-- collector_account: the account where the mule accounts consolidated the proceeds.
+- mule_accounts: account_ids of all first-tier mule accounts (accounts that received money directly from scam \
+victims and passed it on); do not include the collection account.
+- collector_account: the domestic account into which the mule accounts consolidated the proceeds.
 - controller_person_id: the natural person operating the mule network — the person controlling the mule \
 accounts' online banking, who is not one of the recruited account holders.
-- victim_person_ids: person_ids of all scam victims who sent money into the mule accounts.
+- victim_person_ids: person_ids of all scam victims who sent money into the mule accounts (not people making \
+small unrelated transfers).
 """
     fields = [
         field("mule_accounts", "id_set", 0.35, "account_ids of the mule accounts."),
@@ -446,15 +453,18 @@ def plant_ato(w: World, task_id: str) -> None:
         ip = w.foreign_ip()
         t = w.r_dt(datetime(2025, 2, 1), datetime(2025, 11, 20))
         w.add_login(t, pid, dev, ip, cc, "password_reset")
-        w.add_login(t + timedelta(minutes=3), pid, dev, ip, cc, "login")
+        step = t + timedelta(minutes=rng.randint(1, 9), seconds=rng.randint(0, 59))
+        w.add_login(step, pid, dev, ip, cc, "login")
         if rng.random() < 0.6:
-            w.add_login(t + timedelta(minutes=6), pid, dev, ip, cc, "change_phone")
+            step += timedelta(minutes=rng.randint(1, 12), seconds=rng.randint(0, 59))
+            w.add_login(step, pid, dev, ip, cc, "change_phone")
         mule = w.pick(_young)[0]
         macct = new_personal_account(w, mule["person_id"], t.date() - timedelta(days=rng.randint(10, 60)))
         light_activity(w, macct, mule["person_id"], date(2025, 1, 1), date(2025, 12, 20), 3)
-        w.add_login(t + timedelta(minutes=9), pid, dev, ip, cc, "add_payee")
+        step += timedelta(minutes=rng.randint(2, 25), seconds=rng.randint(0, 59))
+        w.add_login(step, pid, dev, ip, cc, "add_payee")
         k = rng.choice([1, 2])
-        ts = t + timedelta(minutes=12)
+        ts = step + timedelta(minutes=rng.randint(1, 15), seconds=rng.randint(0, 59))
         for _ in range(k):
             amt = odd_amount(w, 3_800, 19_000)
             tid = w.add_txn(ts, vacct, macct, amt, rng.choice(["wire", "p2p"]), "")
@@ -476,7 +486,7 @@ def plant_ato(w: World, task_id: str) -> None:
     w.add_login(t + timedelta(minutes=14), d["person_id"], nd, d["_home_ip"], "US", "transfer", tid)
     w.add_asset("vehicle", w._vehicle_desc(price), d["person_id"], t.date(), price, "cash")
     for _ in range(3):
-        ts = t + timedelta(days=rng.randint(2, 60))
+        ts = w.r_dt(t + timedelta(days=2), t + timedelta(days=60))
         w.add_login(ts, d["person_id"], nd, d["_home_ip"], "US", "login")
     # decoy B: traveller on usual device abroad pays a new payee
     tr = w.pick(lambda p: adult_customer(p, 25, 70) and p["_online"])[0]
@@ -499,7 +509,8 @@ customer's credentials and moves money out to an account they control.
 
 Using the online-banking audit log together with the transaction records, identify every fraudulent transfer \
 resulting from an account takeover, and the customers who were victimised. Be careful not to flag customers \
-who were merely travelling, changed phones, or made a legitimate large purchase.
+who were merely travelling, changed phones, or made a legitimate large purchase. Money-mule accounts operated \
+with their holders' cooperation are a different typology and are not account takeovers.
 
 Report:
 - fraudulent_txn_ids: txn_ids of all transfers made by account-takeover attackers.

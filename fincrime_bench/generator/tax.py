@@ -83,6 +83,11 @@ def build_tax_background(w: World) -> None:
         return iid
 
     w.add_info_return = info
+    payers = [b for b in w.businesses if b["_infra"] is None and b.get("_size", 0) > 0]
+    for p in w.persons:
+        if p["_age"] >= 21 and (p["_salary"] > 0 or p["_status"] == "retired") and rng.random() < 0.03:
+            p["_misc"] = money(rng.uniform(600, 9_000))  # prizes, royalties, rents paid by a business
+            info("1099-MISC", rng.choice(payers)["ein"], p["tin"], p["_misc"])
     for p in w.persons:
         for bid, gross, _wh in p["_w2"]:
             info("W-2", w.B[bid]["ein"], p["tin"], gross)
@@ -113,7 +118,7 @@ def build_tax_background(w: World) -> None:
             "interest": sum(a for _b, a in p["_int"]),
             "dividends": sum(a for _b, a in p["_div"]),
             "se_gross": sum(a for _b, a in p["_nec"]) + p["_extra_se"] + p.get("_k1099", 0.0),
-            "other": p["_rent_income"],
+            "other": p["_rent_income"] + p.get("_misc", 0.0),
         }
 
     for hh, members in w.hh_members.items():
@@ -198,7 +203,7 @@ def build_tax_background(w: World) -> None:
             h = acct_holder[t["to_account"]]
             memo = (t["memo"] or "").upper()
             src = acct_holder.get(t["from_account"]) if t["from_account"] else None
-            if "LOAN" in memo or "CAPITAL" in memo or src == h or src in owners_of.get(h, []):
+            if "LOAN" in memo or "CAPITAL" in memo or "REFUND" in memo or src == h or src in owners_of.get(h, []):
                 continue  # not revenue
             inflow[h] += t["amount"]
     w.biz_inflow_at_filing = dict(inflow)

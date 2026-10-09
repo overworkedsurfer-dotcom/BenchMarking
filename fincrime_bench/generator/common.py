@@ -121,6 +121,14 @@ def light_activity(w: World, acct: str, pid: str, start: date, end: date, n: int
     """A handful of small ordinary transactions so a fresh account does not look empty."""
     rng = w.rng
     p = w.P[pid]
+    opened = date.fromisoformat(w.A[acct]["open_date"])
+    start = max(start, opened + timedelta(days=1))
+    if start >= end:
+        return
+    # opening deposit, so everyday spending never overdraws a fresh account
+    w.add_txn(w.r_daytime(max(start - timedelta(days=1), opened if opened.year == 2025 else date(2025, 1, 2)), 9, 16),
+              None, acct, rng.uniform(900, 1_800), "cash_deposit", "", conducted_by=pid,
+              branch=w.branch_for(acct, p["_city"] if p["_city"] in w.city_state else "Austin"))
     for _ in range(n):
         day = w.r_date(start, end)
         r = rng.random()
