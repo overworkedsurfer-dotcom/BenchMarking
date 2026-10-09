@@ -27,7 +27,13 @@ def _parse_kv(items: list[str] | None) -> dict:
 def _load_config(path: str) -> dict:
     p = Path(path)
     if p.suffix == ".toml":
-        import tomllib
+        try:
+            import tomllib
+        except ImportError:  # Python 3.10
+            try:
+                import tomli as tomllib
+            except ImportError:
+                raise SystemExit("TOML configs need Python 3.11+ or `pip install tomli`; or use a .json config")
         return tomllib.loads(p.read_text())
     return json.loads(p.read_text())
 
@@ -35,7 +41,10 @@ def _load_config(path: str) -> dict:
 def _model_from_entry(entry: dict, defaults: dict):
     from .llm import ModelConfig
     e = {**defaults, **entry}
-    e["params"] = {**defaults.get("params", {}), **entry.get("params", {})}
+    if entry.get("replace_params"):
+        e["params"] = dict(entry.get("params", {}))
+    else:
+        e["params"] = {**defaults.get("params", {}), **entry.get("params", {})}
     key = e.get("api_key")
     if not key and e.get("api_key_env"):
         key = os.environ.get(e["api_key_env"])
@@ -94,7 +103,7 @@ def cmd_tasks(a) -> int:
 
 def cmd_run(a) -> int:
     from .agent import AgentConfig
-    from .llm import ModelConfig
+    from .llm import LLMError, ModelConfig
     from .runner import load_benchmark, run_model, select_tasks, slug
     bench = load_benchmark(a.data)
     tasks = select_tasks(bench.tasks, a.tasks, a.category, a.difficulty)
@@ -125,11 +134,17 @@ def cmd_run(a) -> int:
     summaries = []
     for m in models:
         out = Path(a.out) / (a.run_name if a.run_name and len(models) == 1 else slug(m.name))
-        s = run_model(bench, m, out, agent_cfg, tasks, trials=a.trials, concurrency=a.concurrency,
-                      resume=not a.no_resume)
+        try:
+            s = run_model(bench, m, out, agent_cfg, tasks, trials=a.trials, concurrency=a.concurrency,
+                          resume=not a.no_resume)
+        except LLMError as e:
+            print(f"\n!! {m.name}: {e}\n", file=sys.stderr)
+            continue
         summaries.append((m.name, s, out))
         print(f"\n== {m.name}: score {s['score']:.1f} (95% CI {s['ci95'][0]:.1f}-{s['ci95'][1]:.1f}) "
               f"by category {s['by_category']} -> {out}")
+    if not summaries:
+        return 1
     if len(summaries) > 1:
         from .report import leaderboard
         md, _ = leaderboard([o for _n, _s, o in summaries])

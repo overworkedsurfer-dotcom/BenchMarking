@@ -13,7 +13,7 @@ from pathlib import Path
 
 from .agent import Agent, AgentConfig
 from .db import Warehouse, ensure_db
-from .llm import ChatClient, ModelConfig
+from .llm import ChatClient, ModelConfig, preflight
 from .report import summarize
 from .scoring import score_task
 from .tools import Toolbox
@@ -74,7 +74,7 @@ def _builtin_submission(model: str, task: dict, bench: Benchmark, wh: Warehouse)
 
 def run_model(bench: Benchmark, model: ModelConfig, out_dir: str | Path, agent_cfg: AgentConfig | None = None,
               tasks: list[dict] | None = None, trials: int = 1, concurrency: int = 4, resume: bool = True,
-              log=print) -> dict:
+              log=print, preflight_check: bool = True) -> dict:
     agent_cfg = agent_cfg or AgentConfig()
     tasks = tasks if tasks is not None else bench.tasks
     if not bench.keys:
@@ -100,6 +100,8 @@ def run_model(bench: Benchmark, model: ModelConfig, out_dir: str | Path, agent_c
     elif results_path.exists():
         results_path.unlink()
     jobs = [(t, k) for t in tasks for k in range(trials) if (t["task_id"], k) not in done]
+    if jobs and model.base_url != "builtin" and preflight_check:
+        preflight(model)
     lock = threading.Lock()
     log(f"[{model.name}] {len(jobs)} job(s) to run ({len(done)} already done), concurrency={concurrency}")
 

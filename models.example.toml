@@ -1,0 +1,44 @@
+# Copy to models.toml and edit. Run with:
+#   fincrime-bench run --models-config models.toml [--trials 3] [--concurrency 6]
+#
+# Each [[models]] entry needs: name (label in results), model (id sent to the API), base_url,
+# and either api_key_env (preferred: name of an env var holding the key) or api_key.
+# Optional: params (extra request-body fields, merged over [defaults].params unless replace_params = true),
+#           headers, tool_mode ("native" | "text"), timeout_s, max_retries.
+
+[defaults]
+params = { temperature = 0 }
+
+[[models]]
+name = "gpt-4.1"
+model = "gpt-4.1"
+base_url = "https://api.openai.com/v1"
+api_key_env = "OPENAI_API_KEY"
+
+[[models]]
+name = "o4-mini"
+model = "o4-mini"
+base_url = "https://api.openai.com/v1"
+api_key_env = "OPENAI_API_KEY"
+# reasoning models reject temperature: replace (instead of merge with) the default params
+replace_params = true
+params = { reasoning_effort = "medium", max_completion_tokens = 32000 }
+
+[[models]]
+name = "llama-3.3-70b (OpenRouter)"
+model = "meta-llama/llama-3.3-70b-instruct"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+
+[[models]]
+name = "deepseek-chat"
+model = "deepseek-chat"
+base_url = "https://api.deepseek.com/v1"
+api_key_env = "DEEPSEEK_API_KEY"
+
+[[models]]
+name = "qwen2.5-32b (local vLLM)"
+model = "Qwen/Qwen2.5-32B-Instruct"
+base_url = "http://localhost:8000/v1"
+api_key = "EMPTY"
+tool_mode = "text"     # use text mode if the server's function calling is unreliable

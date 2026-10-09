@@ -13,7 +13,7 @@ import ssl
 import time
 import urllib.error
 import urllib.request
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 
 class LLMError(Exception):
@@ -95,3 +95,24 @@ class ChatClient:
             if attempt < self.cfg.max_retries:
                 time.sleep(delay if delay is not None else min(60.0, 2 ** attempt + random.random()))
         raise last or LLMError("request failed")
+
+
+def preflight(cfg: ModelConfig) -> None:
+    """One tiny request to fail fast on bad keys, unknown model names or missing function-calling support."""
+    client = ChatClient(replace(cfg, max_retries=min(cfg.max_retries, 2)))
+    tools = None
+    if cfg.tool_mode == "native":
+        tools = [{"type": "function", "function": {"name": "noop", "description": "Does nothing.",
+                                                    "parameters": {"type": "object", "properties": {}}}}]
+    try:
+        client.chat([{"role": "user", "content": "Reply with the word OK."}], tools=tools)
+    except LLMError as e:
+        hint = ""
+        if e.status == 400 and tools:
+            hint = " If this endpoint does not support function calling, retry with --tool-mode text."
+        elif e.status in (401, 403):
+            hint = " Check the API key (--api-key / --api-key-env)."
+        elif e.status == 404:
+            hint = " Check --base-url (it usually ends in /v1) and the model name."
+        raise LLMError(f"preflight request to {client.url} for model '{cfg.model}' failed: {e}.{hint}",
+                       status=e.status) from e
