@@ -1,0 +1,79 @@
+{
+  "benchmark": "FinCrimeBench",
+  "generator_version": "1.0.0",
+  "seed": 20251,
+  "scale": 1.0,
+  "tables": {
+    "persons": {
+      "rows": 2410,
+      "sha256": "9ded3b9ebf9773c18bb8015125364657d523e8096c30164d4e48c37cdfdd4f01"
+    },
+    "businesses": {
+      "rows": 453,
+      "sha256": "3a582b74d042a7085e18a988e213a20cef44c05fbfa5dd2161cf44b1c94ce260"
+    },
+    "addresses": {
+      "rows": 1429,
+      "sha256": "d9d1f2256864064cc181de107bddf8454edfdee76734e57ff5962cb9806c4ef1"
+    },
+    "ownership": {
+      "rows": 908,
+      "sha256": "023eb9d3d50c5cc7d03bbe2b2032494b0d5b951dd049d70a658488fb1b956999"
+    },
+    "relationships": {
+      "rows": 2872,
+      "sha256": "b79ad3cd7907dacc64617b888e0ffb1c90a156e10a8a976a96e3b61a5e7da574"
+    },
+    "accounts": {
+      "rows": 2609,
+      "sha256": "0d012aff046e0ecdd9d1eec41668daa511fb3d7db02817e27b3606a11a5b6a20"
+    },
+    "transactions": {
+      "rows": 108547,
+      "sha256": "ad7611a37eac8498683c0db006eda25f0b89e83c2a2d7acc07a9454939c8d261"
+    },
+    "branches": {
+      "rows": 51,
+      "sha256": "87468ebd271454764a27ea372ea748033818f773e75ec05f42f46b9f4df6fc70"
+    },
+    "logins": {
+      "rows": 17916,
+      "sha256": "9a4d20a88eb2013243f48b2fe9e8fded1d5ba7fb13fb7ed881d2cdb121ebb65d"
+    },
+    "phones": {
+      "rows": 1897,
+      "sha256": "1717df8434b588e0fcaacd2d8c7b1d8cf54950434a7737b6a9ec6d0ea5343586"
+    },
+    "calls": {
+      "rows": 29385,
+      "sha256": "0350a9bff1c878b69f3ace08e0d381a314a4616d1ed17647b20bfff729f193e9"
+    },
+    "cell_towers": {
+      "rows": 60,
+      "sha256": "9b314730f112fd34095071f6459763f6f1f66a9f855aaa7dba18d102533b0a39"
+    },
+    "tax_returns": {
+      "rows": 1318,
+      "sha256": "135826f21fb1b4eec0f0458d85974218cc743ad9157e663e800b26b5680e93fa"
+    },
+    "return_dependents": {
+      "rows": 700,
+      "sha256": "4ec083cc35fea67091f93b3dcc21c51b37afe5d613beef080b405977504e9d50"
+    },
+    "info_returns": {
+      "rows": 2657,
+      "sha256": "cc9869b533de6d1d57074d060de878dc9078063a4d611fe17e07835feeaa4e7d"
+    },
+    "preparers": {
+      "rows": 20,
+      "sha256": "ccb3d85d3bc82f5f776904c78c067b6aff821cc2bd2fcac33e4d3964a3aaa4ba"
+    },
+    "assets": {
+      "rows": 1611,
+      "sha256": "69ae824de2e53b08ca4bfcf62a9ebfaae8082b44670ef9a75f347d9135c55a9d"
+    }
+  },
+  "tasks": 27,
+  "tasks_sha256": "8bff070b064c042824919002f555ead278543a070eeddabea9a52111e3b2bf2c",
+  "answers_sha256": "d0d42995d19f11070ee274a62860103ae28e49c51ca2f090dea6067c57c986a4"
+}

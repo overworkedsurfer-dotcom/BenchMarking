@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fincrime-bench"
+version = "1.0.0"
+description = "Synthetic financial-crime investigation benchmark (AML, tax evasion, call chaining) for LLM agents"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+fincrime-bench = "fincrime_bench.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["fincrime_bench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: regenerates extra worlds (deselect with -m 'not slow')"]
