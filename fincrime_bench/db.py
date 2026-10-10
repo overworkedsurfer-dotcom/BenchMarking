@@ -71,25 +71,30 @@ def _convert(v: str, ctype: str):
     return v
 
 
-def build_db(data_dir: str | Path, db_path: str | Path) -> None:
-    data_dir = Path(data_dir)
+def _csv_rows(data_dir: Path):
+    for name, spec in TABLES.items():
+        names = [c[0] for c in spec["columns"]]
+        with open(data_dir / f"{name}.csv", newline="", encoding="utf-8") as f:
+            rd = csv.reader(f)
+            header = next(rd)
+            if header != names:
+                raise ValueError(f"{name}.csv header mismatch: {header} != {names}")
+            yield name, rd
+
+
+def build_db_from(tables, db_path: str | Path) -> None:
+    """Build a warehouse from ``(table_name, iterable of string rows in schema column order)`` pairs."""
     tmp = Path(f"{db_path}.tmp-{os.getpid()}-{time.time_ns()}")
     conn = sqlite3.connect(tmp)
     try:
         for name, spec in ALL_TABLES.items():
             cols = ", ".join(f'"{c[0]}" {c[1]}' for c in spec["columns"])
             conn.execute(f'CREATE TABLE "{name}" ({cols})')
-        for name, spec in TABLES.items():
-            types = [c[1] for c in spec["columns"]]
-            names = [c[0] for c in spec["columns"]]
-            with open(data_dir / f"{name}.csv", newline="", encoding="utf-8") as f:
-                rd = csv.reader(f)
-                header = next(rd)
-                if header != names:
-                    raise ValueError(f"{name}.csv header mismatch: {header} != {names}")
-                rows = ([_convert(v, t) for v, t in zip(row, types)] for row in rd)
-                ph = ", ".join("?" for _ in names)
-                conn.executemany(f'INSERT INTO "{name}" VALUES ({ph})', rows)
+        for name, raw_rows in tables:
+            types = [c[1] for c in TABLES[name]["columns"]]
+            rows = ([_convert(v, t) for v, t in zip(row, types)] for row in raw_rows)
+            ph = ", ".join("?" for _ in types)
+            conn.executemany(f'INSERT INTO "{name}" VALUES ({ph})', rows)
         for sql in GRAPH_SQL:
             conn.execute(sql)
         for table, col in INDEXES:
@@ -102,6 +107,10 @@ def build_db(data_dir: str | Path, db_path: str | Path) -> None:
     finally:
         conn.close()
     os.replace(tmp, db_path)
+
+
+def build_db(data_dir: str | Path, db_path: str | Path) -> None:
+    build_db_from(_csv_rows(Path(data_dir)), db_path)
 
 
 def ensure_db(data_dir: str | Path, cache_dir: str | Path | None = None) -> Path:

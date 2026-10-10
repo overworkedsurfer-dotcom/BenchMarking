@@ -59,8 +59,9 @@ def _model_from_entry(entry: dict, defaults: dict):
 # ------------------------------------------------------------------ commands
 def cmd_generate(a) -> int:
     from .generator import generate
-    m = generate(seed=a.seed, out_dir=a.out, scale=a.scale)
-    print(f"wrote {a.out}: {m['tasks']} tasks, " + ", ".join(f"{k}={v['rows']}" for k, v in m["tables"].items()))
+    m = generate(seed=a.seed, out_dir=a.out, scale=a.scale, dossier_tokens=a.dossier_tokens)
+    print(f"wrote {a.out}: {m['tasks']} tasks, {m['sessions']} longevity sessions ({m['session_rounds']} rounds), "
+          + ", ".join(f"{k}={v['rows']}" for k, v in m["tables"].items()))
     return 0
 
 
@@ -80,6 +81,20 @@ def cmd_validate(a) -> int:
         if flag == "FAIL":
             print("     ", {k: v for k, v in r["fields"].items() if v["score"] < 1})
     print(f"\n{len(bench.tasks) - bad}/{len(bench.tasks)} tasks solved by the reference solvers")
+    if bench.sessions:
+        from .sessions import validate_sessions
+        tasks = {t["task_id"]: t for t in bench.tasks}
+        res = validate_sessions(bench.sessions, bench.session_keys, tasks, wh, bench.data_dir / ".cache")
+        sbad = [r for r in res if r["score"] < 0.9999]
+        for r in sbad:
+            print(f"FAIL {r['session_id']} round {r['round']} ({r['kind']}, {r['source_task']}): {r['score']:.3f}")
+        cf = sum(1 for r in res if r["kind"] == "case_file")
+        print(f"{len(res) - len(sbad)}/{len(res)} longevity rounds validated "
+              f"({cf} case-file rounds solved from the case-file text alone)")
+        for sx in bench.sessions:
+            print(f"   {sx['session_id']}: {len(sx['rounds'])} rounds, case file {sx['dossier_chars']:,} chars "
+                  f"(>= {sx['dossier_est_tokens']:,} tokens est.)")
+        bad += len(sbad)
     return 1 if bad else 0
 
 
@@ -87,6 +102,15 @@ def cmd_tasks(a) -> int:
     from .runner import load_benchmark
     from .tools import answer_format
     bench = load_benchmark(a.data)
+    sess = {sx["session_id"]: sx for sx in bench.sessions}
+    if a.show and a.show in sess:
+        sx = sess[a.show]
+        print(f"# {sx['session_id']} — {sx['title']}\ncase file: {sx['dossier_chars']:,} chars "
+              f"(>= {sx['dossier_est_tokens']:,} tokens est.), rows: {sx['case_file_rows']}\n")
+        for r in sx["rounds"]:
+            print(f"--- round {r['round']} [{r['kind']}{', tools' if r['tools'] else ', no tools'}] "
+                  f"{r.get('source_task') or ''}\n{r['prompt']}\n\n{answer_format(r)}\n")
+        return 0
     if a.show:
         t = next((t for t in bench.tasks if t["task_id"] == a.show), None)
         if not t:
@@ -98,6 +122,14 @@ def cmd_tasks(a) -> int:
     print(f"{'task_id':20s} {'category':14s} {'difficulty':10s} title")
     for t in bench.tasks:
         print(f"{t['task_id']:20s} {t['category']:14s} {t['difficulty']:10s} {t['title']}")
+    if bench.sessions:
+        print(f"\n{'session_id':20s} {'rounds':14s} {'case file':10s} title")
+        for sx in bench.sessions:
+            kinds = "/".join(str(sum(1 for r in sx["rounds"] if r["kind"] == k)) for k in
+                             ("case_file", "investigation", "recall", "synthesis"))
+            print(f"{sx['session_id']:20s} {len(sx['rounds']):<3d}({kinds:9s}) {sx['dossier_est_tokens']:>6,}+ tok "
+                  f"{sx['title']}")
+        print("(rounds: case_file/investigation/recall/synthesis; `tasks --show long_01` prints a session)")
     return 0
 
 
@@ -106,9 +138,13 @@ def cmd_run(a) -> int:
     from .llm import LLMError, ModelConfig
     from .runner import load_benchmark, run_model, select_tasks, slug
     bench = load_benchmark(a.data)
-    tasks = select_tasks(bench.tasks, a.tasks, a.category, a.difficulty)
-    if not tasks:
-        print("no tasks selected")
+    tasks = select_tasks(bench.tasks, a.tasks, a.category, a.difficulty) if a.suite in ("all", "tasks") else []
+    sessions = [] if a.suite == "tasks" else [sx for sx in bench.sessions if not a.sessions
+                                              or sx["session_id"] in a.sessions]
+    if a.suite == "all" and (a.tasks or a.category or a.difficulty) and not a.sessions:
+        sessions = []  # a task filter alone means "just these tasks"
+    if not tasks and not sessions:
+        print("nothing selected (check --suite / --tasks / --sessions)")
         return 1
     models: list[ModelConfig] = []
     if a.models_config:
@@ -130,19 +166,27 @@ def cmd_run(a) -> int:
         print("give --model (with --base-url/--api-key) or --models-config")
         return 2
     agent_cfg = AgentConfig(max_tool_calls=a.max_tool_calls, max_turns=a.max_turns, toolset=a.toolset,
-                            max_tool_output_chars=a.max_tool_output_chars)
+                            max_tool_output_chars=a.max_tool_output_chars,
+                            session_tool_calls=a.session_max_tool_calls, session_max_turns=a.session_max_turns,
+                            session_tool_output_chars=a.session_tool_output_chars)
     summaries = []
     for m in models:
         out = Path(a.out) / (a.run_name if a.run_name and len(models) == 1 else slug(m.name))
         try:
             s = run_model(bench, m, out, agent_cfg, tasks, trials=a.trials, concurrency=a.concurrency,
-                          resume=not a.no_resume)
+                          resume=not a.no_resume, sessions=sessions)
         except LLMError as e:
             print(f"\n!! {m.name}: {e}\n", file=sys.stderr)
             continue
         summaries.append((m.name, s, out))
-        print(f"\n== {m.name}: score {s['score']:.1f} (95% CI {s['ci95'][0]:.1f}-{s['ci95'][1]:.1f}) "
-              f"by category {s['by_category']} -> {out}")
+        if "score" in s:
+            print(f"\n== {m.name}: score {s['score']:.1f} (95% CI {s['ci95'][0]:.1f}-{s['ci95'][1]:.1f}) "
+                  f"by category {s['by_category']} -> {out}")
+        if "longevity" in s:
+            lv = s["longevity"]
+            print(f"== {m.name}: longevity {lv['score']:.1f} by round kind {lv['by_kind']}, peak context "
+                  f"{lv['peak_context_tokens']:,} tokens ({lv['context_source']}), rounds lost "
+                  f"{lv['rounds_lost']}/{lv['rounds_total']}")
     if not summaries:
         return 1
     if len(summaries) > 1:
@@ -167,10 +211,11 @@ def cmd_leaderboard(a) -> int:
     dirs = []
     for d in a.run_dirs:
         p = Path(d)
-        if (p / "results.jsonl").exists():
+        if (p / "results.jsonl").exists() or (p / "session_results.jsonl").exists():
             dirs.append(p)
         elif p.is_dir():
-            dirs += sorted(x for x in p.iterdir() if (x / "results.jsonl").exists())
+            dirs += sorted(x for x in p.iterdir()
+                           if (x / "results.jsonl").exists() or (x / "session_results.jsonl").exists())
     md, rows = leaderboard(dirs)
     if a.out:
         Path(a.out).write_text(md)
@@ -206,15 +251,17 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--seed", type=int, default=20251)
     p.add_argument("--scale", type=float, default=1.0, help="population scale (1.0 = ~2,400 persons)")
     p.add_argument("--out", default=DEFAULT_DATA)
+    p.add_argument("--dossier-tokens", type=int, default=32000,
+                   help="minimum case-file size for longevity sessions (conservative token estimate)")
     p.set_defaults(fn=cmd_generate)
 
     p = sub.add_parser("validate", help="check every task is solvable by the reference solvers")
     p.add_argument("--data", default=DEFAULT_DATA)
     p.set_defaults(fn=cmd_validate)
 
-    p = sub.add_parser("tasks", help="list tasks or show one prompt")
+    p = sub.add_parser("tasks", help="list tasks and longevity sessions, or show one")
     p.add_argument("--data", default=DEFAULT_DATA)
-    p.add_argument("--show", help="task_id to print")
+    p.add_argument("--show", help="task_id or session_id to print")
     p.set_defaults(fn=cmd_tasks)
 
     p = sub.add_parser("run", help="run model(s) on the benchmark")
@@ -233,6 +280,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--timeout", type=float, default=600.0, help="per-request timeout seconds")
     p.add_argument("--models-config", help="TOML/JSON file listing several models (see models.example.toml)")
     p.add_argument("--only", nargs="*", help="with --models-config: run only these model names")
+    p.add_argument("--suite", choices=["all", "tasks", "longevity"], default="all",
+                   help="tasks = standalone questions; longevity = multi-round sessions with >=32k-token context")
+    p.add_argument("--sessions", nargs="*", help="longevity session ids to run (default all)")
+    p.add_argument("--session-max-tool-calls", type=int, default=20, help="tool calls per session round")
+    p.add_argument("--session-max-turns", type=int, default=30, help="model turns per session round")
+    p.add_argument("--session-tool-output-chars", type=int, default=6000,
+                   help="truncate each tool result inside sessions")
     p.add_argument("--tasks", nargs="*", help="task ids to run (default all)")
     p.add_argument("--category", nargs="*", help="filter: aml tax ownership telecom investigation")
     p.add_argument("--difficulty", nargs="*", help="filter: easy medium hard")

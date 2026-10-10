@@ -176,3 +176,22 @@ The starting point is a taxpayer whose cash home purchase dwarfs their income. T
 3. the LLC's real funding source: monthly invoices to the taxpayer's own employer, where the taxpayer is an officer
 
 Report the funding account, conduit, source company, nominee, amount diverted and unreported income.
+
+---
+
+## Longevity sessions
+
+Four sessions put every task above into long, multi-round conversations (`sessions.jsonl`). Each opens with a **case file** of at least 32k tokens and then asks its rounds one at a time:
+
+| Session | Round plan (CF = case file, tools off · INV = tools on · R = recall · S = synthesis) |
+|---|---|
+| `long_01` Laundering desk | 1 CF `aml_layering_03` · 2 INV `aml_layering_01` · 3 INV `aml_layering_02` · 4 CF `aml_smurfing_01` · 5 INV `aml_roundtrip_01` · 6 INV `own_ubo_02` · 7 CF `aml_layering_04` · 8 R round-1 txn · 9 R round-3 exit account · 10 S beneficiaries/controllers |
+| `long_02` Telecom and fraud rings | 1 CF `tel_chain_01` · 2 INV `aml_mule_01` · 3 INV `tel_chain_02` · 4 CF `tel_burner_01` · 5 INV `x_capstone_01` · 6 INV `tel_burner_02` · 7 R round-1 crew · 8 R round-2 collector · 9 S bosses/controller/organizer |
+| `long_03` Tax desk | 1 CF `tax_networth_01` · 2 INV `tax_unreported_01` · 3 CF `tax_dependents_01` · 4 INV `tax_skimming_01` · 5 INV `tax_lifestyle_01` · 6 CF `tax_preparer_01` · 7 INV `x_capstone_02` · 8 R round-1 taxpayer · 9 R round-6 preparer · 10 S flagged people and nominee |
+| `long_04` Corporate and account security | 1 CF `own_ubo_01` · 2 INV `aml_ato_01` · 3 CF `aml_structuring_01` · 4 INV `own_kickback_01` · 5 INV `aml_mule_02` · 6 CF `own_ubo_03` · 7 INV `own_kickback_02` · 8 R round-1 company · 9 R round-4 vendor · 10 S insiders/controller/owner |
+
+**Design points:**
+- **Long-range retrieval.** Case-file rounds appear early (round 1) and late (rounds 6–7). Late case-file rounds make the model retrieve evidence from tens of thousands of tokens back, after several tool-heavy investigations.
+- **Hidden evidence.** Each case file buries the evidence among unrelated but complete records of the same kinds (other accounts' statements, other phones' calls, other companies' registry entries, other tax units). The case file states that it is complete for the entities its questions concern.
+- **Validated.** `validate` parses each case file back into tables and runs the reference solvers on that extract alone, so every case-file round is provably answerable from the text the model receives.
+- **Tools off where it matters.** In tool-disabled rounds a native-tools model is only offered `submit_answer`. Any other tool call (native or text mode) returns an error telling the model to answer from the conversation.

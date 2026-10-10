@@ -92,15 +92,80 @@ def summarize(records: list[dict], tasks: list[dict]) -> dict:
     }
 
 
+# ------------------------------------------------------------------ longevity
+CONTEXT_BUCKETS = [(0, 32_000, "<32k"), (32_000, 64_000, "32-64k"), (64_000, 96_000, "64-96k"),
+                   (96_000, 10 ** 12, "96k+")]
+ROUND_KINDS = ["case_file", "investigation", "recall", "synthesis"]
+LOST_STATUSES = ("api_error", "context_overflow", "harness_error")
+
+
+def round_context(r: dict) -> int:
+    st = r.get("stats") or {}
+    return int(st.get("context_tokens_start") or st.get("est_context_start") or 0)
+
+
+def summarize_sessions(records: list[dict], sessions: list[dict]) -> dict:
+    """Longevity metrics: how well a model keeps performing as one conversation grows past 32k tokens."""
+    by_sr: dict[tuple[str, int], list[dict]] = defaultdict(list)
+    for rec in records:
+        for r in rec["rounds"]:
+            by_sr[(rec["session_id"], r["round"])].append(r)
+    rounds: list[dict] = []
+    for sx in sessions:  # rounds never run count as zero
+        for rnd in sx["rounds"]:
+            rs = by_sr.get((sx["session_id"], rnd["round"]), [])
+            rounds.append({"session_id": sx["session_id"], "round": rnd["round"], "kind": rnd["kind"],
+                           "source_task": rnd.get("source_task"), "weight": rnd["weight"],
+                           "score": statistics.fmean(r["score"] for r in rs) if rs else 0.0,
+                           "context": statistics.fmean(round_context(r) for r in rs) if rs else 0,
+                           "ran": bool(rs) and any(r["status"] not in LOST_STATUSES for r in rs)})
+    items = [(r["score"], r["weight"]) for r in rounds]
+    lo, hi = bootstrap_ci(items)
+
+    def mean100(rs: list[dict]):
+        return round(100 * statistics.fmean(r["score"] for r in rs), 2) if rs else None
+
+    by_ctx = {}
+    for a, b, label in CONTEXT_BUCKETS:
+        rs = [r for r in rounds if r["ran"] and r["context"] > 0 and a <= r["context"] < b]
+        by_ctx[label] = {"score": mean100(rs), "rounds": len(rs)}
+    firsts = [round_context(r) for rec in records for r in rec["rounds"][:1] if round_context(r)]
+    src = "api" if any(rec.get("peak_context_source") == "api" for rec in records) else "estimate"
+    all_rounds = [r for rec in records for r in rec["rounds"]]
+    return {
+        "score": round(weighted(items), 2) if items else 0.0,
+        "ci95": [round(lo, 2), round(hi, 2)],
+        "by_kind": {k: mean100([r for r in rounds if r["kind"] == k]) for k in ROUND_KINDS},
+        "by_context": by_ctx,
+        "by_position": {"rounds 1-3": mean100([r for r in rounds if r["round"] <= 3]),
+                        "rounds 4-6": mean100([r for r in rounds if 4 <= r["round"] <= 6]),
+                        "rounds 7+": mean100([r for r in rounds if r["round"] >= 7])},
+        "peak_context_tokens": max((rec.get("peak_context_tokens", 0) for rec in records), default=0),
+        "min_first_round_context": min(firsts) if firsts else 0,
+        "context_source": src,
+        "rounds_total": len(rounds),
+        "rounds_lost": sum(1 for r in all_rounds if r["status"] in LOST_STATUSES),
+        "session_scores": {rec["session_id"]: rec["score"] for rec in records},
+        "in_session_task_scores": {r["source_task"]: round(r["score"], 4) for r in rounds if r["source_task"]},
+        "round_scores": {f"{r['session_id']}/r{r['round']}": round(r["score"], 4) for r in rounds},
+    }
+
+
 # ---------------------------------------------------------------- leaderboard
 def _load_run(run_dir: Path) -> tuple[str, list[dict]]:
-    records = [json.loads(line) for line in open(run_dir / "results.jsonl", encoding="utf-8") if line.strip()]
+    p = run_dir / "results.jsonl"
+    records = [json.loads(line) for line in open(p, encoding="utf-8") if line.strip()] if p.exists() else []
     name = run_dir.name
     if (run_dir / "run.json").exists():
         name = json.loads((run_dir / "run.json").read_text())["model"]["name"]
     elif records:
         name = records[0]["model"]
     return name, records
+
+
+def _load_sessions(run_dir: Path) -> list[dict]:
+    p = run_dir / "session_results.jsonl"
+    return [json.loads(line) for line in open(p, encoding="utf-8") if line.strip()] if p.exists() else []
 
 
 def _fmt(v, pct: bool = False) -> str:
@@ -110,11 +175,13 @@ def _fmt(v, pct: bool = False) -> str:
 
 
 def leaderboard(run_dirs: list[str | Path]) -> tuple[str, list[dict]]:
-    runs = []
+    runs, session_runs = [], []
     for d in run_dirs:
         d = Path(d)
-        if (d / "results.jsonl").exists():
-            runs.append(_load_run(d))
+        if (d / "results.jsonl").exists() or (d / "session_results.jsonl").exists():
+            name, recs = _load_run(d)
+            runs.append((name, recs))
+            session_runs.append((name, recs, _load_sessions(d)))
     if not runs:
         raise ValueError("no runs with results.jsonl found")
     # common task universe: union of tasks seen in any run (missing tasks score 0)
@@ -126,10 +193,14 @@ def leaderboard(run_dirs: list[str | Path]) -> tuple[str, list[dict]]:
     tasks = sorted(meta.values(), key=lambda t: t["task_id"])
     rows = []
     for name, recs in runs:
+        if not recs:
+            continue
         s = summarize(recs, tasks)
         s["model"] = name
         rows.append(s)
     rows.sort(key=lambda s: -s["score"])
+    if not rows:
+        return _longevity_table(session_runs, {}), []
 
     lines = ["# FinCrimeBench leaderboard", "",
              f"{len(tasks)} tasks · score = difficulty-weighted mean task score × 100 (easy 1, medium 2, hard 3) · "
@@ -174,4 +245,51 @@ def leaderboard(run_dirs: list[str | Path]) -> tuple[str, list[dict]]:
             boots.sort()
             lines.append(f"| {a['model']} | {b['model']} | {wins} | {losses} | {len(pairs) - wins - losses} | "
                          f"{delta:+.1f} | {boots[50]:+.1f} to {boots[1949]:+.1f} |")
-    return "\n".join(lines) + "\n", rows
+    standalone = {s["model"]: s["task_scores"] for s in rows}
+    return "\n".join(lines) + "\n" + _longevity_table(session_runs, standalone), rows
+
+
+def _longevity_table(session_runs: list[tuple[str, list[dict], list[dict]]], standalone: dict) -> str:
+    """Leaderboard section for the multi-round, >=32k-token sessions."""
+    lrows = []
+    seen: dict[str, dict] = {}
+    for _name, _recs, srecs in session_runs:
+        for rec in srecs:
+            seen.setdefault(rec["session_id"], {"session_id": rec["session_id"],
+                                                "rounds": [{"round": r["round"], "kind": r["kind"],
+                                                            "source_task": r["source_task"], "weight": r["weight"]}
+                                                           for r in rec["rounds"]]})
+    sessions = [seen[k] for k in sorted(seen)]
+    for name, _recs, srecs in session_runs:
+        if not srecs:
+            continue
+        ls = summarize_sessions(srecs, sessions)
+        st = standalone.get(name, {})
+        pairs = [(v, st[t]) for t, v in ls["in_session_task_scores"].items() if t in st]
+        ls["delta"] = round(100 * statistics.fmean(a - b for a, b in pairs), 1) if pairs else None
+        ls["model"] = name
+        lrows.append(ls)
+    if not lrows:
+        return ""
+    lrows.sort(key=lambda r: -r["score"])
+    out = ["", "## Longevity (multi-round sessions, >=32k-token context)", "",
+           "Each session is one conversation: a case file of at least 32k tokens, then ~10 rounds of questions. "
+           "Case-file, recall and synthesis rounds have tools disabled. Context buckets use the prompt size at the "
+           "start of each round (API-reported when available). Δ standalone = in-session minus standalone score on "
+           "the same tasks (negative means the model degrades in long conversations).", ""]
+    hdr = ["Rank", "Model", "Longevity", "95% CI", "Case file", "Investigation", "Recall", "Synthesis", "<32k",
+           "32-64k", "64-96k", "96k+", "Late rounds (7+)", "Δ standalone", "Peak context", "Rounds lost"]
+    out.append("| " + " | ".join(hdr) + " |")
+    out.append("|" + "|".join("---" for _ in hdr) + "|")
+    for i, r in enumerate(lrows, 1):
+        bk = r["by_kind"]
+        ctx = r["by_context"]
+        cells = [str(i), r["model"], f"**{r['score']:.1f}**", f"{r['ci95'][0]:.1f}–{r['ci95'][1]:.1f}"]
+        cells += [_fmt(bk.get(k)) for k in ROUND_KINDS]
+        cells += [_fmt(ctx[label]["score"]) + (f" ({ctx[label]['rounds']})" if ctx[label]["rounds"] else "")
+                  for _a, _b, label in CONTEXT_BUCKETS]
+        cells += [_fmt(r["by_position"]["rounds 7+"]), "–" if r["delta"] is None else f"{r['delta']:+.1f}",
+                  f"{r['peak_context_tokens']:,}" + ("" if r["context_source"] == "api" else " (est)"),
+                  f"{r['rounds_lost']}/{r['rounds_total']}"]
+        out.append("| " + " | ".join(cells) + " |")
+    return "\n".join(out) + "\n"

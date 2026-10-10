@@ -74,6 +74,10 @@
     }
   },
   "tasks": 27,
+  "sessions": 4,
+  "session_rounds": 39,
   "tasks_sha256": "19548b1c3c214eecc8d569eb11b981ef3cadab314b8a08ce917cd74e9fcd707c",
-  "answers_sha256": "5841d671cffed18067061cda811b264ca90572c78b24b654e83721c165bb1c2b"
+  "answers_sha256": "5841d671cffed18067061cda811b264ca90572c78b24b654e83721c165bb1c2b",
+  "sessions_sha256": "1070f5ed72d5f313fca3ad1dae2025983cdc184b653618deb1723d0cd4181f36",
+  "session_answers_sha256": "f9f552e717922ebaa967cf6a9c9467845a4dc71de1b13c6828daea34a27c9bec"
 }

@@ -14,6 +14,7 @@ from pathlib import Path
 
 from ..schema import TABLES, column_names
 from . import aml, capstone, ownership, taxfraud, telecom
+from .sessions import DEFAULT_DOSSIER_TOKENS, build_sessions
 from .tax import build_tax_background
 from .world import World
 
@@ -21,7 +22,7 @@ GENERATOR_VERSION = "1.0.0"
 DEFAULT_SEED = 20251
 
 
-def build_world(seed: int = DEFAULT_SEED, scale: float = 1.0) -> World:
+def build_world(seed: int = DEFAULT_SEED, scale: float = 1.0, dossier_tokens: int = DEFAULT_DOSSIER_TOKENS) -> World:
     w = World(seed, scale)
     w.build_background()
     build_tax_background(w)
@@ -61,6 +62,7 @@ def build_world(seed: int = DEFAULT_SEED, scale: float = 1.0) -> World:
     taxfraud.plant_skimming(w, "tax_skimming_01")
 
     finalize(w)
+    w.sessions, w.session_answers = build_sessions(w, dossier_tokens)
     return w
 
 
@@ -134,7 +136,15 @@ def write_world(w: World, out_dir: str | Path) -> dict:
     with open(out / "answers.jsonl", "w", encoding="utf-8") as f:
         for a in w.answers:
             f.write(json.dumps(a, ensure_ascii=False) + "\n")
-    for extra in ("tasks.jsonl", "answers.jsonl"):
+    with open(out / "sessions.jsonl", "w", encoding="utf-8") as f:
+        for sess in w.sessions:
+            f.write(json.dumps(sess, ensure_ascii=False) + "\n")
+    with open(out / "session_answers.jsonl", "w", encoding="utf-8") as f:
+        for a in w.session_answers:
+            f.write(json.dumps(a, ensure_ascii=False) + "\n")
+    manifest["sessions"] = len(w.sessions)
+    manifest["session_rounds"] = sum(len(sx["rounds"]) for sx in w.sessions)
+    for extra in ("tasks.jsonl", "answers.jsonl", "sessions.jsonl", "session_answers.jsonl"):
         manifest[extra.replace(".jsonl", "_sha256")] = _sha256(out / extra)
     with open(out / "manifest.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2)
@@ -142,5 +152,6 @@ def write_world(w: World, out_dir: str | Path) -> dict:
     return manifest
 
 
-def generate(seed: int = DEFAULT_SEED, out_dir: str | Path = "data/public", scale: float = 1.0) -> dict:
-    return write_world(build_world(seed, scale), out_dir)
+def generate(seed: int = DEFAULT_SEED, out_dir: str | Path = "data/public", scale: float = 1.0,
+             dossier_tokens: int = DEFAULT_DOSSIER_TOKENS) -> dict:
+    return write_world(build_world(seed, scale, dossier_tokens), out_dir)

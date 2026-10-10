@@ -1,6 +1,13 @@
 # Dataset
 
-`data/public/` is one synthetic world (seed 20251, generator 1.0.0) covering calendar year 2025. It contains 17 CSV tables plus `tasks.jsonl` (prompts and answer schemas), `answers.jsonl` (answer keys, decoys and notes) and `manifest.json` (row counts and SHA-256 hashes). The harness loads the CSVs into a read-only SQLite warehouse, cached under `data/<split>/.cache/`, and derives a `graph_edges` table.
+`data/public/` is one synthetic world (seed 20251, generator 1.0.0) covering calendar year 2025. It contains:
+
+- 17 CSV tables
+- `tasks.jsonl` (prompts and answer schemas) and `answers.jsonl` (answer keys, decoys and notes)
+- `sessions.jsonl` (longevity sessions: case-file text and rounds) and `session_answers.jsonl` (per-round answer keys)
+- `manifest.json` (row counts and SHA-256 hashes)
+
+The harness loads the CSVs into a read-only SQLite warehouse, cached under `data/<split>/.cache/`, and derives a `graph_edges` table.
 
 ## How the world is generated
 
@@ -18,6 +25,7 @@
 7. **Assets.** Homes, vehicles, boats and commercial property, with financing and 2025 purchases and sales consistent with income.
 8. **Tax.** Information returns (W-2, 1099-NEC/K/INT/DIV/MISC, including gig-platform 1099-Ks) derived from the activity above, then honest 1040s (single, joint, separate, head of household; dependents; paid preparers; refunds) and entity returns (1120/1120S/1065) whose receipts match deposited revenue.
 9. **Schemes.** Each scheme reserves its actors (so schemes never overlap), injects records and decoys, and registers a task. Rule-based answer keys are computed after all planting, and the generator checks that they equal the planted cases.
+10. **Longevity sessions** (`generator/sessions.py`). For each session the generator selects the evidence its case-file rounds need, closes it over referenced entities (accounts, people, companies, phones), buries it among complete unrelated records until the case file reaches the size target (`--dossier-tokens`, default 32,000 at a conservative 2.6 characters per token), and renders it as pipe-separated tables.
 
 **Design rule:** every feature a scheme relies on must also occur in legitimate background activity. That covers international wires, accounts opened in 2025, newly incorporated LLCs, offshore entities, teller cash, cash deposits over $10k and near the threshold, prepaid phones activated in 2025, password resets from abroad, third-party signers, owner draws, "management fee" memos, loans and more. Models therefore have to follow the specific evidence chain rather than filter on a rare value.
 

@@ -4,6 +4,8 @@ A benchmark that tests how well LLM agents analyse tabular and graph data to cat
 
 Everything is **synthetic** and generated deterministically from a seed: a small world of ~2,500 people and ~480 companies with a year (2025) of banking, telecom, corporate-registry and tax data. Into that background the generator plants **27 investigations**. Each one comes with a machine-checkable answer key, **decoys** built to catch false accusations, and a **reference solver** that proves the answer can be derived from the data alone.
 
+A **longevity suite** tests endurance in long conversations. It has 4 sessions of 9–10 rounds each. Every session opens with a case file of at least 32k tokens, then asks its questions one at a time in a single, ever-growing conversation.
+
 You plug in any model that speaks the **OpenAI Chat Completions API** (OpenAI, OpenRouter, Together, Groq, DeepSeek, vLLM, Ollama, LM Studio, LiteLLM, …). Give it a model name, base URL and key, and the harness runs it as a tool-using agent, scores it, and ranks it against other models.
 
 ```
@@ -21,7 +23,7 @@ You plug in any model that speaks the **OpenAI Chat Completions API** (OpenAI, O
 ```bash
 git clone https://github.com/overworkedsurfer-dotcom/BenchMarking && cd BenchMarking
 pip install -e .                 # no third-party dependencies, Python >= 3.10
-fincrime-bench validate          # reference solvers must score 27/27 -> dataset is sound
+fincrime-bench validate          # must report 27/27 tasks and 39/39 longevity rounds
 
 # run one model (key read from an env var so it never lands in shell history or results)
 export OPENAI_API_KEY=sk-...
@@ -29,6 +31,8 @@ fincrime-bench run --model gpt-4.1 --base-url https://api.openai.com/v1 --api-ke
 ```
 
 Without installing, use `python -m fincrime_bench <command>` instead of `fincrime-bench`.
+
+By default `run` executes both the standalone tasks and the longevity sessions. Use `--suite tasks` or `--suite longevity` to run only one.
 
 Smoke-test the pipeline without any API key using the built-in pseudo-models: `oracle` submits the answer key (100), `reference` runs the reference solvers (100), and `null` submits nothing (0):
 
@@ -104,6 +108,42 @@ Defaults: 40 investigative tool calls, 60 model turns, and tool output truncated
 
 Run `fincrime-bench tasks` to list them, or `fincrime-bench tasks --show <id>` to print the exact prompt a model receives. [`docs/TASKS.md`](docs/TASKS.md) describes each family in depth.
 
+## Longevity suite: long conversations past 32k tokens
+
+Standalone tasks start from an empty conversation. The longevity suite checks whether a model keeps performing as one conversation grows long.
+
+| Session | Rounds | Case file | Theme |
+|---|---|---|---|
+| `long_01` | 10 | ≥ 32k tokens | Laundering desk: stolen wires, smurfing, offshore investors |
+| `long_02` | 9 | ≥ 32k tokens | Telecom and fraud-ring desk |
+| `long_03` | 10 | ≥ 32k tokens | Tax desk |
+| `long_04` | 10 | ≥ 32k tokens | Corporate registry and account-security desk |
+
+Each session is one conversation:
+
+1. The first message is a **case file**: an extract of warehouse records with the evidence for some questions buried among unrelated records. It is at least 32k tokens by a conservative estimate (about 40–55k with real tokenizers), so even the first question sits past 32k.
+2. Then come 9–10 **rounds**, one question at a time, and the context keeps growing (typically 60–100k tokens by the end):
+   - **case_file** rounds, tools disabled: answer by reading the case file. Some of these come many rounds after it was shown, which tests long-range retrieval.
+   - **investigation** rounds, tools enabled: a benchmark task asked mid-conversation.
+   - **recall** rounds, tools disabled: restate an item from the round-1 question, or a finding from an earlier round.
+   - **synthesis** round, tools disabled: list the people identified across several earlier rounds.
+
+Every one of the 27 tasks appears in exactly one session, so the leaderboard can compare each model's **in-session vs standalone** score on the same tasks. A negative Δ means the model degrades as the conversation grows. The longevity table also reports:
+
+- scores by round kind
+- scores by context size at the start of each round (<32k, 32–64k, 64–96k, 96k+)
+- late-round performance
+- peak context reached; this uses the API's reported token counts, or an estimate when the API reports none
+- rounds lost when a conversation stops fitting a model's context window. That is recorded as `context_overflow` and scores 0, which is itself a longevity result.
+
+`fincrime-bench validate` proves the suite is sound. It re-parses every case file from the exact text the model sees and runs the reference solvers on that extract alone.
+
+`fincrime-bench tasks --show long_01` prints a full session outline.
+
+Per-round settings: `--session-max-tool-calls` (20), `--session-max-turns` (30), `--session-tool-output-chars` (6,000). `generate --dossier-tokens` sets the case-file size.
+
+**Cost.** Every model call in a session resends the whole conversation, so the suite is input-heavy: roughly 8–12M input tokens per model per trial before prompt caching. Providers that cache repeated prefixes (most major APIs) cut this substantially, because the case file stays at the front of the conversation. Models with context windows under about 64k tokens will lose late rounds.
+
 ## Scoring (summary)
 
 Each answer field has a type-specific scorer:
@@ -130,7 +170,7 @@ Full definitions are in [`docs/SCORING.md`](docs/SCORING.md).
 
 ```bash
 fincrime-bench generate --seed 918273 --out data/private   # keep the seed secret
-fincrime-bench validate --data data/private               # must print 27/27
+fincrime-bench validate --data data/private               # must print 27/27 and 39/39
 fincrime-bench run --models-config models.toml --data data/private --out results-private
 ```
 
@@ -138,7 +178,7 @@ Generation is deterministic: the same seed and generator version always produce 
 
 ## Fair comparisons
 
-Compare models only on the same data split and the same settings: `--max-tool-calls`, `--max-turns`, `--toolset`, `--tool-mode` and `--max-tool-output-chars` are recorded in each run's `run.json`. Prefer `--trials 3` or more at temperature 0 or the provider default, and report the confidence interval. A model that needs `--tool-mode text` is using a different interface, so note it next to the score.
+Compare models only on the same data split and the same settings: `--max-tool-calls`, `--max-turns`, `--toolset`, `--tool-mode`, `--max-tool-output-chars` and the `--session-*` limits are recorded in each run's `run.json`. In-session rounds get a smaller default tool budget (20 vs 40 calls) to keep conversations within common context windows. To make the Δ-vs-standalone comparison measure context alone, pass `--session-max-tool-calls 40`. Prefer `--trials 3` or more at temperature 0 or the provider default, and report the confidence interval. A model that needs `--tool-mode text` is using a different interface, so note it next to the score.
 
 ## Outputs
 
@@ -146,8 +186,9 @@ Compare models only on the same data split and the same settings: `--max-tool-ca
 results/<model>/
   run.json          model config (no API key), agent settings, dataset seed/version
   results.jsonl     one line per task x trial: score, per-field scores, decoy hits, status, tokens, submission
-  summary.json      aggregate metrics (see docs/SCORING.md)
-  transcripts/      full conversation, every tool call and result, per task x trial
+  session_results.jsonl  one line per session x trial: per-round scores, statuses, context size per round
+  summary.json      aggregate metrics, including a "longevity" block (see docs/SCORING.md)
+  transcripts/      full conversation, every tool call and result, per task / session x trial
 ```
 
 `fincrime-bench rescore results/<model>` re-scores stored submissions after a scorer change, without calling the model again.
@@ -157,20 +198,22 @@ results/<model>/
 ```
 fincrime_bench/
   generator/   world.py (population, banks, phones, background activity), tax.py (returns, 1099s),
-               aml.py, taxfraud.py, ownership.py, telecom.py, capstone.py (planted schemes + tasks)
+               aml.py, taxfraud.py, ownership.py, telecom.py, capstone.py (planted schemes + tasks),
+               sessions.py (longevity sessions: case files, rounds, recall/synthesis)
   schema.py    data dictionary (drives CSV columns, SQLite types, describe_table, prompts)
   db.py        CSV -> cached SQLite warehouse, read-only sandbox, derived graph_edges table
   tools.py     model-facing tools          agent.py    native/text tool-calling agent loop
   llm.py       stdlib OpenAI-compatible client with retries
   scoring.py   field scorers               report.py   summaries, leaderboard, head-to-head
   solvers.py   reference solvers (data-only solutions used by `validate`)
+  sessions.py  longevity sessions at run time: case-file warehouses, validation, round scoring
   runner.py    concurrency, resume, transcripts           cli.py      command-line interface
-data/public/   17 CSV tables, tasks.jsonl, answers.jsonl, manifest.json
+data/public/   17 CSV tables, tasks.jsonl, answers.jsonl, sessions.jsonl, session_answers.jsonl, manifest.json
 docs/          DATASET.md (data dictionary), TASKS.md, SCORING.md
-tests/         dataset integrity, scorer unit tests, reference solvers, end-to-end agent run vs a fake API
+tests/         dataset integrity, scorer unit tests, reference solvers, longevity sessions, end-to-end runs vs a fake API
 ```
 
-`python -m pytest` runs the test suite: about 50 tests in about 30 s, including an end-to-end run against a scripted fake OpenAI server in both tool modes. Explore the data by hand with `fincrime-bench tool sql_query '{"query": "SELECT ..."}'`.
+`python -m pytest` runs the test suite: about 60 tests in about 35 s, including end-to-end task and multi-round session runs against a scripted fake OpenAI server in both tool modes. Explore the data by hand with `fincrime-bench tool sql_query '{"query": "SELECT ..."}'`.
 
 ## Adding a task family
 

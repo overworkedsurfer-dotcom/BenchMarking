@@ -93,3 +93,23 @@ For every pair of models, the leaderboard reports:
 - 27 tasks is a modest sample, so confidence intervals are wide. Use `--trials` ≥ 3 and, for important comparisons, also evaluate on a private seed (see the README).
 - A model's score depends on the harness settings: tool budget, toolset, tool mode and output truncation. Compare models only under identical settings; they are recorded in each `run.json`.
 - The `bool` field in `aml_roundtrip_01` has weight 0.2. Guessing it alone gives at most 0.2 on that task.
+
+## 7. Longevity sessions
+
+Each session round is scored exactly like a task: same field scorers, same answer keys for task rounds. Round weights are the source task's difficulty weight (1/2/3) for case-file and investigation rounds, 1 for recall rounds and 2 for the synthesis round.
+
+The **longevity score** is the weighted mean round score × 100 over all session rounds, with a 95% bootstrap CI over rounds. Rounds never reached count as 0: for example, after a `context_overflow` the remaining rounds of that session are lost.
+
+Reported in `summary.json` → `longevity` and in the leaderboard's longevity table:
+
+| Metric | Definition |
+|---|---|
+| `by_kind` | Mean round score × 100 for `case_file` (tools off, read the case file), `investigation` (tools on), `recall` and `synthesis` |
+| `by_context` | Mean score of rounds grouped by the prompt size at the start of the round: <32k, 32–64k, 64–96k, 96k+ tokens. Uses API-reported `prompt_tokens` when available, else an estimate (characters / 3) |
+| `by_position` | Mean score for rounds 1–3, 4–6 and 7+ |
+| `peak_context_tokens` | Largest prompt size reached in any session (`context_source` says whether it came from the API or the estimate) |
+| `min_first_round_context` | Smallest context at the first question across sessions (should be ≥ 32k) |
+| `rounds_lost` | Rounds ending in `api_error`, `context_overflow` or `harness_error` |
+| Δ standalone (leaderboard) | Mean over tasks of (in-session score − standalone score) when the same run directory has both. Negative means degradation in long conversations |
+
+Recall rounds score against the **true** value. A model that answered an earlier round wrongly and then restates its own wrong answer still scores 0 on the recall round. The synthesis round is an F1 over person ids, so it rewards complete and precise recall of several earlier findings.
